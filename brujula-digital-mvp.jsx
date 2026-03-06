@@ -273,6 +273,17 @@ const styles = {
   `,
 };
 
+// ========== RESPONSIVE HOOK ==========
+const useResponsive = () => {
+  const [width, setWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return { isMobile: width < 768, isTablet: width < 1024 };
+};
+
 // ========== ICON COMPONENTS ==========
 const CompassIcon = ({ size = 32 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
@@ -476,6 +487,9 @@ const Card = ({ children, style: customStyle, delay = 0 }) => (
 
 // ========== NAVBAR ==========
 const Navbar = ({ currentPage, setPage }) => {
+  const { isMobile } = useResponsive();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const navItems = [
     { id: "inicio", label: "Inicio" },
     { id: "diagnostico", label: "Diagnóstico" },
@@ -494,7 +508,7 @@ const Navbar = ({ currentPage, setPage }) => {
         background: "rgba(253, 248, 243, 0.95)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(44,110,111,0.1)",
-        padding: "0 24px",
+        padding: "0 20px",
       }}
     >
       <div
@@ -504,19 +518,19 @@ const Navbar = ({ currentPage, setPage }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: 72,
+          height: isMobile ? 60 : 72,
         }}
       >
         <div
-          style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
-          onClick={() => setPage("inicio")}
+          style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
+          onClick={() => { setPage("inicio"); setMenuOpen(false); }}
         >
-          <CompassIcon size={40} />
+          <CompassIcon size={isMobile ? 32 : 40} />
           <div>
             <div
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: 20,
+                fontSize: isMobile ? 16 : 20,
                 fontWeight: 700,
                 color: tokens.colors.oceanDeep,
                 lineHeight: 1.1,
@@ -524,47 +538,97 @@ const Navbar = ({ currentPage, setPage }) => {
             >
               BRÚJULA DIGITAL
             </div>
-            <div style={{ fontSize: 11, color: tokens.colors.textSecondary, fontWeight: 500 }}>
-              Autonomía digital para docentes
-            </div>
+            {!isMobile && (
+              <div style={{ fontSize: 11, color: tokens.colors.textSecondary, fontWeight: 500 }}>
+                Autonomía digital para docentes
+              </div>
+            )}
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+        {!isMobile ? (
+          <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setPage(item.id)}
+                style={{
+                  padding: "8px 16px",
+                  fontSize: 14,
+                  fontWeight: currentPage === item.id ? 700 : 500,
+                  color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textSecondary,
+                  background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
+                  border: "none",
+                  borderRadius: 8,
+                  cursor: "pointer",
+                  fontFamily: "'Nunito', sans-serif",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 8,
+              display: "flex",
+              flexDirection: "column",
+              gap: 5,
+            }}
+          >
+            <div style={{ width: 24, height: 2, background: tokens.colors.oceanDeep, borderRadius: 2, transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
+            <div style={{ width: 24, height: 2, background: tokens.colors.oceanDeep, borderRadius: 2, transition: "all 0.3s ease", opacity: menuOpen ? 0 : 1 }} />
+            <div style={{ width: 24, height: 2, background: tokens.colors.oceanDeep, borderRadius: 2, transition: "all 0.3s ease", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
+          </button>
+        )}
+      </div>
+
+      {isMobile && menuOpen && (
+        <div style={{ background: "white", borderTop: `1px solid ${tokens.colors.oceanMist}`, animation: "slideDown 0.3s ease" }}>
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setPage(item.id)}
+              onClick={() => { setPage(item.id); setMenuOpen(false); }}
               style={{
-                padding: "8px 16px",
-                fontSize: 14,
+                display: "block",
+                width: "100%",
+                padding: "14px 20px",
+                fontSize: 16,
                 fontWeight: currentPage === item.id ? 700 : 500,
-                color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textSecondary,
+                color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textPrimary,
                 background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
                 border: "none",
-                borderRadius: 8,
+                borderBottom: `1px solid ${tokens.colors.oceanMist}`,
                 cursor: "pointer",
                 fontFamily: "'Nunito', sans-serif",
-                transition: "all 0.2s ease",
+                textAlign: "left",
               }}
             >
               {item.label}
             </button>
           ))}
         </div>
-      </div>
+      )}
     </nav>
   );
 };
 
 // ========== PAGE: INICIO ==========
-const PageInicio = ({ setPage }) => (
+const PageInicio = ({ setPage }) => {
+  const { isMobile, isTablet } = useResponsive();
+  return (
   <div>
     {/* Hero */}
     <section
       style={{
         background: `linear-gradient(135deg, ${tokens.colors.sandWarm}40, ${tokens.colors.oceanMist}60)`,
-        padding: "80px 24px 60px",
+        padding: isMobile ? "48px 20px 40px" : "80px 24px 60px",
         position: "relative",
         overflow: "hidden",
       }}
@@ -591,12 +655,12 @@ const PageInicio = ({ setPage }) => (
           background: `radial-gradient(circle, ${tokens.colors.oceanLight}10, transparent 70%)`,
         }}
       />
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", gap: 60 }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", gap: isMobile ? 32 : 60, flexDirection: isMobile ? "column" : "row", textAlign: isMobile ? "center" : "left" }}>
         <div style={{ flex: 1, animation: "fadeInUp 0.8s ease" }}>
           <h1
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 48,
+              fontSize: isMobile ? 30 : 48,
               fontWeight: 700,
               color: tokens.colors.textPrimary,
               lineHeight: 1.2,
@@ -609,18 +673,18 @@ const PageInicio = ({ setPage }) => (
           </h1>
           <p
             style={{
-              fontSize: 19,
+              fontSize: isMobile ? 16 : 19,
               color: tokens.colors.textSecondary,
               lineHeight: 1.7,
               marginBottom: 32,
-              maxWidth: 500,
+              maxWidth: isMobile ? "100%" : 500,
             }}
           >
             Aprende a usar herramientas digitales con criterio pedagógico, seguridad y autonomía.
             A tu ritmo, sin presiones.
           </p>
-          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-            <Button size="lg" onClick={() => setPage("diagnostico")}>
+          <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", justifyContent: isMobile ? "center" : "flex-start" }}>
+            <Button size={isMobile ? "md" : "lg"} onClick={() => setPage("diagnostico")}>
               Comenzar diagnóstico <ArrowRightIcon />
             </Button>
             <Button variant="secondary" onClick={() => setPage("ruta")}>
@@ -630,7 +694,7 @@ const PageInicio = ({ setPage }) => (
         </div>
         <div
           style={{
-            flex: 1,
+            flex: isMobile ? "none" : 1,
             display: "flex",
             justifyContent: "center",
             animation: "fadeInUp 0.8s ease 0.2s both",
@@ -638,8 +702,8 @@ const PageInicio = ({ setPage }) => (
         >
           <div
             style={{
-              width: 340,
-              height: 340,
+              width: isMobile ? 200 : 340,
+              height: isMobile ? 200 : 340,
               borderRadius: "50%",
               background: `linear-gradient(135deg, ${tokens.colors.oceanMist}, ${tokens.colors.sandWarm})`,
               display: "flex",
@@ -649,18 +713,18 @@ const PageInicio = ({ setPage }) => (
               boxShadow: "0 20px 60px rgba(44,110,111,0.15)",
             }}
           >
-            <CompassIcon size={180} />
+            <CompassIcon size={isMobile ? 110 : 180} />
           </div>
         </div>
       </div>
     </section>
 
     {/* ¿Cómo funciona? */}
-    <section style={{ padding: "80px 24px", maxWidth: 1200, margin: "0 auto" }}>
+    <section style={{ padding: isMobile ? "48px 20px" : "80px 24px", maxWidth: 1200, margin: "0 auto" }}>
       <h2
         style={{
           fontFamily: "'Playfair Display', serif",
-          fontSize: 36,
+          fontSize: isMobile ? 26 : 36,
           textAlign: "center",
           marginBottom: 16,
           color: tokens.colors.textPrimary,
@@ -668,10 +732,10 @@ const PageInicio = ({ setPage }) => (
       >
         ¿Cómo funciona?
       </h2>
-      <p style={{ textAlign: "center", color: tokens.colors.textSecondary, marginBottom: 48, fontSize: 17 }}>
+      <p style={{ textAlign: "center", color: tokens.colors.textSecondary, marginBottom: 40, fontSize: isMobile ? 15 : 17 }}>
         Tres pasos simples hacia tu autonomía digital
       </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: isMobile ? 20 : 32 }}>
         {[
           {
             step: "01",
@@ -724,7 +788,7 @@ const PageInicio = ({ setPage }) => (
     {/* Niveles */}
     <section
       style={{
-        padding: "80px 24px",
+        padding: isMobile ? "48px 20px" : "80px 24px",
         background: `linear-gradient(180deg, white 0%, ${tokens.colors.oceanMist}40 100%)`,
       }}
     >
@@ -732,14 +796,14 @@ const PageInicio = ({ setPage }) => (
         <h2
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 36,
+            fontSize: isMobile ? 26 : 36,
             textAlign: "center",
-            marginBottom: 48,
+            marginBottom: isMobile ? 32 : 48,
           }}
         >
           Explora las etapas
         </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 20 : 32 }}>
           {[
             {
               level: "explorador",
@@ -805,18 +869,18 @@ const PageInicio = ({ setPage }) => (
     </section>
 
     {/* Testimonios */}
-    <section style={{ padding: "80px 24px", maxWidth: 1200, margin: "0 auto" }}>
+    <section style={{ padding: isMobile ? "48px 20px" : "80px 24px", maxWidth: 1200, margin: "0 auto" }}>
       <h2
         style={{
           fontFamily: "'Playfair Display', serif",
-          fontSize: 36,
+          fontSize: isMobile ? 26 : 36,
           textAlign: "center",
-          marginBottom: 48,
+          marginBottom: isMobile ? 32 : 48,
         }}
       >
         Voces de docentes como tú
       </h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 16 : 24 }}>
         {[
           {
             quote:
@@ -857,7 +921,8 @@ const PageInicio = ({ setPage }) => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 // ========== PAGE: DIAGNÓSTICO ==========
 const PageDiagnostico = ({ setPage }) => {
@@ -1018,6 +1083,7 @@ const PageDiagnostico = ({ setPage }) => {
 
 // ========== PAGE: MI RUTA ==========
 const PageRuta = ({ setPage }) => {
+  const { isMobile } = useResponsive();
   const levels = [
     { key: "explorador", label: "Explorador Digital", color: tokens.colors.oceanDeep },
     { key: "integrador", label: "Integrador Estratégico", color: tokens.colors.coralSoft },
@@ -1029,30 +1095,30 @@ const PageRuta = ({ setPage }) => {
   );
 
   return (
-    <div style={{ padding: "48px 24px", maxWidth: 900, margin: "0 auto" }}>
+    <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
       {/* Header */}
       <div style={{ marginBottom: 40, animation: "fadeInUp 0.6s ease" }}>
         <h1
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 36,
+            fontSize: isMobile ? 26 : 36,
             marginBottom: 8,
           }}
         >
           Tu ruta hacia la autonomía digital
         </h1>
-        <p style={{ fontSize: 17, color: tokens.colors.textSecondary, marginBottom: 24 }}>
+        <p style={{ fontSize: isMobile ? 15 : 17, color: tokens.colors.textSecondary, marginBottom: 24 }}>
           Avanza paso a paso desarrollando seguridad, criterio pedagógico y autonomía.
         </p>
-        <Card style={{ display: "flex", alignItems: "center", gap: 24, padding: "20px 28px" }}>
+        <Card style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 16 : 24, padding: "20px 28px" }}>
           <div>
             <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 4 }}>Progreso general</div>
             <div style={{ fontSize: 32, fontWeight: 700, color: tokens.colors.oceanDeep }}>{totalProgress}%</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, width: isMobile ? "100%" : "auto" }}>
             <ProgressBar value={totalProgress} height={12} />
           </div>
-          <div style={{ textAlign: "right" }}>
+          <div style={{ textAlign: isMobile ? "left" : "right" }}>
             <div style={{ fontSize: 13, color: tokens.colors.textSecondary }}>Nivel actual</div>
             <LevelBadge level="explorador" size="sm" />
           </div>
@@ -1143,11 +1209,11 @@ const PageRuta = ({ setPage }) => {
                     if (mod.unlocked) e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)";
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 6 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 10 : 0, marginBottom: 6 }}>
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
                         <span style={{ fontSize: 20 }}>{mod.icon}</span>
-                        <h3 style={{ fontSize: 17, fontWeight: 700 }}>{mod.title}</h3>
+                        <h3 style={{ fontSize: isMobile ? 15 : 17, fontWeight: 700 }}>{mod.title}</h3>
                       </div>
                       <p style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{mod.desc}</p>
                     </div>
@@ -1157,7 +1223,7 @@ const PageRuta = ({ setPage }) => {
                       </Button>
                     )}
                     {mod.progress === 100 && (
-                      <span style={{ fontSize: 13, fontWeight: 600, color: tokens.colors.forestCalm }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: tokens.colors.forestCalm, flexShrink: 0 }}>
                         ✓ Completado
                       </span>
                     )}
@@ -1315,24 +1381,26 @@ const PageComunidad = () => {
 };
 
 // ========== PAGE: LOGROS ==========
-const PageLogros = () => (
-  <div style={{ padding: "48px 24px", maxWidth: 900, margin: "0 auto" }}>
+const PageLogros = () => {
+  const { isMobile } = useResponsive();
+  return (
+  <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
     <h1
       style={{
         fontFamily: "'Playfair Display', serif",
-        fontSize: 36,
+        fontSize: isMobile ? 28 : 36,
         marginBottom: 8,
         animation: "fadeInUp 0.6s ease",
       }}
     >
       Tus logros
     </h1>
-    <p style={{ fontSize: 17, color: tokens.colors.textSecondary, marginBottom: 40, animation: "fadeInUp 0.6s ease 0.1s both" }}>
+    <p style={{ fontSize: isMobile ? 15 : 17, color: tokens.colors.textSecondary, marginBottom: isMobile ? 28 : 40, animation: "fadeInUp 0.6s ease 0.1s both" }}>
       Cada insignia representa un paso en tu camino. ¡Celebra tu progreso!
     </p>
 
     {/* Stats */}
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginBottom: 48 }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 20, marginBottom: isMobile ? 32 : 48 }}>
       {[
         { label: "Insignias obtenidas", value: "3 / 8", color: tokens.colors.goldBadge },
         { label: "Nivel actual", value: "Explorador", color: tokens.colors.oceanDeep },
@@ -1346,7 +1414,7 @@ const PageLogros = () => (
     </div>
 
     {/* Badges Grid */}
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? 12 : 20 }}>
       {BADGES.map((badge, i) => (
         <Card
           key={badge.id}
@@ -1383,23 +1451,26 @@ const PageLogros = () => (
       ))}
     </div>
   </div>
-);
+  );
+};
 
 // ========== PAGE: PERFIL ==========
-const PagePerfil = () => (
-  <div style={{ padding: "48px 24px", maxWidth: 800, margin: "0 auto" }}>
+const PagePerfil = () => {
+  const { isMobile } = useResponsive();
+  return (
+  <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 800, margin: "0 auto" }}>
     <h1
       style={{
         fontFamily: "'Playfair Display', serif",
-        fontSize: 36,
-        marginBottom: 32,
+        fontSize: isMobile ? 28 : 36,
+        marginBottom: isMobile ? 24 : 32,
         animation: "fadeInUp 0.6s ease",
       }}
     >
       Mi cuenta
     </h1>
 
-    <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 32 }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", gap: isMobile ? 20 : 32 }}>
       {/* Profile Card */}
       <Card style={{ textAlign: "center", animation: "fadeInUp 0.6s ease 0.1s both" }}>
         <div
@@ -1459,7 +1530,7 @@ const PagePerfil = () => (
             </div>
             <ProgressBar value={68} height={10} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 12, marginTop: 20 }}>
             {[
               { label: "Módulos completados", value: "1 / 8" },
               { label: "Lecciones terminadas", value: "9 / 37" },
@@ -1519,7 +1590,8 @@ const PagePerfil = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 // ========== HELP BUTTON (GLOBAL) ==========
 const HelpButton = () => {
@@ -1588,13 +1660,15 @@ const HelpButton = () => {
 };
 
 // ========== FOOTER ==========
-const Footer = () => (
+const Footer = () => {
+  const { isMobile, isTablet } = useResponsive();
+  return (
   <footer
     style={{
       background: tokens.colors.textPrimary,
       color: "white",
-      padding: "48px 24px",
-      marginTop: 64,
+      padding: isMobile ? "40px 20px" : "48px 24px",
+      marginTop: isMobile ? 40 : 64,
     }}
   >
     <div
@@ -1602,11 +1676,11 @@ const Footer = () => (
         maxWidth: 1200,
         margin: "0 auto",
         display: "grid",
-        gridTemplateColumns: "2fr 1fr 1fr 1fr",
-        gap: 40,
+        gridTemplateColumns: isMobile ? "1fr 1fr" : isTablet ? "1fr 1fr" : "2fr 1fr 1fr 1fr",
+        gap: isMobile ? 24 : 40,
       }}
     >
-      <div>
+      <div style={{ gridColumn: isMobile ? "1 / -1" : "auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
           <CompassIcon size={32} />
           <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 700 }}>
@@ -1656,7 +1730,8 @@ const Footer = () => (
       © 2026 Brújula Digital · Chispas Estratégicas · Aprender sin Edad
     </div>
   </footer>
-);
+  );
+};
 
 // ========== MAIN APP ==========
 export default function BrujulaDigital() {

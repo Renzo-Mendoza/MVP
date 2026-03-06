@@ -331,6 +331,19 @@ const styles = {
     }
   `
 };
+// ========== RESPONSIVE HOOK ==========
+const useResponsive = ()=>{
+    const [width, setWidth] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : 1200);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const handler = ()=>setWidth(window.innerWidth);
+        window.addEventListener("resize", handler);
+        return ()=>window.removeEventListener("resize", handler);
+    }, []);
+    return {
+        isMobile: width < 768,
+        isTablet: width < 1024
+    };
+};
 // ========== ICON COMPONENTS ==========
 const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
         width: size,
@@ -347,7 +360,7 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                 fill: "#E8F4F4"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 279,
+                lineNumber: 290,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -359,7 +372,7 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                 fill: "none"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 280,
+                lineNumber: 291,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("polygon", {
@@ -367,7 +380,7 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                 fill: "#E8927C"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 281,
+                lineNumber: 292,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("polygon", {
@@ -375,7 +388,7 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                 fill: "#2C6E6F"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 282,
+                lineNumber: 293,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -385,7 +398,7 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                 fill: "#2C6E6F"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 283,
+                lineNumber: 294,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -395,7 +408,7 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                 fill: "white"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 284,
+                lineNumber: 295,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             [
@@ -424,13 +437,13 @@ const CompassIcon = ({ size = 32 })=>/*#__PURE__*/ (0, __TURBOPACK__imported__mo
                     children: d
                 }, d, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 286,
+                    lineNumber: 297,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0)))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 278,
+        lineNumber: 289,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const HelpIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -448,14 +461,14 @@ const HelpIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
                 r: "10"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 304,
+                lineNumber: 315,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                 d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 305,
+                lineNumber: 316,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
@@ -465,13 +478,13 @@ const HelpIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
                 y2: "17"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 306,
+                lineNumber: 317,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 303,
+        lineNumber: 314,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const HeartIcon = ({ filled })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -485,12 +498,12 @@ const HeartIcon = ({ filled })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module_
             d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
         }, void 0, false, {
             fileName: "[project]/brujula-digital-mvp.jsx",
-            lineNumber: 312,
+            lineNumber: 323,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 311,
+        lineNumber: 322,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const ChatIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -505,12 +518,12 @@ const ChatIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
             d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
         }, void 0, false, {
             fileName: "[project]/brujula-digital-mvp.jsx",
-            lineNumber: 318,
+            lineNumber: 329,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 317,
+        lineNumber: 328,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const CheckIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -525,12 +538,12 @@ const CheckIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proje
             points: "20 6 9 17 4 12"
         }, void 0, false, {
             fileName: "[project]/brujula-digital-mvp.jsx",
-            lineNumber: 324,
+            lineNumber: 335,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 323,
+        lineNumber: 334,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const LockIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -551,20 +564,20 @@ const LockIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$projec
                 ry: "2"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 330,
+                lineNumber: 341,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                 d: "M7 11V7a5 5 0 0 1 10 0v4"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 331,
+                lineNumber: 342,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 329,
+        lineNumber: 340,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const ArrowRightIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -583,20 +596,20 @@ const ArrowRightIcon = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$
                 y2: "12"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 337,
+                lineNumber: 348,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("polyline", {
                 points: "12 5 19 12 12 19"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 338,
+                lineNumber: 349,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 336,
+        lineNumber: 347,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 // ========== SUB-COMPONENTS ==========
@@ -623,12 +636,12 @@ const ProgressBar = ({ value, height = 8, showLabel = false })=>/*#__PURE__*/ (0
                     }
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 353,
+                    lineNumber: 364,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 345,
+                lineNumber: 356,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             showLabel && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -646,13 +659,13 @@ const ProgressBar = ({ value, height = 8, showLabel = false })=>/*#__PURE__*/ (0
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 365,
+                lineNumber: 376,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 344,
+        lineNumber: 355,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 const LevelBadge = ({ level, size = "md" })=>{
@@ -703,7 +716,7 @@ const LevelBadge = ({ level, size = "md" })=>{
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 390,
+        lineNumber: 401,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -752,7 +765,7 @@ const Button = ({ children, variant = "primary", onClick, style: customStyle, si
         children: children
     }, void 0, false, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 442,
+        lineNumber: 453,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -777,11 +790,13 @@ const Card = ({ children, style: customStyle, delay = 0 })=>/*#__PURE__*/ (0, __
         children: children
     }, void 0, false, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 454,
+        lineNumber: 465,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 // ========== NAVBAR ==========
 const Navbar = ({ currentPage, setPage })=>{
+    const { isMobile } = useResponsive();
+    const [menuOpen, setMenuOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const navItems = [
         {
             id: "inicio",
@@ -816,124 +831,226 @@ const Navbar = ({ currentPage, setPage })=>{
             background: "rgba(253, 248, 243, 0.95)",
             backdropFilter: "blur(12px)",
             borderBottom: "1px solid rgba(44,110,111,0.1)",
-            padding: "0 24px"
+            padding: "0 20px"
         },
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            style: {
-                maxWidth: 1200,
-                margin: "0 auto",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                height: 72
-            },
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 12,
-                        cursor: "pointer"
-                    },
-                    onClick: ()=>setPage("inicio"),
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CompassIcon, {
-                            size: 40
-                        }, void 0, false, {
-                            fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 514,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    style: {
-                                        fontFamily: "'Playfair Display', serif",
-                                        fontSize: 20,
-                                        fontWeight: 700,
-                                        color: tokens.colors.oceanDeep,
-                                        lineHeight: 1.1
-                                    },
-                                    children: "BRÚJULA DIGITAL"
-                                }, void 0, false, {
-                                    fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 516,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    style: {
-                                        fontSize: 11,
-                                        color: tokens.colors.textSecondary,
-                                        fontWeight: 500
-                                    },
-                                    children: "Autonomía digital para docentes"
-                                }, void 0, false, {
-                                    fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 527,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 515,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0))
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 510,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0)),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        display: "flex",
-                        gap: 4,
-                        alignItems: "center"
-                    },
-                    children: navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: ()=>setPage(item.id),
-                            style: {
-                                padding: "8px 16px",
-                                fontSize: 14,
-                                fontWeight: currentPage === item.id ? 700 : 500,
-                                color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textSecondary,
-                                background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
-                                border: "none",
-                                borderRadius: 8,
-                                cursor: "pointer",
-                                fontFamily: "'Nunito', sans-serif",
-                                transition: "all 0.2s ease"
-                            },
-                            children: item.label
-                        }, item.id, false, {
-                            fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 535,
-                            columnNumber: 13
-                        }, ("TURBOPACK compile-time value", void 0)))
-                }, void 0, false, {
-                    fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 533,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0))
-            ]
-        }, void 0, true, {
-            fileName: "[project]/brujula-digital-mvp.jsx",
-            lineNumber: 500,
-            columnNumber: 7
-        }, ("TURBOPACK compile-time value", void 0))
-    }, void 0, false, {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                style: {
+                    maxWidth: 1200,
+                    margin: "0 auto",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    height: isMobile ? 60 : 72
+                },
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 10,
+                            cursor: "pointer"
+                        },
+                        onClick: ()=>{
+                            setPage("inicio");
+                            setMenuOpen(false);
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CompassIcon, {
+                                size: isMobile ? 32 : 40
+                            }, void 0, false, {
+                                fileName: "[project]/brujula-digital-mvp.jsx",
+                                lineNumber: 528,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        style: {
+                                            fontFamily: "'Playfair Display', serif",
+                                            fontSize: isMobile ? 16 : 20,
+                                            fontWeight: 700,
+                                            color: tokens.colors.oceanDeep,
+                                            lineHeight: 1.1
+                                        },
+                                        children: "BRÚJULA DIGITAL"
+                                    }, void 0, false, {
+                                        fileName: "[project]/brujula-digital-mvp.jsx",
+                                        lineNumber: 530,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    !isMobile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        style: {
+                                            fontSize: 11,
+                                            color: tokens.colors.textSecondary,
+                                            fontWeight: 500
+                                        },
+                                        children: "Autonomía digital para docentes"
+                                    }, void 0, false, {
+                                        fileName: "[project]/brujula-digital-mvp.jsx",
+                                        lineNumber: 542,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/brujula-digital-mvp.jsx",
+                                lineNumber: 529,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/brujula-digital-mvp.jsx",
+                        lineNumber: 524,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    !isMobile ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            display: "flex",
+                            gap: 4,
+                            alignItems: "center"
+                        },
+                        children: navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setPage(item.id),
+                                style: {
+                                    padding: "8px 16px",
+                                    fontSize: 14,
+                                    fontWeight: currentPage === item.id ? 700 : 500,
+                                    color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textSecondary,
+                                    background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
+                                    border: "none",
+                                    borderRadius: 8,
+                                    cursor: "pointer",
+                                    fontFamily: "'Nunito', sans-serif",
+                                    transition: "all 0.2s ease"
+                                },
+                                children: item.label
+                            }, item.id, false, {
+                                fileName: "[project]/brujula-digital-mvp.jsx",
+                                lineNumber: 552,
+                                columnNumber: 15
+                            }, ("TURBOPACK compile-time value", void 0)))
+                    }, void 0, false, {
+                        fileName: "[project]/brujula-digital-mvp.jsx",
+                        lineNumber: 550,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setMenuOpen(!menuOpen),
+                        style: {
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            padding: 8,
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 5
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                style: {
+                                    width: 24,
+                                    height: 2,
+                                    background: tokens.colors.oceanDeep,
+                                    borderRadius: 2,
+                                    transition: "all 0.3s ease",
+                                    transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none"
+                                }
+                            }, void 0, false, {
+                                fileName: "[project]/brujula-digital-mvp.jsx",
+                                lineNumber: 585,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                style: {
+                                    width: 24,
+                                    height: 2,
+                                    background: tokens.colors.oceanDeep,
+                                    borderRadius: 2,
+                                    transition: "all 0.3s ease",
+                                    opacity: menuOpen ? 0 : 1
+                                }
+                            }, void 0, false, {
+                                fileName: "[project]/brujula-digital-mvp.jsx",
+                                lineNumber: 586,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                style: {
+                                    width: 24,
+                                    height: 2,
+                                    background: tokens.colors.oceanDeep,
+                                    borderRadius: 2,
+                                    transition: "all 0.3s ease",
+                                    transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none"
+                                }
+                            }, void 0, false, {
+                                fileName: "[project]/brujula-digital-mvp.jsx",
+                                lineNumber: 587,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/brujula-digital-mvp.jsx",
+                        lineNumber: 573,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/brujula-digital-mvp.jsx",
+                lineNumber: 514,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            isMobile && menuOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                style: {
+                    background: "white",
+                    borderTop: `1px solid ${tokens.colors.oceanMist}`,
+                    animation: "slideDown 0.3s ease"
+                },
+                children: navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>{
+                            setPage(item.id);
+                            setMenuOpen(false);
+                        },
+                        style: {
+                            display: "block",
+                            width: "100%",
+                            padding: "14px 20px",
+                            fontSize: 16,
+                            fontWeight: currentPage === item.id ? 700 : 500,
+                            color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textPrimary,
+                            background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
+                            border: "none",
+                            borderBottom: `1px solid ${tokens.colors.oceanMist}`,
+                            cursor: "pointer",
+                            fontFamily: "'Nunito', sans-serif",
+                            textAlign: "left"
+                        },
+                        children: item.label
+                    }, item.id, false, {
+                        fileName: "[project]/brujula-digital-mvp.jsx",
+                        lineNumber: 595,
+                        columnNumber: 13
+                    }, ("TURBOPACK compile-time value", void 0)))
+            }, void 0, false, {
+                fileName: "[project]/brujula-digital-mvp.jsx",
+                lineNumber: 593,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 489,
+        lineNumber: 503,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 // ========== PAGE: INICIO ==========
-const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+const PageInicio = ({ setPage })=>{
+    const { isMobile, isTablet } = useResponsive();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                 style: {
                     background: `linear-gradient(135deg, ${tokens.colors.sandWarm}40, ${tokens.colors.oceanMist}60)`,
-                    padding: "80px 24px 60px",
+                    padding: isMobile ? "48px 20px 40px" : "80px 24px 60px",
                     position: "relative",
                     overflow: "hidden"
                 },
@@ -950,7 +1067,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                         }
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 572,
+                        lineNumber: 636,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -965,7 +1082,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                         }
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 583,
+                        lineNumber: 647,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -974,7 +1091,9 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                             margin: "0 auto",
                             display: "flex",
                             alignItems: "center",
-                            gap: 60
+                            gap: isMobile ? 32 : 60,
+                            flexDirection: isMobile ? "column" : "row",
+                            textAlign: isMobile ? "center" : "left"
                         },
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -986,7 +1105,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                         style: {
                                             fontFamily: "'Playfair Display', serif",
-                                            fontSize: 48,
+                                            fontSize: isMobile ? 30 : 48,
                                             fontWeight: 700,
                                             color: tokens.colors.textPrimary,
                                             lineHeight: 1.2,
@@ -996,7 +1115,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                             "Encuentra tu rumbo",
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 607,
+                                                lineNumber: 671,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1006,50 +1125,52 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                                 children: "en la educación digital"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 608,
+                                                lineNumber: 672,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 596,
+                                        lineNumber: 660,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         style: {
-                                            fontSize: 19,
+                                            fontSize: isMobile ? 16 : 19,
                                             color: tokens.colors.textSecondary,
                                             lineHeight: 1.7,
                                             marginBottom: 32,
-                                            maxWidth: 500
+                                            maxWidth: isMobile ? "100%" : 500
                                         },
                                         children: "Aprende a usar herramientas digitales con criterio pedagógico, seguridad y autonomía. A tu ritmo, sin presiones."
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 610,
+                                        lineNumber: 674,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         style: {
                                             display: "flex",
-                                            gap: 16,
-                                            alignItems: "center"
+                                            gap: 12,
+                                            alignItems: "center",
+                                            flexWrap: "wrap",
+                                            justifyContent: isMobile ? "center" : "flex-start"
                                         },
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Button, {
-                                                size: "lg",
+                                                size: isMobile ? "md" : "lg",
                                                 onClick: ()=>setPage("diagnostico"),
                                                 children: [
                                                     "Comenzar diagnóstico ",
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowRightIcon, {}, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 624,
+                                                        lineNumber: 688,
                                                         columnNumber: 36
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 623,
+                                                lineNumber: 687,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Button, {
@@ -1058,32 +1179,32 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                                 children: "Ver mi ruta"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 626,
+                                                lineNumber: 690,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 622,
+                                        lineNumber: 686,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 595,
+                                lineNumber: 659,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 style: {
-                                    flex: 1,
+                                    flex: isMobile ? "none" : 1,
                                     display: "flex",
                                     justifyContent: "center",
                                     animation: "fadeInUp 0.8s ease 0.2s both"
                                 },
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     style: {
-                                        width: 340,
-                                        height: 340,
+                                        width: isMobile ? 200 : 340,
+                                        height: isMobile ? 200 : 340,
                                         borderRadius: "50%",
                                         background: `linear-gradient(135deg, ${tokens.colors.oceanMist}, ${tokens.colors.sandWarm})`,
                                         display: "flex",
@@ -1093,37 +1214,37 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         boxShadow: "0 20px 60px rgba(44,110,111,0.15)"
                                     },
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CompassIcon, {
-                                        size: 180
+                                        size: isMobile ? 110 : 180
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 652,
+                                        lineNumber: 716,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 639,
+                                    lineNumber: 703,
                                     columnNumber: 11
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 631,
+                                lineNumber: 695,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 594,
+                        lineNumber: 658,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 564,
+                lineNumber: 628,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                 style: {
-                    padding: "80px 24px",
+                    padding: isMobile ? "48px 20px" : "80px 24px",
                     maxWidth: 1200,
                     margin: "0 auto"
                 },
@@ -1131,7 +1252,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                         style: {
                             fontFamily: "'Playfair Display', serif",
-                            fontSize: 36,
+                            fontSize: isMobile ? 26 : 36,
                             textAlign: "center",
                             marginBottom: 16,
                             color: tokens.colors.textPrimary
@@ -1139,27 +1260,27 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                         children: "¿Cómo funciona?"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 660,
+                        lineNumber: 724,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         style: {
                             textAlign: "center",
                             color: tokens.colors.textSecondary,
-                            marginBottom: 48,
-                            fontSize: 17
+                            marginBottom: 40,
+                            fontSize: isMobile ? 15 : 17
                         },
                         children: "Tres pasos simples hacia tu autonomía digital"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 671,
+                        lineNumber: 735,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         style: {
                             display: "grid",
-                            gridTemplateColumns: "repeat(3, 1fr)",
-                            gap: 32
+                            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+                            gap: isMobile ? 20 : 32
                         },
                         children: [
                             {
@@ -1197,7 +1318,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 696,
+                                        lineNumber: 760,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1208,7 +1329,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: item.icon
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 707,
+                                        lineNumber: 771,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1221,7 +1342,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: item.title
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 708,
+                                        lineNumber: 772,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1233,29 +1354,29 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: item.desc
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 718,
+                                        lineNumber: 782,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, i, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 695,
+                                lineNumber: 759,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)))
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 674,
+                        lineNumber: 738,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 659,
+                lineNumber: 723,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                 style: {
-                    padding: "80px 24px",
+                    padding: isMobile ? "48px 20px" : "80px 24px",
                     background: `linear-gradient(180deg, white 0%, ${tokens.colors.oceanMist}40 100%)`
                 },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1267,21 +1388,21 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             style: {
                                 fontFamily: "'Playfair Display', serif",
-                                fontSize: 36,
+                                fontSize: isMobile ? 26 : 36,
                                 textAlign: "center",
-                                marginBottom: 48
+                                marginBottom: isMobile ? 32 : 48
                             },
                             children: "Explora las etapas"
                         }, void 0, false, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 732,
+                            lineNumber: 796,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             style: {
                                 display: "grid",
-                                gridTemplateColumns: "repeat(3, 1fr)",
-                                gap: 32
+                                gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+                                gap: isMobile ? 20 : 32
                             },
                             children: [
                                 {
@@ -1330,7 +1451,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                             children: item.level === "explorador" ? "🧭" : item.level === "integrador" ? "🔗" : "⭐"
                                         }, void 0, false, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 770,
+                                            lineNumber: 834,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1343,7 +1464,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                             children: item.title
                                         }, void 0, false, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 785,
+                                            lineNumber: 849,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1356,7 +1477,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                             children: item.desc
                                         }, void 0, false, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 795,
+                                            lineNumber: 859,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1371,34 +1492,34 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 798,
+                                            lineNumber: 862,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, i, true, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 769,
+                                    lineNumber: 833,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)))
                         }, void 0, false, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 742,
+                            lineNumber: 806,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 731,
+                    lineNumber: 795,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 725,
+                lineNumber: 789,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                 style: {
-                    padding: "80px 24px",
+                    padding: isMobile ? "48px 20px" : "80px 24px",
                     maxWidth: 1200,
                     margin: "0 auto"
                 },
@@ -1406,21 +1527,21 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                         style: {
                             fontFamily: "'Playfair Display', serif",
-                            fontSize: 36,
+                            fontSize: isMobile ? 26 : 36,
                             textAlign: "center",
-                            marginBottom: 48
+                            marginBottom: isMobile ? 32 : 48
                         },
                         children: "Voces de docentes como tú"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 809,
+                        lineNumber: 873,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         style: {
                             display: "grid",
-                            gridTemplateColumns: "repeat(3, 1fr)",
-                            gap: 24
+                            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+                            gap: isMobile ? 16 : 24
                         },
                         children: [
                             {
@@ -1453,7 +1574,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: '"'
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 841,
+                                        lineNumber: 905,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1467,7 +1588,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: item.quote
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 842,
+                                        lineNumber: 906,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1479,7 +1600,7 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: item.author
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 853,
+                                        lineNumber: 917,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1490,32 +1611,33 @@ const PageInicio = ({ setPage })=>/*#__PURE__*/ (0, __TURBOPACK__imported__modul
                                         children: item.role
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 854,
+                                        lineNumber: 918,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, i, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 840,
+                                lineNumber: 904,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)))
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 819,
+                        lineNumber: 883,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 808,
+                lineNumber: 872,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 562,
+        lineNumber: 626,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
+};
 // ========== PAGE: DIAGNÓSTICO ==========
 const PageDiagnostico = ({ setPage })=>{
     const [step, setStep] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
@@ -1566,12 +1688,12 @@ const PageDiagnostico = ({ setPage })=>{
                         children: "🧭"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 886,
+                        lineNumber: 951,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 885,
+                    lineNumber: 950,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -1585,7 +1707,7 @@ const PageDiagnostico = ({ setPage })=>{
                     children: "¡Bienvenida, Carla!"
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 903,
+                    lineNumber: 968,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1598,7 +1720,7 @@ const PageDiagnostico = ({ setPage })=>{
                     children: "Tu nivel actual es:"
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 914,
+                    lineNumber: 979,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1611,12 +1733,12 @@ const PageDiagnostico = ({ setPage })=>{
                         size: "md"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 918,
+                        lineNumber: 983,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 917,
+                    lineNumber: 982,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1633,14 +1755,14 @@ const PageDiagnostico = ({ setPage })=>{
                             children: "3 módulos"
                         }, void 0, false, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 930,
+                            lineNumber: 995,
                             columnNumber: 39
                         }, ("TURBOPACK compile-time value", void 0)),
                         " diseñados especialmente para que ganes confianza paso a paso. No hay prisa — cada logro cuenta."
                     ]
                 }, void 0, true, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 920,
+                    lineNumber: 985,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1654,24 +1776,24 @@ const PageDiagnostico = ({ setPage })=>{
                             "Ver mi ruta personalizada ",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowRightIcon, {}, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 935,
+                                lineNumber: 1000,
                                 columnNumber: 39
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 934,
+                        lineNumber: 999,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 933,
+                    lineNumber: 998,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/brujula-digital-mvp.jsx",
-            lineNumber: 884,
+            lineNumber: 949,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0));
     }
@@ -1707,7 +1829,7 @@ const PageDiagnostico = ({ setPage })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 949,
+                                lineNumber: 1014,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1717,13 +1839,13 @@ const PageDiagnostico = ({ setPage })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 950,
+                                lineNumber: 1015,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 948,
+                        lineNumber: 1013,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ProgressBar, {
@@ -1731,13 +1853,13 @@ const PageDiagnostico = ({ setPage })=>{
                         height: 6
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 952,
+                        lineNumber: 1017,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 947,
+                lineNumber: 1012,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1756,7 +1878,7 @@ const PageDiagnostico = ({ setPage })=>{
                         children: currentQ.question
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 956,
+                        lineNumber: 1021,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1795,18 +1917,18 @@ const PageDiagnostico = ({ setPage })=>{
                                 children: opt
                             }, i, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 970,
+                                lineNumber: 1035,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)))
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 968,
+                        lineNumber: 1033,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, step, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 955,
+                lineNumber: 1020,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1819,18 +1941,19 @@ const PageDiagnostico = ({ setPage })=>{
                 children: "No hay respuestas correctas o incorrectas. Elige la que mejor te represente."
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1005,
+                lineNumber: 1070,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 946,
+        lineNumber: 1011,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 // ========== PAGE: MI RUTA ==========
 const PageRuta = ({ setPage })=>{
+    const { isMobile } = useResponsive();
     const levels = [
         {
             key: "explorador",
@@ -1851,7 +1974,7 @@ const PageRuta = ({ setPage })=>{
     const totalProgress = Math.round(MODULES.reduce((acc, m)=>acc + m.progress, 0) / MODULES.length);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         style: {
-            padding: "48px 24px",
+            padding: isMobile ? "32px 20px" : "48px 24px",
             maxWidth: 900,
             margin: "0 auto"
         },
@@ -1865,32 +1988,33 @@ const PageRuta = ({ setPage })=>{
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                         style: {
                             fontFamily: "'Playfair Display', serif",
-                            fontSize: 36,
+                            fontSize: isMobile ? 26 : 36,
                             marginBottom: 8
                         },
                         children: "Tu ruta hacia la autonomía digital"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1035,
+                        lineNumber: 1101,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         style: {
-                            fontSize: 17,
+                            fontSize: isMobile ? 15 : 17,
                             color: tokens.colors.textSecondary,
                             marginBottom: 24
                         },
                         children: "Avanza paso a paso desarrollando seguridad, criterio pedagógico y autonomía."
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1044,
+                        lineNumber: 1110,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Card, {
                         style: {
                             display: "flex",
-                            alignItems: "center",
-                            gap: 24,
+                            alignItems: isMobile ? "flex-start" : "center",
+                            flexDirection: isMobile ? "column" : "row",
+                            gap: isMobile ? 16 : 24,
                             padding: "20px 28px"
                         },
                         children: [
@@ -1905,7 +2029,7 @@ const PageRuta = ({ setPage })=>{
                                         children: "Progreso general"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1049,
+                                        lineNumber: 1115,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1920,35 +2044,36 @@ const PageRuta = ({ setPage })=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1050,
+                                        lineNumber: 1116,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1048,
+                                lineNumber: 1114,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 style: {
-                                    flex: 1
+                                    flex: 1,
+                                    width: isMobile ? "100%" : "auto"
                                 },
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ProgressBar, {
                                     value: totalProgress,
                                     height: 12
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1053,
+                                    lineNumber: 1119,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1052,
+                                lineNumber: 1118,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 style: {
-                                    textAlign: "right"
+                                    textAlign: isMobile ? "left" : "right"
                                 },
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1959,7 +2084,7 @@ const PageRuta = ({ setPage })=>{
                                         children: "Nivel actual"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1056,
+                                        lineNumber: 1122,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LevelBadge, {
@@ -1967,25 +2092,25 @@ const PageRuta = ({ setPage })=>{
                                         size: "sm"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1057,
+                                        lineNumber: 1123,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1055,
+                                lineNumber: 1121,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1047,
+                        lineNumber: 1113,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1034,
+                lineNumber: 1100,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             levels.map((level, li)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2011,7 +2136,7 @@ const PageRuta = ({ setPage })=>{
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1066,
+                                    lineNumber: 1132,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -2023,13 +2148,13 @@ const PageRuta = ({ setPage })=>{
                                     children: level.label
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1074,
+                                    lineNumber: 1140,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 1065,
+                            lineNumber: 1131,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2058,7 +2183,7 @@ const PageRuta = ({ setPage })=>{
                                             }
                                         }, void 0, false, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 1092,
+                                            lineNumber: 1158,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2077,16 +2202,16 @@ const PageRuta = ({ setPage })=>{
                                             },
                                             children: mod.progress === 100 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CheckIcon, {}, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1124,
+                                                lineNumber: 1190,
                                                 columnNumber: 43
                                             }, ("TURBOPACK compile-time value", void 0)) : mod.unlocked ? mod.id : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LockIcon, {}, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1124,
+                                                lineNumber: 1190,
                                                 columnNumber: 83
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 1105,
+                                            lineNumber: 1171,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2112,6 +2237,8 @@ const PageRuta = ({ setPage })=>{
                                                         display: "flex",
                                                         justifyContent: "space-between",
                                                         alignItems: "start",
+                                                        flexDirection: isMobile ? "column" : "row",
+                                                        gap: isMobile ? 10 : 0,
                                                         marginBottom: 6
                                                     },
                                                     children: [
@@ -2132,24 +2259,24 @@ const PageRuta = ({ setPage })=>{
                                                                             children: mod.icon
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                                            lineNumber: 1149,
+                                                                            lineNumber: 1215,
                                                                             columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                                                             style: {
-                                                                                fontSize: 17,
+                                                                                fontSize: isMobile ? 15 : 17,
                                                                                 fontWeight: 700
                                                                             },
                                                                             children: mod.title
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                                            lineNumber: 1150,
+                                                                            lineNumber: 1216,
                                                                             columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                                    lineNumber: 1148,
+                                                                    lineNumber: 1214,
                                                                     columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2160,13 +2287,13 @@ const PageRuta = ({ setPage })=>{
                                                                     children: mod.desc
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                                    lineNumber: 1152,
+                                                                    lineNumber: 1218,
                                                                     columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1147,
+                                                            lineNumber: 1213,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         mod.unlocked && mod.progress < 100 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Button, {
@@ -2175,25 +2302,26 @@ const PageRuta = ({ setPage })=>{
                                                             children: mod.progress > 0 ? "Continuar" : "Iniciar"
                                                         }, void 0, false, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1155,
+                                                            lineNumber: 1221,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         mod.progress === 100 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             style: {
                                                                 fontSize: 13,
                                                                 fontWeight: 600,
-                                                                color: tokens.colors.forestCalm
+                                                                color: tokens.colors.forestCalm,
+                                                                flexShrink: 0
                                                             },
                                                             children: "✓ Completado"
                                                         }, void 0, false, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1160,
+                                                            lineNumber: 1226,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                    lineNumber: 1146,
+                                                    lineNumber: 1212,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 mod.unlocked && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2219,7 +2347,7 @@ const PageRuta = ({ setPage })=>{
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                                    lineNumber: 1168,
+                                                                    lineNumber: 1234,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2229,13 +2357,13 @@ const PageRuta = ({ setPage })=>{
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                                    lineNumber: 1169,
+                                                                    lineNumber: 1235,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1167,
+                                                            lineNumber: 1233,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ProgressBar, {
@@ -2243,42 +2371,42 @@ const PageRuta = ({ setPage })=>{
                                                             height: 6
                                                         }, void 0, false, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1171,
+                                                            lineNumber: 1237,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                    lineNumber: 1166,
+                                                    lineNumber: 1232,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 1128,
+                                            lineNumber: 1194,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, mod.id, true, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1081,
+                                    lineNumber: 1147,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0)))
                         }, void 0, false, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 1079,
+                            lineNumber: 1145,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, level.key, true, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1064,
+                    lineNumber: 1130,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 1032,
+        lineNumber: 1098,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -2302,7 +2430,7 @@ const PageComunidad = ()=>{
                 children: "Comunidad docente"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1190,
+                lineNumber: 1256,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2315,7 +2443,7 @@ const PageComunidad = ()=>{
                 children: "Comparte experiencias, haz preguntas y aprende junto a otros docentes."
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1200,
+                lineNumber: 1266,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Card, {
@@ -2347,7 +2475,7 @@ const PageComunidad = ()=>{
                             children: "CZ"
                         }, void 0, false, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 1207,
+                            lineNumber: 1273,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2369,7 +2497,7 @@ const PageComunidad = ()=>{
                                     children: "¿Qué quieres compartir hoy, Carla?"
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1225,
+                                    lineNumber: 1291,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2383,29 +2511,29 @@ const PageComunidad = ()=>{
                                         children: "Publicar"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1240,
+                                        lineNumber: 1306,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1239,
+                                    lineNumber: 1305,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 1224,
+                            lineNumber: 1290,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1206,
+                    lineNumber: 1272,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1205,
+                lineNumber: 1271,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             COMMUNITY_POSTS.map((post, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Card, {
@@ -2436,7 +2564,7 @@ const PageComunidad = ()=>{
                                 children: post.avatar
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1250,
+                                lineNumber: 1316,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2459,7 +2587,7 @@ const PageComunidad = ()=>{
                                                 children: post.author
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1269,
+                                                lineNumber: 1335,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2470,13 +2598,13 @@ const PageComunidad = ()=>{
                                                 children: post.time
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1270,
+                                                lineNumber: 1336,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1268,
+                                        lineNumber: 1334,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2489,7 +2617,7 @@ const PageComunidad = ()=>{
                                         children: post.text
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1272,
+                                        lineNumber: 1338,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2519,14 +2647,14 @@ const PageComunidad = ()=>{
                                                         filled: likedPosts[post.id]
                                                     }, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 1290,
+                                                        lineNumber: 1356,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     post.likes + (likedPosts[post.id] ? 1 : 0)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1276,
+                                                lineNumber: 1342,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2544,7 +2672,7 @@ const PageComunidad = ()=>{
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ChatIcon, {}, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 1306,
+                                                        lineNumber: 1372,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     " ",
@@ -2553,43 +2681,45 @@ const PageComunidad = ()=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1293,
+                                                lineNumber: 1359,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1275,
+                                        lineNumber: 1341,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1267,
+                                lineNumber: 1333,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1249,
+                        lineNumber: 1315,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, post.id, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1248,
+                    lineNumber: 1314,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 1189,
+        lineNumber: 1255,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 // ========== PAGE: LOGROS ==========
-const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+const PageLogros = ()=>{
+    const { isMobile } = useResponsive();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         style: {
-            padding: "48px 24px",
+            padding: isMobile ? "32px 20px" : "48px 24px",
             maxWidth: 900,
             margin: "0 auto"
         },
@@ -2597,35 +2727,35 @@ const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                 style: {
                     fontFamily: "'Playfair Display', serif",
-                    fontSize: 36,
+                    fontSize: isMobile ? 28 : 36,
                     marginBottom: 8,
                     animation: "fadeInUp 0.6s ease"
                 },
                 children: "Tus logros"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1320,
+                lineNumber: 1388,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 style: {
-                    fontSize: 17,
+                    fontSize: isMobile ? 15 : 17,
                     color: tokens.colors.textSecondary,
-                    marginBottom: 40,
+                    marginBottom: isMobile ? 28 : 40,
                     animation: "fadeInUp 0.6s ease 0.1s both"
                 },
                 children: "Cada insignia representa un paso en tu camino. ¡Celebra tu progreso!"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1330,
+                lineNumber: 1398,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 style: {
                     display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: 20,
-                    marginBottom: 48
+                    gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+                    gap: isMobile ? 12 : 20,
+                    marginBottom: isMobile ? 32 : 48
                 },
                 children: [
                     {
@@ -2659,7 +2789,7 @@ const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: stat.value
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1342,
+                                lineNumber: 1410,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2670,25 +2800,25 @@ const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: stat.label
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1343,
+                                lineNumber: 1411,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, i, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1341,
+                        lineNumber: 1409,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)))
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1335,
+                lineNumber: 1403,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 style: {
                     display: "grid",
-                    gridTemplateColumns: "repeat(4, 1fr)",
-                    gap: 20
+                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+                    gap: isMobile ? 12 : 20
                 },
                 children: BADGES.map((badge, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Card, {
                         delay: 0.3 + i * 0.08,
@@ -2714,7 +2844,7 @@ const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: badge.earned ? badge.icon : "🔒"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1360,
+                                lineNumber: 1428,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2726,7 +2856,7 @@ const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: badge.name
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1378,
+                                lineNumber: 1446,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2737,30 +2867,33 @@ const PageLogros = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: badge.earned ? badge.date : "Por desbloquear"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1379,
+                                lineNumber: 1447,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, badge.id, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1351,
+                        lineNumber: 1419,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)))
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1349,
+                lineNumber: 1417,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 1319,
+        lineNumber: 1387,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
+};
 // ========== PAGE: PERFIL ==========
-const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+const PagePerfil = ()=>{
+    const { isMobile } = useResponsive();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         style: {
-            padding: "48px 24px",
+            padding: isMobile ? "32px 20px" : "48px 24px",
             maxWidth: 800,
             margin: "0 auto"
         },
@@ -2768,21 +2901,21 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                 style: {
                     fontFamily: "'Playfair Display', serif",
-                    fontSize: 36,
-                    marginBottom: 32,
+                    fontSize: isMobile ? 28 : 36,
+                    marginBottom: isMobile ? 24 : 32,
                     animation: "fadeInUp 0.6s ease"
                 },
                 children: "Mi cuenta"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1391,
+                lineNumber: 1462,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 style: {
                     display: "grid",
-                    gridTemplateColumns: "280px 1fr",
-                    gap: 32
+                    gridTemplateColumns: isMobile ? "1fr" : "280px 1fr",
+                    gap: isMobile ? 20 : 32
                 },
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Card, {
@@ -2809,7 +2942,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: "CZ"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1405,
+                                lineNumber: 1476,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -2821,7 +2954,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: "Carla Zuñiga"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1423,
+                                lineNumber: 1494,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2833,7 +2966,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 children: "Docente de Inglés"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1424,
+                                lineNumber: 1495,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LevelBadge, {
@@ -2841,7 +2974,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                 size: "sm"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1425,
+                                lineNumber: 1496,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2866,7 +2999,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 children: "Experiencia"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1428,
+                                                lineNumber: 1499,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2876,13 +3009,13 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 children: "28 años"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1429,
+                                                lineNumber: 1500,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1427,
+                                        lineNumber: 1498,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2900,7 +3033,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 children: "Edad"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1432,
+                                                lineNumber: 1503,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2910,13 +3043,13 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 children: "50 años"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1433,
+                                                lineNumber: 1504,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1431,
+                                        lineNumber: 1502,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2933,7 +3066,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 children: "Miembro desde"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1436,
+                                                lineNumber: 1507,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2943,25 +3076,25 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 children: "Feb 2026"
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1437,
+                                                lineNumber: 1508,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1435,
+                                        lineNumber: 1506,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1426,
+                                lineNumber: 1497,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1404,
+                        lineNumber: 1475,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2986,7 +3119,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                         children: "Progreso en la ruta"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1445,
+                                        lineNumber: 1516,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3009,7 +3142,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                         children: "Nivel Explorador"
                                                     }, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 1457,
+                                                        lineNumber: 1528,
                                                         columnNumber: 15
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3019,13 +3152,13 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                         children: "68%"
                                                     }, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 1458,
+                                                        lineNumber: 1529,
                                                         columnNumber: 15
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1456,
+                                                lineNumber: 1527,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ProgressBar, {
@@ -3033,20 +3166,20 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                 height: 10
                                             }, void 0, false, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1460,
+                                                lineNumber: 1531,
                                                 columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1455,
+                                        lineNumber: 1526,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         style: {
                                             display: "grid",
-                                            gridTemplateColumns: "repeat(3, 1fr)",
-                                            gap: 16,
+                                            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+                                            gap: 12,
                                             marginTop: 20
                                         },
                                         children: [
@@ -3079,7 +3212,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                         children: stat.value
                                                     }, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 1477,
+                                                        lineNumber: 1548,
                                                         columnNumber: 17
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3091,24 +3224,24 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                         children: stat.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                                        lineNumber: 1478,
+                                                        lineNumber: 1549,
                                                         columnNumber: 17
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, i, true, {
                                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                                lineNumber: 1468,
+                                                lineNumber: 1539,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0)))
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1462,
+                                        lineNumber: 1533,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1444,
+                                lineNumber: 1515,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Card, {
@@ -3126,7 +3259,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                         children: "Actividad reciente"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1485,
+                                        lineNumber: 1556,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     [
@@ -3166,7 +3299,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                     children: item.icon
                                                 }, void 0, false, {
                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                    lineNumber: 1511,
+                                                    lineNumber: 1582,
                                                     columnNumber: 15
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3182,7 +3315,7 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                             children: item.action
                                                         }, void 0, false, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1513,
+                                                            lineNumber: 1584,
                                                             columnNumber: 17
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3193,45 +3326,46 @@ const PagePerfil = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$proj
                                                             children: item.time
                                                         }, void 0, false, {
                                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                                            lineNumber: 1514,
+                                                            lineNumber: 1585,
                                                             columnNumber: 17
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                                    lineNumber: 1512,
+                                                    lineNumber: 1583,
                                                     columnNumber: 15
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, i, true, {
                                             fileName: "[project]/brujula-digital-mvp.jsx",
-                                            lineNumber: 1501,
+                                            lineNumber: 1572,
                                             columnNumber: 13
                                         }, ("TURBOPACK compile-time value", void 0)))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1484,
+                                lineNumber: 1555,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1443,
+                        lineNumber: 1514,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1402,
+                lineNumber: 1473,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 1390,
+        lineNumber: 1461,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
+};
 // ========== HELP BUTTON (GLOBAL) ==========
 const HelpButton = ()=>{
     const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -3259,12 +3393,12 @@ const HelpButton = ()=>{
                 },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HelpIcon, {}, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1550,
+                    lineNumber: 1622,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1529,
+                lineNumber: 1601,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3291,7 +3425,7 @@ const HelpButton = ()=>{
                         children: "¿Necesitas ayuda?"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1567,
+                        lineNumber: 1639,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3304,7 +3438,7 @@ const HelpButton = ()=>{
                         children: "No te preocupes, estamos aquí para acompañarte. Elige cómo prefieres recibir ayuda:"
                     }, void 0, false, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1570,
+                        lineNumber: 1642,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3323,7 +3457,7 @@ const HelpButton = ()=>{
                                 children: "💬 Chat con un mentor"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1574,
+                                lineNumber: 1646,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Button, {
@@ -3336,7 +3470,7 @@ const HelpButton = ()=>{
                                 children: "📋 Ver guías rápidas"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1577,
+                                lineNumber: 1649,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Button, {
@@ -3349,31 +3483,33 @@ const HelpButton = ()=>{
                                 children: "📞 Solicitar llamada"
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1580,
+                                lineNumber: 1652,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1573,
+                        lineNumber: 1645,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1553,
+                lineNumber: 1625,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true);
 };
 // ========== FOOTER ==========
-const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
+const Footer = ()=>{
+    const { isMobile, isTablet } = useResponsive();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
         style: {
             background: tokens.colors.textPrimary,
             color: "white",
-            padding: "48px 24px",
-            marginTop: 64
+            padding: isMobile ? "40px 20px" : "48px 24px",
+            marginTop: isMobile ? 40 : 64
         },
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3381,11 +3517,14 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                     maxWidth: 1200,
                     margin: "0 auto",
                     display: "grid",
-                    gridTemplateColumns: "2fr 1fr 1fr 1fr",
-                    gap: 40
+                    gridTemplateColumns: isMobile ? "1fr 1fr" : isTablet ? "1fr 1fr" : "2fr 1fr 1fr 1fr",
+                    gap: isMobile ? 24 : 40
                 },
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            gridColumn: isMobile ? "1 / -1" : "auto"
+                        },
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 style: {
@@ -3399,7 +3538,7 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                                         size: 32
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1611,
+                                        lineNumber: 1685,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3411,13 +3550,13 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                                         children: "BRÚJULA DIGITAL"
                                     }, void 0, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1612,
+                                        lineNumber: 1686,
                                         columnNumber: 11
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1610,
+                                lineNumber: 1684,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3430,13 +3569,13 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                                 children: "Autonomía digital para docentes. Aprendizaje práctico, accesible y acompañado."
                             }, void 0, false, {
                                 fileName: "[project]/brujula-digital-mvp.jsx",
-                                lineNumber: 1616,
+                                lineNumber: 1690,
                                 columnNumber: 9
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/brujula-digital-mvp.jsx",
-                        lineNumber: 1609,
+                        lineNumber: 1683,
                         columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0)),
                     [
@@ -3480,7 +3619,7 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                                     children: col.title
                                 }, void 0, false, {
                                     fileName: "[project]/brujula-digital-mvp.jsx",
-                                    lineNumber: 1626,
+                                    lineNumber: 1700,
                                     columnNumber: 11
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 col.items.map((item, j)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3493,19 +3632,19 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                                         children: item
                                     }, j, false, {
                                         fileName: "[project]/brujula-digital-mvp.jsx",
-                                        lineNumber: 1630,
+                                        lineNumber: 1704,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)))
                             ]
                         }, i, true, {
                             fileName: "[project]/brujula-digital-mvp.jsx",
-                            lineNumber: 1625,
+                            lineNumber: 1699,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0)))
                 ]
             }, void 0, true, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1600,
+                lineNumber: 1674,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3521,15 +3660,16 @@ const Footer = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$
                 children: "© 2026 Brújula Digital · Chispas Estratégicas · Aprender sin Edad"
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1645,
+                lineNumber: 1719,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 1592,
+        lineNumber: 1666,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
+};
 function BrujulaDigital() {
     const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("inicio");
     const setPage = (page)=>{
@@ -3546,7 +3686,7 @@ function BrujulaDigital() {
                     setPage: setPage
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1673,
+                    lineNumber: 1748,
                     columnNumber: 16
                 }, this);
             case "diagnostico":
@@ -3554,7 +3694,7 @@ function BrujulaDigital() {
                     setPage: setPage
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1675,
+                    lineNumber: 1750,
                     columnNumber: 16
                 }, this);
             case "ruta":
@@ -3562,25 +3702,25 @@ function BrujulaDigital() {
                     setPage: setPage
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1677,
+                    lineNumber: 1752,
                     columnNumber: 16
                 }, this);
             case "comunidad":
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PageComunidad, {}, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1679,
+                    lineNumber: 1754,
                     columnNumber: 16
                 }, this);
             case "logros":
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PageLogros, {}, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1681,
+                    lineNumber: 1756,
                     columnNumber: 16
                 }, this);
             case "perfil":
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PagePerfil, {}, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1683,
+                    lineNumber: 1758,
                     columnNumber: 16
                 }, this);
             default:
@@ -3588,7 +3728,7 @@ function BrujulaDigital() {
                     setPage: setPage
                 }, void 0, false, {
                     fileName: "[project]/brujula-digital-mvp.jsx",
-                    lineNumber: 1685,
+                    lineNumber: 1760,
                     columnNumber: 16
                 }, this);
         }
@@ -3603,7 +3743,7 @@ function BrujulaDigital() {
                 children: styles.global
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1691,
+                lineNumber: 1766,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Navbar, {
@@ -3611,30 +3751,30 @@ function BrujulaDigital() {
                 setPage: setPage
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1692,
+                lineNumber: 1767,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
                 children: renderPage()
             }, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1693,
+                lineNumber: 1768,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Footer, {}, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1694,
+                lineNumber: 1769,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HelpButton, {}, void 0, false, {
                 fileName: "[project]/brujula-digital-mvp.jsx",
-                lineNumber: 1695,
+                lineNumber: 1770,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/brujula-digital-mvp.jsx",
-        lineNumber: 1690,
+        lineNumber: 1765,
         columnNumber: 5
     }, this);
 }
