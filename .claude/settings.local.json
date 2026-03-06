@@ -5,7 +5,13 @@
       "Bash(npm --version)",
       "Bash(npm install)",
       "Bash(npm run build)",
-      "Bash(npx vercel --version)"
+      "Bash(npx vercel --version)",
+      "Bash(npx vercel --prod)",
+      "Bash(npx vercel --prod --yes)",
+      "Bash(npx vercel remove mvp --yes)",
+      "Bash(rm -rf .vercel)",
+      "Bash(npx vercel --prod --yes --name brujula-digital)",
+      "Bash(npm show next@latest version)"
     ]
   }
 }

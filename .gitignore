@@ -36,3 +36,4 @@ temp/
 # Package manager
 package-lock.json
 yarn.lock
+.vercel
