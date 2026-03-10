@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 const tokens = {
   colors: {
     oceanDeep: "#2C6E6F",
+    oceanDarker: "#1A4E4F",
     oceanLight: "#4A9B9C",
     oceanMist: "#E8F4F4",
     sandWarm: "#F5E6D3",
@@ -11,11 +12,29 @@ const tokens = {
     coralSoft: "#E8927C",
     coralDeep: "#D4735C",
     goldBadge: "#F2C94C",
+    goldLight: "#FFF8E1",
     forestCalm: "#5B8A72",
-    textPrimary: "#2D3436",
-    textSecondary: "#636E72",
-    textMuted: "#B2BEC3",
+    forestLight: "#E8F5E9",
+    textPrimary: "#1A2024",
+    textBody: "#2D3748",
+    textSecondary: "#4A5568",
+    textMuted: "#A0AEC0",
     white: "#FFFFFF",
+    bgAlt: "#FFFFFF",
+  },
+  shadows: {
+    sm: "0 2px 8px rgba(0,0,0,0.06)",
+    md: "0 4px 24px rgba(0,0,0,0.08)",
+    lg: "0 8px 40px rgba(0,0,0,0.12)",
+    coral: "0 4px 16px rgba(232,146,124,0.35)",
+    teal: "0 4px 16px rgba(44,110,111,0.25)",
+  },
+  radii: {
+    sm: 8,
+    md: 14,
+    lg: 20,
+    xl: 28,
+    pill: 999,
   },
 };
 
@@ -232,12 +251,13 @@ const DIAGNOSTIC_QUESTIONS = [
 // ========== STYLES ==========
 const styles = {
   global: `
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
       --ocean-deep: #2C6E6F;
+      --ocean-darker: #1A4E4F;
       --ocean-light: #4A9B9C;
       --ocean-mist: #E8F4F4;
       --sand-warm: #F5E6D3;
@@ -246,15 +266,34 @@ const styles = {
       --coral-deep: #D4735C;
       --gold-badge: #F2C94C;
       --forest-calm: #5B8A72;
-      --text-primary: #2D3436;
-      --text-secondary: #636E72;
-      --text-muted: #B2BEC3;
+      --text-primary: #1A2024;
+      --text-body: #2D3748;
+      --text-secondary: #4A5568;
+      --text-muted: #A0AEC0;
     }
     
     body {
       font-family: 'Nunito', sans-serif;
       color: var(--text-primary);
       background: var(--sand-light);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    button { touch-action: manipulation; }
+
+    :focus-visible {
+      outline: 3px solid #4A9B9C;
+      outline-offset: 2px;
+      border-radius: 4px;
     }
 
     @keyframes fadeInUp {
@@ -290,6 +329,28 @@ const styles = {
       0% { transform: scale(0) rotate(-180deg); opacity: 0; }
       60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes celebrate {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.1) rotate(-3deg); }
+      50% { transform: scale(1.15) rotate(3deg); }
+      75% { transform: scale(1.1) rotate(-1deg); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes streak {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.2); }
+    }
+
+    footer a:hover, footer div[style*="cursor: pointer"]:hover {
+      opacity: 0.85 !important;
     }
   `,
 };
@@ -371,6 +432,70 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
+// ========== DECORATIVE COMPONENTS ==========
+const WaveDivider = ({ color = tokens.colors.sandLight, flip = false }) => (
+  <div style={{ lineHeight: 0, overflow: "hidden", transform: flip ? "rotate(180deg)" : "none" }}>
+    <svg viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none" style={{ width: "100%", height: 60, display: "block" }}>
+      <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill={color} />
+    </svg>
+  </div>
+);
+
+const FloatingDecoration = ({ top, left, right, size = 120, color = tokens.colors.coralSoft, opacity = 0.08 }) => (
+  <div style={{
+    position: "absolute", top, left, right, width: size, height: size,
+    borderRadius: "50%", pointerEvents: "none",
+    background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+    opacity, animation: "float 6s ease-in-out infinite",
+  }} />
+);
+
+const StreakBadge = ({ days = 5 }) => (
+  <div style={{
+    display: "inline-flex", alignItems: "center", gap: 6,
+    padding: "6px 14px", background: tokens.colors.goldLight,
+    borderRadius: tokens.radii.pill, fontSize: 14, fontWeight: 700,
+    color: "#B7791F",
+  }}>
+    <span style={{ animation: "streak 2s ease-in-out infinite" }}>🔥</span> {days} días seguidos
+  </div>
+);
+
+const CircularProgress = ({ value, size = 64, strokeWidth = 5, color = tokens.colors.oceanDeep }) => {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (value / 100) * circumference;
+  return (
+    <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#E0E0E0" strokeWidth={strokeWidth} />
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={color} strokeWidth={strokeWidth}
+        strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
+        style={{ transition: "stroke-dashoffset 1.2s ease" }} />
+      <text x={size / 2} y={size / 2} textAnchor="middle" dominantBaseline="central"
+        style={{ transform: "rotate(90deg)", transformOrigin: "center", fontSize: size * 0.24, fontWeight: 700, fill: color, fontFamily: "'Nunito', sans-serif" }}>
+        {value}%
+      </text>
+    </svg>
+  );
+};
+
+const SectionTitle = ({ children, subtitle, align = "left" }) => (
+  <div style={{ marginBottom: 28, textAlign: align }}>
+    <h2 style={{
+      fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 700,
+      color: tokens.colors.textPrimary, letterSpacing: "-0.02em", marginBottom: subtitle ? 8 : 0,
+      textWrap: "balance",
+    }}>
+      {children}
+    </h2>
+    {subtitle && (
+      <p style={{ fontSize: 17, color: tokens.colors.textSecondary, lineHeight: 1.6, maxWidth: 600, margin: align === "center" ? "0 auto" : undefined }}>
+        {subtitle}
+      </p>
+    )}
+  </div>
+);
+
 // ========== SUB-COMPONENTS ==========
 const ProgressBar = ({ value, height = 8, showLabel = false }) => (
   <div style={{ position: "relative" }}>
@@ -411,25 +536,26 @@ const ProgressBar = ({ value, height = 8, showLabel = false }) => (
 );
 
 const LevelBadge = ({ level, size = "md" }) => {
+  const normalizedLevel = level.toLowerCase();
   const config = {
-    explorador: { bg: "#E8F4F4", color: "#2C6E6F", label: "Explorador Digital", icon: "🧭" },
-    integrador: { bg: "#FFF3E0", color: "#E8927C", label: "Integrador Estratégico", icon: "🔗" },
-    autonomo: { bg: "#E8F5E9", color: "#5B8A72", label: "Docente Autónomo", icon: "⭐" },
+    explorador: { bg: tokens.colors.oceanMist, color: tokens.colors.oceanDeep, label: "Explorador Digital", icon: "🧭" },
+    integrador: { bg: "#FFF3E0", color: tokens.colors.coralSoft, label: "Integrador Estratégico", icon: "🔗" },
+    autonomo: { bg: `${tokens.colors.forestCalm}20`, color: tokens.colors.forestCalm, label: "Docente Autónomo", icon: "⭐" },
   };
-  const c = config[level];
-  const sz = size === "sm" ? { p: "4px 10px", fs: 11 } : { p: "6px 14px", fs: 13 };
+  const c = config[normalizedLevel] || config.explorador;
+  const sz = size === "sm" ? { p: "6px 14px", fs: 13 } : { p: "8px 18px", fs: 15 };
   return (
     <span
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: 4,
+        gap: 6,
         padding: sz.p,
         background: c.bg,
         color: c.color,
-        borderRadius: 20,
+        borderRadius: tokens.radii.pill,
         fontSize: sz.fs,
-        fontWeight: 600,
+        fontWeight: 700,
       }}
     >
       {c.icon} {c.label}
@@ -437,22 +563,24 @@ const LevelBadge = ({ level, size = "md" }) => {
   );
 };
 
-const Button = ({ children, variant = "primary", onClick, style: customStyle, size = "md" }) => {
+const Button = ({ children, variant = "primary", onClick, style: customStyle, size = "md", ariaLabel }) => {
   const [hovered, setHovered] = useState(false);
   const baseStyle = {
     display: "inline-flex",
     alignItems: "center",
+    justifyContent: "center",
     gap: 8,
-    padding: size === "lg" ? "16px 32px" : size === "sm" ? "8px 16px" : "12px 24px",
-    fontSize: size === "lg" ? 18 : size === "sm" ? 14 : 16,
+    padding: size === "lg" ? "16px 36px" : size === "sm" ? "10px 20px" : "14px 28px",
+    fontSize: size === "lg" ? 18 : size === "sm" ? 15 : 16,
     fontWeight: 700,
     fontFamily: "'Nunito', sans-serif",
-    borderRadius: 12,
+    borderRadius: tokens.radii.md,
     border: "none",
     cursor: "pointer",
-    transition: "all 0.3s ease",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
     transform: hovered ? "translateY(-2px)" : "translateY(0)",
-    boxShadow: hovered ? "0 6px 20px rgba(44,110,111,0.25)" : "0 2px 8px rgba(44,110,111,0.12)",
+    boxShadow: hovered ? tokens.shadows.teal : tokens.shadows.sm,
+    minHeight: 44,
   };
   const variants = {
     primary: {
@@ -460,7 +588,7 @@ const Button = ({ children, variant = "primary", onClick, style: customStyle, si
       color: "white",
     },
     secondary: {
-      background: "transparent",
+      background: hovered ? tokens.colors.oceanMist : "transparent",
       color: tokens.colors.oceanDeep,
       border: `2px solid ${tokens.colors.oceanDeep}`,
       boxShadow: "none",
@@ -468,6 +596,7 @@ const Button = ({ children, variant = "primary", onClick, style: customStyle, si
     coral: {
       background: hovered ? tokens.colors.coralDeep : tokens.colors.coralSoft,
       color: "white",
+      boxShadow: hovered ? tokens.shadows.coral : tokens.shadows.sm,
     },
   };
   return (
@@ -476,30 +605,32 @@ const Button = ({ children, variant = "primary", onClick, style: customStyle, si
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      aria-label={ariaLabel}
     >
       {children}
     </button>
   );
 };
 
-const Card = ({ children, style: customStyle, delay = 0 }) => (
+const Card = ({ children, style, customStyle, delay = 0 }) => (
   <div
     style={{
       background: "white",
-      borderRadius: 16,
-      padding: 24,
-      boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+      borderRadius: tokens.radii.lg,
+      padding: 28,
+      boxShadow: tokens.shadows.md,
       animation: `fadeInUp 0.6s ease ${delay}s both`,
-      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+      ...style,
       ...customStyle,
     }}
     onMouseEnter={(e) => {
       e.currentTarget.style.transform = "translateY(-4px)";
-      e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,0,0,0.1)";
+      e.currentTarget.style.boxShadow = tokens.shadows.lg;
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.transform = "translateY(0)";
-      e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.06)";
+      e.currentTarget.style.boxShadow = tokens.shadows.md;
     }}
   >
     {children}
@@ -527,10 +658,11 @@ const Navbar = ({ currentPage, setPage }) => {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        background: "rgba(253, 248, 243, 0.95)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(44,110,111,0.1)",
-        padding: "0 20px",
+        background: "rgba(253, 248, 243, 0.97)",
+        backdropFilter: "blur(16px)",
+        borderBottom: `2px solid ${tokens.colors.oceanMist}`,
+        padding: "0 24px",
+        boxShadow: "0 1px 8px rgba(44,110,111,0.07)",
       }}
     >
       <div
@@ -540,28 +672,33 @@ const Navbar = ({ currentPage, setPage }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: isMobile ? 60 : 72,
+          height: isMobile ? 64 : 80,
         }}
       >
         <div
-          style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
+          style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
           onClick={() => { setPage("inicio"); setMenuOpen(false); }}
+          role="button"
+          aria-label="Ir al inicio"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { setPage("inicio"); setMenuOpen(false); } }}
         >
-          <CompassIcon size={isMobile ? 32 : 40} />
+          <CompassIcon size={isMobile ? 34 : 42} />
           <div>
             <div
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: isMobile ? 16 : 20,
+                fontSize: isMobile ? 17 : 21,
                 fontWeight: 700,
-                color: tokens.colors.oceanDeep,
+                color: tokens.colors.oceanDarker,
                 lineHeight: 1.1,
+                letterSpacing: "0.5px",
               }}
             >
               BRÚJULA DIGITAL
             </div>
             {!isMobile && (
-              <div style={{ fontSize: 11, color: tokens.colors.textSecondary, fontWeight: 500 }}>
+              <div style={{ fontSize: 12, color: tokens.colors.textSecondary, fontWeight: 600 }}>
                 Autonomía digital para docentes
               </div>
             )}
@@ -569,22 +706,37 @@ const Navbar = ({ currentPage, setPage }) => {
         </div>
 
         {!isMobile ? (
-          <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setPage(item.id)}
+                aria-current={currentPage === item.id ? "page" : undefined}
                 style={{
-                  padding: "8px 16px",
-                  fontSize: 14,
-                  fontWeight: currentPage === item.id ? 700 : 500,
-                  color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textSecondary,
-                  background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
+                  padding: "10px 18px",
+                  minHeight: 44,
+                  fontSize: 15,
+                  fontWeight: currentPage === item.id ? 700 : 600,
+                  color: currentPage === item.id ? "white" : tokens.colors.textBody,
+                  background: currentPage === item.id ? tokens.colors.oceanDeep : "transparent",
                   border: "none",
-                  borderRadius: 8,
+                  borderRadius: tokens.radii.pill,
                   cursor: "pointer",
                   fontFamily: "'Nunito', sans-serif",
                   transition: "all 0.2s ease",
+                  letterSpacing: "0.2px",
+                }}
+                onMouseEnter={(e) => {
+                  if (currentPage !== item.id) {
+                    e.currentTarget.style.background = tokens.colors.oceanMist;
+                    e.currentTarget.style.color = tokens.colors.oceanDarker;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (currentPage !== item.id) {
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.color = tokens.colors.textBody;
+                  }
                 }}
               >
                 {item.label}
@@ -594,42 +746,53 @@ const Navbar = ({ currentPage, setPage }) => {
         ) : (
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
             style={{
               background: "none",
               border: "none",
               cursor: "pointer",
-              padding: 8,
+              padding: 10,
+              minHeight: 44,
+              minWidth: 44,
               display: "flex",
               flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
               gap: 5,
             }}
           >
-            <div style={{ width: 24, height: 2, background: tokens.colors.oceanDeep, borderRadius: 2, transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-            <div style={{ width: 24, height: 2, background: tokens.colors.oceanDeep, borderRadius: 2, transition: "all 0.3s ease", opacity: menuOpen ? 0 : 1 }} />
-            <div style={{ width: 24, height: 2, background: tokens.colors.oceanDeep, borderRadius: 2, transition: "all 0.3s ease", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
+            <div style={{ width: 24, height: 2.5, background: tokens.colors.oceanDarker, borderRadius: 2, transition: "all 0.3s ease", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
+            <div style={{ width: 24, height: 2.5, background: tokens.colors.oceanDarker, borderRadius: 2, transition: "all 0.3s ease", opacity: menuOpen ? 0 : 1 }} />
+            <div style={{ width: 24, height: 2.5, background: tokens.colors.oceanDarker, borderRadius: 2, transition: "all 0.3s ease", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
           </button>
         )}
       </div>
 
       {isMobile && menuOpen && (
-        <div style={{ background: "white", borderTop: `1px solid ${tokens.colors.oceanMist}`, animation: "slideDown 0.3s ease" }}>
+        <div style={{ background: "white", borderTop: `2px solid ${tokens.colors.oceanMist}`, animation: "slideDown 0.3s ease", paddingBottom: 8 }}>
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => { setPage(item.id); setMenuOpen(false); }}
+              aria-current={currentPage === item.id ? "page" : undefined}
               style={{
-                display: "block",
+                display: "flex",
+                alignItems: "center",
                 width: "100%",
-                padding: "14px 20px",
-                fontSize: 16,
-                fontWeight: currentPage === item.id ? 700 : 500,
-                color: currentPage === item.id ? tokens.colors.oceanDeep : tokens.colors.textPrimary,
-                background: currentPage === item.id ? tokens.colors.oceanMist : "transparent",
+                padding: "16px 24px",
+                minHeight: 48,
+                fontSize: 17,
+                fontWeight: currentPage === item.id ? 700 : 600,
+                color: currentPage === item.id ? "white" : tokens.colors.textBody,
+                background: currentPage === item.id ? tokens.colors.oceanDeep : "transparent",
                 border: "none",
-                borderBottom: `1px solid ${tokens.colors.oceanMist}`,
+                borderRadius: currentPage === item.id ? tokens.radii.md : 0,
+                margin: currentPage === item.id ? "4px 12px" : "0",
                 cursor: "pointer",
                 fontFamily: "'Nunito', sans-serif",
                 textAlign: "left",
+                transition: "all 0.15s ease",
               }}
             >
               {item.label}
@@ -650,68 +813,78 @@ const PageInicio = ({ setPage }) => {
     <section
       style={{
         background: `linear-gradient(135deg, ${tokens.colors.sandWarm}40, ${tokens.colors.oceanMist}60)`,
-        padding: isMobile ? "48px 20px 40px" : "80px 24px 60px",
+        padding: isMobile ? "52px 20px 44px" : "88px 24px 68px",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: -60,
-          right: -60,
-          width: 300,
-          height: 300,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${tokens.colors.coralSoft}15, transparent 70%)`,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: -40,
-          left: -40,
-          width: 200,
-          height: 200,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${tokens.colors.oceanLight}10, transparent 70%)`,
-        }}
-      />
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", gap: isMobile ? 32 : 60, flexDirection: isMobile ? "column" : "row", textAlign: isMobile ? "center" : "left" }}>
+      <FloatingDecoration top="8%" right="12%" size={80} color={tokens.colors.coralSoft} delay={0} />
+      <FloatingDecoration top="70%" left="5%" size={50} color={tokens.colors.oceanLight} delay={1.5} />
+      <FloatingDecoration top="30%" right="3%" size={35} color={tokens.colors.goldBadge} delay={2.5} />
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", gap: isMobile ? 36 : 64, flexDirection: isMobile ? "column" : "row", textAlign: isMobile ? "center" : "left", position: "relative", zIndex: 1 }}>
         <div style={{ flex: 1, animation: "fadeInUp 0.8s ease" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: tokens.colors.coralSoft + "18", padding: "8px 18px",
+            borderRadius: tokens.radii.pill, marginBottom: 20,
+            fontSize: 14, fontWeight: 700, color: tokens.colors.coralSoft,
+            fontFamily: "'Nunito', sans-serif",
+          }}>
+            🧭 Para docentes que quieren crecer
+          </div>
           <h1
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: isMobile ? 30 : 48,
+              fontSize: isMobile ? 32 : 52,
               fontWeight: 700,
               color: tokens.colors.textPrimary,
-              lineHeight: 1.2,
-              marginBottom: 20,
+              lineHeight: 1.15,
+              marginBottom: 22,
             }}
           >
             Encuentra tu rumbo
             <br />
-            <span style={{ color: tokens.colors.oceanDeep }}>en la educación digital</span>
+            <span style={{ color: tokens.colors.oceanDarker }}>en la educación digital</span>
           </h1>
           <p
             style={{
-              fontSize: isMobile ? 16 : 19,
-              color: tokens.colors.textSecondary,
+              fontSize: isMobile ? 17 : 20,
+              color: tokens.colors.textBody,
               lineHeight: 1.7,
-              marginBottom: 32,
-              maxWidth: isMobile ? "100%" : 500,
+              marginBottom: 36,
+              maxWidth: isMobile ? "100%" : 520,
+              fontFamily: "'Nunito', sans-serif",
             }}
           >
             Aprende a usar herramientas digitales con criterio pedagógico, seguridad y autonomía.
-            A tu ritmo, sin presiones.
+            A tu ritmo, sin presiones. <strong>Porque enseñar merece las mejores herramientas.</strong>
           </p>
-          <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", justifyContent: isMobile ? "center" : "flex-start" }}>
-            <Button size={isMobile ? "md" : "lg"} onClick={() => setPage("diagnostico")}>
+          <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", justifyContent: isMobile ? "center" : "flex-start" }}>
+            <Button size={isMobile ? "md" : "lg"} onClick={() => setPage("diagnostico")} aria-label="Comenzar el diagnóstico de nivel digital">
               Comenzar diagnóstico <ArrowRightIcon />
             </Button>
-            <Button variant="secondary" onClick={() => setPage("ruta")}>
+            <Button variant="secondary" onClick={() => setPage("ruta")} aria-label="Ver mi ruta de aprendizaje">
               Ver mi ruta
             </Button>
+          </div>
+          <div style={{
+            display: "flex", gap: 24, marginTop: 28, flexWrap: "wrap",
+            justifyContent: isMobile ? "center" : "flex-start",
+          }}>
+            {[
+              { num: "127+", label: "docentes activos" },
+              { num: "8", label: "módulos prácticos" },
+              { num: "100%", label: "gratuito" },
+            ].map((stat, i) => (
+              <div key={i} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 22, fontWeight: 800, color: tokens.colors.oceanDarker, fontFamily: "'Nunito', sans-serif" }}>
+                  {stat.num}
+                </div>
+                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 600 }}>
+                  {stat.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         <div
@@ -724,84 +897,75 @@ const PageInicio = ({ setPage }) => {
         >
           <div
             style={{
-              width: isMobile ? 200 : 340,
-              height: isMobile ? 200 : 340,
+              width: isMobile ? 210 : 350,
+              height: isMobile ? 210 : 350,
               borderRadius: "50%",
               background: `linear-gradient(135deg, ${tokens.colors.oceanMist}, ${tokens.colors.sandWarm})`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               animation: "float 4s ease-in-out infinite",
-              boxShadow: "0 20px 60px rgba(44,110,111,0.15)",
+              boxShadow: `0 24px 64px rgba(44,110,111,0.18)`,
             }}
           >
-            <CompassIcon size={isMobile ? 110 : 180} />
+            <CompassIcon size={isMobile ? 115 : 190} />
           </div>
         </div>
       </div>
     </section>
 
     {/* ¿Cómo funciona? */}
-    <section style={{ padding: isMobile ? "48px 20px" : "80px 24px", maxWidth: 1200, margin: "0 auto" }}>
-      <h2
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: isMobile ? 26 : 36,
-          textAlign: "center",
-          marginBottom: 16,
-          color: tokens.colors.textPrimary,
-        }}
-      >
-        ¿Cómo funciona?
-      </h2>
-      <p style={{ textAlign: "center", color: tokens.colors.textSecondary, marginBottom: 40, fontSize: isMobile ? 15 : 17 }}>
-        Tres pasos simples hacia tu autonomía digital
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: isMobile ? 20 : 32 }}>
+    <section style={{ padding: isMobile ? "52px 20px" : "88px 24px", maxWidth: 1200, margin: "0 auto" }}>
+      <SectionTitle
+        title="¿Cómo funciona?"
+        subtitle="Tres pasos simples hacia tu autonomía digital"
+      />
+      <div style={{ marginTop: 44, display: "grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: isMobile ? 22 : 36 }}>
         {[
           {
             step: "01",
             icon: "📋",
             title: "Diagnostica tu nivel",
-            desc: "Identifica tu nivel de autonomía y seguridad digital docente con un test rápido y amigable.",
+            desc: "Identifica tu nivel de autonomía y seguridad digital docente con un test rápido y amigable. Sin juicios, solo claridad.",
           },
           {
             step: "02",
             icon: "🗺️",
             title: "Recorre tu ruta",
-            desc: "Avanza por una ruta de aprendizaje adaptada a tu nivel. Sin presión, a tu propio ritmo.",
+            desc: "Avanza por una ruta de aprendizaje adaptada a tu nivel. Cada lección es práctica y aplicable a tu aula.",
           },
           {
             step: "03",
             icon: "🏅",
             title: "Obtén tus logros",
-            desc: "Gana insignias mientras fortaleces tu autonomía digital y celebra cada avance.",
+            desc: "Gana insignias mientras fortaleces tu autonomía digital. Cada pequeño paso merece ser celebrado.",
           },
         ].map((item, i) => (
           <Card key={i} delay={i * 0.15}>
             <div
               style={{
                 fontSize: 13,
-                fontWeight: 700,
+                fontWeight: 800,
                 color: tokens.colors.coralSoft,
-                marginBottom: 12,
+                marginBottom: 14,
                 letterSpacing: 2,
+                fontFamily: "'Nunito', sans-serif",
               }}
             >
               PASO {item.step}
             </div>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>{item.icon}</div>
+            <div style={{ fontSize: 52, marginBottom: 18 }}>{item.icon}</div>
             <h3
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: 22,
-                marginBottom: 12,
+                fontSize: 23,
+                marginBottom: 14,
                 color: tokens.colors.textPrimary,
               }}
             >
               {item.title}
             </h3>
-            <p style={{ color: tokens.colors.textSecondary, lineHeight: 1.6, fontSize: 15 }}>{item.desc}</p>
+            <p style={{ color: tokens.colors.textBody, lineHeight: 1.7, fontSize: 16, fontFamily: "'Nunito', sans-serif" }}>{item.desc}</p>
           </Card>
         ))}
       </div>
@@ -810,22 +974,16 @@ const PageInicio = ({ setPage }) => {
     {/* Niveles */}
     <section
       style={{
-        padding: isMobile ? "48px 20px" : "80px 24px",
+        padding: isMobile ? "52px 20px" : "88px 24px",
         background: `linear-gradient(180deg, white 0%, ${tokens.colors.oceanMist}40 100%)`,
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <h2
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: isMobile ? 26 : 36,
-            textAlign: "center",
-            marginBottom: isMobile ? 32 : 48,
-          }}
-        >
-          Explora las etapas
-        </h2>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 20 : 32 }}>
+        <SectionTitle
+          title="Explora las etapas"
+          subtitle="Tu camino hacia la autonomía digital, paso a paso"
+        />
+        <div style={{ marginTop: 44, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 22 : 36 }}>
           {[
             {
               level: "explorador",
@@ -852,18 +1010,18 @@ const PageInicio = ({ setPage }) => {
               bg: "#E8F5E9",
             },
           ].map((item, i) => (
-            <Card key={i} delay={i * 0.15} style={{ textAlign: "center", borderTop: `4px solid ${item.color}` }}>
+            <Card key={i} delay={i * 0.15} customStyle={{ textAlign: "center", borderTop: `4px solid ${item.color}` }}>
               <div
                 style={{
-                  width: 80,
-                  height: 80,
+                  width: 88,
+                  height: 88,
                   borderRadius: "50%",
                   background: item.bg,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  margin: "0 auto 20px",
-                  fontSize: 36,
+                  margin: "0 auto 22px",
+                  fontSize: 40,
                 }}
               >
                 {item.level === "explorador" ? "🧭" : item.level === "integrador" ? "🔗" : "⭐"}
@@ -871,17 +1029,17 @@ const PageInicio = ({ setPage }) => {
               <h3
                 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: 22,
-                  marginBottom: 12,
+                  fontSize: 23,
+                  marginBottom: 14,
                   color: item.color,
                 }}
               >
                 {item.title}
               </h3>
-              <p style={{ color: tokens.colors.textSecondary, lineHeight: 1.6, fontSize: 15, marginBottom: 16 }}>
+              <p style={{ color: tokens.colors.textBody, lineHeight: 1.7, fontSize: 16, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>
                 {item.desc}
               </p>
-              <div style={{ fontSize: 13, fontWeight: 600, color: tokens.colors.textMuted }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: tokens.colors.textSecondary, fontFamily: "'Nunito', sans-serif" }}>
                 {item.modules} módulos
               </div>
             </Card>
@@ -891,53 +1049,54 @@ const PageInicio = ({ setPage }) => {
     </section>
 
     {/* Testimonios */}
-    <section style={{ padding: isMobile ? "48px 20px" : "80px 24px", maxWidth: 1200, margin: "0 auto" }}>
-      <h2
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: isMobile ? 26 : 36,
-          textAlign: "center",
-          marginBottom: isMobile ? 32 : 48,
-        }}
-      >
-        Voces de docentes como tú
-      </h2>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 16 : 24 }}>
+    <section style={{ padding: isMobile ? "52px 20px" : "88px 24px", maxWidth: 1200, margin: "0 auto" }}>
+      <SectionTitle
+        title="Voces de docentes como tú"
+        subtitle="Historias reales de quienes ya encontraron su rumbo digital"
+      />
+      <div style={{ marginTop: 44, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 18 : 28 }}>
         {[
           {
             quote:
               "Antes le tenía miedo a Zoom. Ahora doy clases en línea con confianza. El secreto fue aprender paso a paso, sin presión.",
             author: "Patricia A.",
             role: "Docente de Comunicación, 52 años",
+            emoji: "👩‍🏫",
           },
           {
             quote:
               "Lo mejor de Brújula Digital es que no te hacen sentir tonta. El lenguaje es claro, los ejercicios son reales y siempre hay alguien que te ayuda.",
             author: "María del Carmen O.",
             role: "Coordinadora Académica, 48 años",
+            emoji: "💛",
           },
           {
             quote:
               "Mis alumnos notaron el cambio. Ahora uso Quizizz para evaluaciones y Google Classroom para organizar todo. ¡Me siento actualizada!",
             author: "Patricia R.",
             role: "Docente de Inglés, 55 años",
+            emoji: "🌟",
           },
         ].map((item, i) => (
-          <Card key={i} delay={i * 0.15} style={{ background: tokens.colors.sandWarm + "60" }}>
-            <div style={{ fontSize: 36, marginBottom: 12, opacity: 0.3 }}>"</div>
+          <Card key={i} delay={i * 0.15} customStyle={{
+            background: `linear-gradient(135deg, ${tokens.colors.sandWarm}40, ${tokens.colors.sandLight})`,
+            borderLeft: `4px solid ${tokens.colors.coralSoft}50`,
+          }}>
+            <div style={{ fontSize: 40, marginBottom: 14 }}>{item.emoji}</div>
             <p
               style={{
-                fontSize: 15,
-                lineHeight: 1.7,
-                color: tokens.colors.textPrimary,
-                marginBottom: 20,
+                fontSize: 16,
+                lineHeight: 1.8,
+                color: tokens.colors.textBody,
+                marginBottom: 22,
                 fontStyle: "italic",
+                fontFamily: "'Nunito', sans-serif",
               }}
             >
-              {item.quote}
+              &ldquo;{item.quote}&rdquo;
             </p>
-            <div style={{ fontWeight: 700, fontSize: 14, color: tokens.colors.oceanDeep }}>{item.author}</div>
-            <div style={{ fontSize: 13, color: tokens.colors.textSecondary }}>{item.role}</div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.oceanDarker }}>{item.author}</div>
+            <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>{item.role}</div>
           </Card>
         ))}
       </div>
@@ -948,6 +1107,7 @@ const PageInicio = ({ setPage }) => {
 
 // ========== PAGE: DIAGNÓSTICO ==========
 const PageDiagnostico = ({ setPage }) => {
+  const { isMobile } = useResponsive();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResult, setShowResult] = useState(false);
@@ -968,20 +1128,20 @@ const PageDiagnostico = ({ setPage }) => {
 
   if (showResult) {
     return (
-      <div style={{ padding: "60px 24px", maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+      <div style={{ padding: isMobile ? "48px 20px" : "72px 24px", maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
         <div style={{ animation: "badgeUnlock 0.8s ease both" }}>
           <div
             style={{
-              width: 120,
-              height: 120,
+              width: 130,
+              height: 130,
               borderRadius: "50%",
-              background: tokens.colors.oceanMist,
+              background: `linear-gradient(135deg, ${tokens.colors.oceanMist}, ${tokens.colors.sandWarm}40)`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 auto 24px",
-              fontSize: 56,
-              boxShadow: `0 0 0 8px ${tokens.colors.oceanDeep}20`,
+              margin: "0 auto 28px",
+              fontSize: 60,
+              boxShadow: `0 0 0 6px ${tokens.colors.oceanDeep}15, 0 0 0 12px ${tokens.colors.oceanDeep}08`,
             }}
           >
             🧭
@@ -990,27 +1150,28 @@ const PageDiagnostico = ({ setPage }) => {
         <h2
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 36,
-            marginBottom: 12,
-            color: tokens.colors.oceanDeep,
+            fontSize: isMobile ? 32 : 40,
+            marginBottom: 14,
+            color: tokens.colors.oceanDarker,
             animation: "fadeInUp 0.6s ease 0.3s both",
           }}
         >
           ¡Bienvenida, Carla!
         </h2>
-        <p style={{ fontSize: 18, color: tokens.colors.textSecondary, marginBottom: 8, animation: "fadeInUp 0.6s ease 0.5s both" }}>
+        <p style={{ fontSize: 18, color: tokens.colors.textBody, marginBottom: 10, animation: "fadeInUp 0.6s ease 0.5s both", fontFamily: "'Nunito', sans-serif" }}>
           Tu nivel actual es:
         </p>
-        <div style={{ animation: "fadeInUp 0.6s ease 0.6s both", marginBottom: 24 }}>
+        <div style={{ animation: "fadeInUp 0.6s ease 0.6s both", marginBottom: 28 }}>
           <LevelBadge level="explorador" size="md" />
         </div>
         <p
           style={{
-            fontSize: 16,
-            color: tokens.colors.textSecondary,
-            lineHeight: 1.7,
-            marginBottom: 32,
+            fontSize: 17,
+            color: tokens.colors.textBody,
+            lineHeight: 1.8,
+            marginBottom: 36,
             animation: "fadeInUp 0.6s ease 0.7s both",
+            fontFamily: "'Nunito', sans-serif",
           }}
         >
           Estás comenzando tu camino digital y eso es algo muy valioso.
@@ -1018,7 +1179,7 @@ const PageDiagnostico = ({ setPage }) => {
           para que ganes confianza paso a paso. No hay prisa — cada logro cuenta.
         </p>
         <div style={{ animation: "fadeInUp 0.6s ease 0.9s both" }}>
-          <Button size="lg" onClick={() => setPage("ruta")}>
+          <Button size="lg" onClick={() => setPage("ruta")} aria-label="Ver mi ruta personalizada">
             Ver mi ruta personalizada <ArrowRightIcon />
           </Button>
         </div>
@@ -1030,56 +1191,63 @@ const PageDiagnostico = ({ setPage }) => {
   const progress = ((step) / DIAGNOSTIC_QUESTIONS.length) * 100;
 
   return (
-    <div style={{ padding: "48px 24px", maxWidth: 700, margin: "0 auto" }}>
-      <div style={{ marginBottom: 40 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 14, color: tokens.colors.textSecondary }}>
+    <div style={{ padding: isMobile ? "40px 20px" : "56px 24px", maxWidth: 700, margin: "0 auto" }}>
+      <div style={{ marginBottom: 44 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, fontSize: 15, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif", fontWeight: 600 }}>
           <span>Pregunta {step + 1} de {DIAGNOSTIC_QUESTIONS.length}</span>
           <span>{Math.round(progress)}%</span>
         </div>
-        <ProgressBar value={progress} height={6} />
+        <ProgressBar value={progress} height={8} />
       </div>
 
       <div key={step} style={{ animation: "fadeInUp 0.5s ease" }}>
         <h2
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 28,
-            marginBottom: 32,
+            fontSize: isMobile ? 24 : 30,
+            marginBottom: 36,
             lineHeight: 1.4,
-            color: tokens.colors.textPrimary,
+            color: tokens.colors.oceanDarker,
           }}
         >
           {currentQ.question}
         </h2>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }} role="radiogroup" aria-label="Opciones de respuesta">
           {currentQ.options.map((opt, i) => (
             <button
               key={i}
               onClick={() => handleAnswer(currentQ.id, i)}
+              role="radio"
+              aria-checked={selectedOption === i}
               style={{
-                padding: "18px 24px",
+                padding: "20px 24px",
+                minHeight: 52,
                 background: selectedOption === i ? tokens.colors.oceanDeep : "white",
-                color: selectedOption === i ? "white" : tokens.colors.textPrimary,
-                border: `2px solid ${selectedOption === i ? tokens.colors.oceanDeep : "#E0E0E0"}`,
-                borderRadius: 12,
+                color: selectedOption === i ? "white" : tokens.colors.textBody,
+                border: `2px solid ${selectedOption === i ? tokens.colors.oceanDeep : "#D4D8DD"}`,
+                borderRadius: tokens.radii.md,
                 fontSize: 16,
                 fontFamily: "'Nunito', sans-serif",
+                fontWeight: 600,
                 cursor: "pointer",
                 textAlign: "left",
                 transition: "all 0.3s ease",
                 transform: selectedOption === i ? "scale(0.98)" : "scale(1)",
+                boxShadow: selectedOption === i ? tokens.shadows.teal : tokens.shadows.sm,
               }}
               onMouseEnter={(e) => {
                 if (selectedOption === null) {
                   e.currentTarget.style.borderColor = tokens.colors.oceanLight;
                   e.currentTarget.style.background = tokens.colors.oceanMist;
+                  e.currentTarget.style.boxShadow = tokens.shadows.md;
                 }
               }}
               onMouseLeave={(e) => {
                 if (selectedOption === null) {
-                  e.currentTarget.style.borderColor = "#E0E0E0";
+                  e.currentTarget.style.borderColor = "#D4D8DD";
                   e.currentTarget.style.background = "white";
+                  e.currentTarget.style.boxShadow = tokens.shadows.sm;
                 }
               }}
             >
@@ -1091,10 +1259,11 @@ const PageDiagnostico = ({ setPage }) => {
 
       <p
         style={{
-          marginTop: 32,
+          marginTop: 36,
           textAlign: "center",
-          fontSize: 14,
-          color: tokens.colors.textMuted,
+          fontSize: 15,
+          color: tokens.colors.textSecondary,
+          fontFamily: "'Nunito', sans-serif",
         }}
       >
         No hay respuestas correctas o incorrectas. Elige la que mejor te represente.
@@ -1115,86 +1284,162 @@ const PageRuta = ({ setPage }) => {
   ];
 
   const totalProgress = Math.round(rutaModules.reduce((acc, m) => acc + m.progress, 0) / rutaModules.length);
+  const completedCount = rutaModules.filter(m => m.progress === 100).length;
 
   return (
     <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: 16, marginBottom: 40, animation: "fadeInUp 0.6s ease" }}>
+      {/* Header with circular progress */}
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: isMobile ? "flex-start" : "center",
+        flexDirection: isMobile ? "column" : "row",
+        gap: 20,
+        marginBottom: 40,
+        animation: "fadeInUp 0.6s ease",
+      }}>
         <div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 26 : 36, marginBottom: 4 }}>
-            Tu Ruta de Aprendizaje
-          </h1>
-          <p style={{ fontSize: 15, color: tokens.colors.textSecondary }}>
-            Nivel actual: Explorador 🧭
-          </p>
+          <SectionTitle
+            title="Tu Ruta de Aprendizaje"
+            subtitle="Cada paso te acerca a la autonomía digital"
+          />
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12 }}>
+            <LevelBadge level="Explorador" size="md" />
+            <StreakBadge days={5} />
+          </div>
         </div>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 8,
-          padding: "8px 18px", background: tokens.colors.oceanMist, borderRadius: 20,
-          fontSize: 14, fontWeight: 600, color: tokens.colors.oceanDeep,
-        }}>
-          Progreso General: {totalProgress}%
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <CircularProgress value={totalProgress} size={isMobile ? 72 : 88} label="general" />
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 28, fontWeight: 800, color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif" }}>
+              {completedCount}/{rutaModules.length}
+            </div>
+            <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 600 }}>
+              módulos
+            </div>
+          </div>
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+      {/* Celebration banner if any module completed */}
+      {completedCount > 0 && (
+        <div
+          style={{
+            background: `linear-gradient(135deg, ${tokens.colors.forestCalm}15, ${tokens.colors.goldBadge}15)`,
+            borderRadius: tokens.radii.lg,
+            padding: isMobile ? "16px 18px" : "18px 24px",
+            marginBottom: 32,
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            border: `1px solid ${tokens.colors.forestCalm}30`,
+            animation: "fadeInUp 0.6s ease 0.2s both",
+          }}
+        >
+          <span style={{ fontSize: 28 }}>🎉</span>
+          <div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: tokens.colors.forestCalm, fontFamily: "'Nunito', sans-serif" }}>
+              ¡Felicidades! Llevas {completedCount} módulo{completedCount > 1 ? "s" : ""} completado{completedCount > 1 ? "s" : ""}
+            </div>
+            <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginTop: 2 }}>
+              Sigue así, cada lección cuenta ✨
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Module timeline */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {rutaModules.map((mod, i) => (
-          <div key={mod.id} style={{ display: "flex", gap: isMobile ? 16 : 24, animation: `fadeInUp 0.6s ease ${i * 0.12}s both` }}>
+          <div key={mod.id} style={{ display: "flex", gap: isMobile ? 16 : 24, animation: `fadeInUp 0.6s ease ${i * 0.12 + 0.3}s both` }}>
             {/* Numbered circle + connector */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 48, flexShrink: 0 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 52, flexShrink: 0 }}>
               <div style={{
-                width: 40, height: 40, borderRadius: "50%",
+                width: 44, height: 44, borderRadius: "50%",
                 background: mod.progress === 100 ? tokens.colors.forestCalm : mod.unlocked ? tokens.colors.oceanDeep : "#DDD",
                 color: "white", display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 700, fontSize: 16, flexShrink: 0,
+                fontWeight: 800, fontSize: 17, flexShrink: 0,
+                boxShadow: mod.progress === 100
+                  ? `0 3px 12px ${tokens.colors.forestCalm}40`
+                  : mod.unlocked ? tokens.shadows.teal : "none",
+                transition: "all 0.3s ease",
               }}>
                 {mod.progress === 100 ? <CheckIcon /> : mod.id}
               </div>
               {i < rutaModules.length - 1 && (
-                <div style={{ width: 3, flex: 1, minHeight: 40, background: mod.unlocked ? tokens.colors.oceanDeep + "30" : "#E0E0E0", borderRadius: 2 }} />
+                <div style={{
+                  width: 3, flex: 1, minHeight: 40,
+                  background: mod.progress === 100
+                    ? `linear-gradient(180deg, ${tokens.colors.forestCalm}, ${tokens.colors.forestCalm}30)`
+                    : mod.unlocked ? tokens.colors.oceanDeep + "30" : "#E0E0E0",
+                  borderRadius: 2,
+                }} />
               )}
             </div>
 
             {/* Module card */}
-            <div style={{
-              flex: 1, background: mod.unlocked ? "white" : "#F8F8F8",
-              borderRadius: 14, padding: isMobile ? "18px 16px" : "20px 24px",
+            <Card delay={i * 0.12 + 0.3} customStyle={{
+              flex: 1,
+              background: mod.unlocked ? "white" : "#FAFAFA",
               marginBottom: 20,
-              opacity: mod.unlocked ? 1 : 0.55,
-              boxShadow: mod.unlocked ? "0 2px 12px rgba(0,0,0,0.06)" : "none",
-              borderLeft: mod.active || (mod.unlocked && mod.progress > 0 && mod.progress < 100) ? `4px solid ${tokens.colors.coralSoft}` : "4px solid transparent",
+              opacity: mod.unlocked ? 1 : 0.6,
+              borderLeft: mod.unlocked && mod.progress > 0 && mod.progress < 100
+                ? `4px solid ${tokens.colors.coralSoft}`
+                : mod.progress === 100
+                  ? `4px solid ${tokens.colors.forestCalm}`
+                  : "4px solid transparent",
+              padding: isMobile ? "20px 18px" : "24px 28px",
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 12 : 0, marginBottom: 8 }}>
+              <div style={{
+                display: "flex", justifyContent: "space-between",
+                alignItems: isMobile ? "flex-start" : "center",
+                flexDirection: isMobile ? "column" : "row",
+                gap: isMobile ? 12 : 0, marginBottom: 8,
+              }}>
                 <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontSize: 20 }}>{mod.icon}</span>
-                    <h3 style={{ fontSize: isMobile ? 16 : 18, fontWeight: 700, fontFamily: "'Playfair Display', serif", color: mod.unlocked ? tokens.colors.textPrimary : tokens.colors.textMuted }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                    <span style={{ fontSize: 24 }}>{mod.icon}</span>
+                    <h3 style={{
+                      fontSize: isMobile ? 17 : 19, fontWeight: 700,
+                      fontFamily: "'Playfair Display', serif",
+                      color: mod.unlocked ? tokens.colors.textPrimary : tokens.colors.textMuted,
+                    }}>
                       Módulo {mod.id}: {mod.title}
                     </h3>
                   </div>
-                  <p style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{mod.desc}</p>
+                  <p style={{ fontSize: 15, color: tokens.colors.textSecondary, lineHeight: 1.5, fontFamily: "'Nunito', sans-serif" }}>{mod.desc}</p>
                 </div>
                 {mod.unlocked && mod.progress < 100 && mod.progress > 0 && (
-                  <Button size="sm" onClick={() => setPage("explorador")}>Continuar</Button>
+                  <Button size="sm" onClick={() => setPage("explorador")} aria-label={`Continuar módulo ${mod.title}`}>
+                    Continuar →
+                  </Button>
                 )}
                 {mod.progress === 100 && (
-                  <span style={{ fontSize: 13, fontWeight: 600, color: tokens.colors.forestCalm, whiteSpace: "nowrap" }}>✓ Completado</span>
+                  <span style={{
+                    fontSize: 14, fontWeight: 700, color: tokens.colors.forestCalm,
+                    whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6,
+                    background: `${tokens.colors.forestCalm}12`, padding: "6px 14px",
+                    borderRadius: tokens.radii.pill,
+                  }}>
+                    ✓ Completado
+                  </span>
                 )}
               </div>
               {mod.unlocked && (
-                <div style={{ marginTop: 10 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: tokens.colors.textMuted, marginBottom: 4 }}>
+                <div style={{ marginTop: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600 }}>
                     <span>{mod.completed}/{mod.lessons} lecciones</span>
-                    <span>{mod.progress}%</span>
+                    <span style={{ color: mod.progress === 100 ? tokens.colors.forestCalm : tokens.colors.oceanDeep }}>{mod.progress}%</span>
                   </div>
-                  <ProgressBar value={mod.progress} height={6} />
+                  <ProgressBar value={mod.progress} height={8} />
                 </div>
               )}
               {!mod.unlocked && (
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 8, fontSize: 13, color: tokens.colors.textMuted }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10, fontSize: 14, color: tokens.colors.textMuted, fontWeight: 500 }}>
                   <LockIcon /> Completa el módulo anterior para desbloquear
                 </div>
               )}
-            </div>
+            </Card>
           </div>
         ))}
       </div>
@@ -1209,131 +1454,206 @@ const PageComunidad = () => {
   const [activeTab, setActiveTab] = useState("foro");
 
   const tabs = [
-    { id: "foro", label: "Foro de Preguntas" },
-    { id: "experiencias", label: "Experiencias Reales" },
-    { id: "recursos", label: "Recursos Compartidos" },
+    { id: "foro", label: "💬 Foro de Preguntas", emoji: "💬" },
+    { id: "experiencias", label: "💛 Experiencias Reales", emoji: "💛" },
+    { id: "recursos", label: "📎 Recursos Compartidos", emoji: "📎" },
   ];
 
   const experiencias = [
-    { id: 1, author: "Ana García", avatar: "AG", color: tokens.colors.coralSoft, role: "Docente de Matemáticas, Arequipa", text: "Gracias a Brújula Digital aprendí a usar Canva para mis materiales. Ahora mis estudiantes prestan más atención y mis colegas me piden ayuda. ¡Es un cambio increíble!" },
-    { id: 2, author: "Pedro Sánchez", avatar: "PS", color: tokens.colors.forestCalm, role: "Docente de Ciencias, Lima", text: "Al principio tenía mucho miedo de usar tecnología en clase. El Módulo de videoconferencias me ayudó paso a paso. Ahora mis clases en línea fluyen con naturalidad." },
+    { id: 1, author: "Ana García", avatar: "AG", color: tokens.colors.coralSoft, role: "Docente de Matemáticas · Arequipa", text: "Gracias a Brújula Digital aprendí a usar Canva para mis materiales. Ahora mis estudiantes prestan más atención y mis colegas me piden ayuda. ¡Es un cambio increíble!", years: "28 años enseñando" },
+    { id: 2, author: "Pedro Sánchez", avatar: "PS", color: tokens.colors.forestCalm, role: "Docente de Ciencias · Lima", text: "Al principio tenía mucho miedo de usar tecnología en clase. El Módulo de videoconferencias me ayudó paso a paso. Ahora mis clases en línea fluyen con naturalidad.", years: "22 años enseñando" },
   ];
 
   return (
-    <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 1100, margin: "0 auto" }}>
-      <div style={{ marginBottom: 32, animation: "fadeInUp 0.6s ease" }}>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 26 : 36, marginBottom: 8 }}>
-          Comunidad Docente
-        </h1>
-        <p style={{ fontSize: 16, color: tokens.colors.textSecondary }}>
-          Comparte, pregunta y aprende junto a otros docentes que están en tu mismo camino digital.
-        </p>
-      </div>
-
-      {/* Pill Tabs */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 32, flexWrap: "wrap", animation: "fadeInUp 0.6s ease 0.1s both" }}>
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              padding: "8px 20px", borderRadius: 20, fontSize: 14, fontWeight: 600,
-              fontFamily: "'Nunito', sans-serif", cursor: "pointer", transition: "all 0.2s ease",
-              background: activeTab === tab.id ? tokens.colors.oceanDeep : "white",
-              color: activeTab === tab.id ? "white" : tokens.colors.textSecondary,
-              border: `1px solid ${activeTab === tab.id ? tokens.colors.oceanDeep : "#DDD"}`,
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Two-column layout */}
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 340px", gap: 28 }}>
-        {/* Left — Forum */}
-        <div>
-          {/* Compose */}
-          <Card style={{ marginBottom: 20, animation: "fadeInUp 0.6s ease 0.2s both" }}>
-            <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: tokens.colors.oceanDeep }}>📝 Nueva Pregunta</div>
+    <div>
+      {/* Hero banner */}
+      <section style={{
+        background: `linear-gradient(135deg, ${tokens.colors.sandWarm}50, ${tokens.colors.oceanMist}60)`,
+        padding: isMobile ? "36px 20px" : "48px 24px",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        <FloatingDecoration top="10%" left="5%" size={60} color={tokens.colors.coralSoft} delay={0} />
+        <FloatingDecoration top="20%" right="8%" size={40} color={tokens.colors.goldBadge} delay={1} />
+        <div style={{ maxWidth: 1100, margin: "0 auto", animation: "fadeInUp 0.6s ease", position: "relative", zIndex: 1 }}>
+          <SectionTitle
+            title="Comunidad Docente"
+            subtitle="No estás solo(a) en este camino. Aquí encontrarás colegas que comparten tus mismas preguntas y entusiasmo."
+          />
+          <div style={{ display: "flex", gap: 20, marginTop: 20, flexWrap: "wrap" }}>
             <div style={{
-              width: "100%", padding: "14px 18px", border: "2px solid #E0E0E0", borderRadius: 12,
-              fontSize: 15, color: tokens.colors.textMuted, background: "#FAFAFA", marginBottom: 12,
+              display: "flex", alignItems: "center", gap: 8, fontSize: 15,
+              color: tokens.colors.oceanDarker, fontWeight: 600, fontFamily: "'Nunito', sans-serif",
             }}>
-              ¿Tienes alguna duda? Describe tu pregunta aquí...
+              <span style={{ fontSize: 20 }}>👥</span> 127 docentes activos
             </div>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button size="sm">Publicar</Button>
+            <div style={{
+              display: "flex", alignItems: "center", gap: 8, fontSize: 15,
+              color: tokens.colors.oceanDarker, fontWeight: 600, fontFamily: "'Nunito', sans-serif",
+            }}>
+              <span style={{ fontSize: 20 }}>💬</span> 340+ conversaciones
             </div>
-          </Card>
+          </div>
+        </div>
+      </section>
 
-          {/* Posts */}
-          {COMMUNITY_POSTS.map((post, i) => (
-            <Card key={post.id} style={{ marginBottom: 16 }} delay={0.3 + i * 0.1}>
-              <div style={{ display: "flex", gap: 12 }}>
-                <div style={{
-                  width: 40, height: 40, borderRadius: "50%", background: post.color,
-                  color: "white", display: "flex", alignItems: "center", justifyContent: "center",
-                  fontWeight: 700, fontSize: 13, flexShrink: 0,
-                }}>
-                  {post.avatar}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                    <span style={{ fontWeight: 700, fontSize: 14, color: tokens.colors.oceanDeep }}>{post.author}</span>
-                    <span style={{ fontSize: 12, color: tokens.colors.textMuted }}>{post.time}</span>
-                  </div>
-                  <p style={{ fontSize: 14, lineHeight: 1.6, color: tokens.colors.textPrimary, marginBottom: 12 }}>
-                    {post.text}
-                  </p>
-                  <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                    <button onClick={() => setLikedPosts((p) => ({ ...p, [post.id]: !p[post.id] }))} style={{
-                      display: "flex", alignItems: "center", gap: 4, background: "none", border: "none",
-                      cursor: "pointer", fontSize: 13, color: likedPosts[post.id] ? tokens.colors.coralSoft : tokens.colors.textSecondary,
-                      fontFamily: "'Nunito', sans-serif",
-                    }}>
-                      <HeartIcon filled={likedPosts[post.id]} /> {post.likes + (likedPosts[post.id] ? 1 : 0)}
-                    </button>
-                    <span style={{ fontSize: 13, color: tokens.colors.textSecondary }}>💬 {post.replies} respuestas</span>
-                    <button style={{
-                      marginLeft: "auto", padding: "5px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600,
-                      background: tokens.colors.oceanMist, color: tokens.colors.oceanDeep,
-                      border: "none", cursor: "pointer", fontFamily: "'Nunito', sans-serif",
-                    }}>
-                      Responder
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Card>
+      <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 1100, margin: "0 auto" }}>
+        {/* Pill Tabs */}
+        <div style={{
+          display: "flex", gap: 10, marginBottom: 36, flexWrap: "wrap",
+          animation: "fadeInUp 0.6s ease 0.1s both",
+        }}>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              aria-pressed={activeTab === tab.id}
+              style={{
+                padding: "12px 24px", borderRadius: tokens.radii.pill,
+                fontSize: 15, fontWeight: 700, minHeight: 48,
+                fontFamily: "'Nunito', sans-serif", cursor: "pointer", transition: "all 0.2s ease",
+                background: activeTab === tab.id ? tokens.colors.oceanDeep : "white",
+                color: activeTab === tab.id ? "white" : tokens.colors.textBody,
+                border: `2px solid ${activeTab === tab.id ? tokens.colors.oceanDeep : "#E0E0E0"}`,
+                boxShadow: activeTab === tab.id ? tokens.shadows.teal : "none",
+              }}
+            >
+              {tab.label}
+            </button>
           ))}
         </div>
 
-        {/* Right — Experiencias Reales */}
-        <div style={{ animation: "fadeInUp 0.6s ease 0.3s both" }}>
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, marginBottom: 16, color: tokens.colors.oceanDeep }}>
-            ✨ Experiencias Reales
-          </h3>
-          {experiencias.map((exp, i) => (
-            <Card key={exp.id} style={{ marginBottom: 16, background: tokens.colors.sandWarm + "30" }} delay={0.4 + i * 0.12}>
-              <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-                <div style={{
-                  width: 36, height: 36, borderRadius: "50%", background: exp.color,
-                  color: "white", display: "flex", alignItems: "center", justifyContent: "center",
-                  fontWeight: 700, fontSize: 12, flexShrink: 0,
-                }}>
-                  {exp.avatar}
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 14 }}>{exp.author}</div>
-                  <div style={{ fontSize: 11, color: tokens.colors.textMuted }}>{exp.role}</div>
-                </div>
+        {/* Two-column layout */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 32 }}>
+          {/* Left — Forum */}
+          <div>
+            {/* Compose */}
+            <Card customStyle={{ marginBottom: 24 }} delay={0.2}>
+              <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 14, color: tokens.colors.oceanDarker, fontFamily: "'Nunito', sans-serif" }}>
+                📝 Comparte tu pregunta
               </div>
-              <p style={{ fontSize: 13, lineHeight: 1.6, color: tokens.colors.textSecondary, fontStyle: "italic" }}>
-                "{exp.text}"
-              </p>
+              <div style={{
+                width: "100%", padding: "16px 20px", border: `2px solid ${tokens.colors.oceanMist}`, borderRadius: tokens.radii.md,
+                fontSize: 15, color: tokens.colors.textMuted, background: tokens.colors.sandLight, marginBottom: 14,
+                fontFamily: "'Nunito', sans-serif", lineHeight: 1.5,
+              }}>
+                ¿Tienes alguna duda? Escribe aquí con confianza, todos pasamos por lo mismo...
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button size="sm" aria-label="Publicar pregunta">Publicar →</Button>
+              </div>
             </Card>
-          ))}
+
+            {/* Posts */}
+            {COMMUNITY_POSTS.map((post, i) => (
+              <Card key={post.id} customStyle={{ marginBottom: 20 }} delay={0.3 + i * 0.1}>
+                <div style={{ display: "flex", gap: 14 }}>
+                  <div style={{
+                    width: 44, height: 44, borderRadius: "50%", background: post.color,
+                    color: "white", display: "flex", alignItems: "center", justifyContent: "center",
+                    fontWeight: 800, fontSize: 14, flexShrink: 0,
+                  }}>
+                    {post.avatar}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, flexWrap: "wrap", gap: 4 }}>
+                      <span style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.oceanDarker }}>{post.author}</span>
+                      <span style={{ fontSize: 13, color: tokens.colors.textMuted }}>{post.time}</span>
+                    </div>
+                    <p style={{ fontSize: 15, lineHeight: 1.7, color: tokens.colors.textBody, marginBottom: 14, fontFamily: "'Nunito', sans-serif" }}>
+                      {post.text}
+                    </p>
+                    <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
+                      <button
+                        onClick={() => setLikedPosts((p) => ({ ...p, [post.id]: !p[post.id] }))}
+                        aria-label={likedPosts[post.id] ? "Quitar me gusta" : "Dar me gusta"}
+                        style={{
+                          display: "flex", alignItems: "center", gap: 6, background: "none", border: "none",
+                          cursor: "pointer", fontSize: 14, fontWeight: 600,
+                          color: likedPosts[post.id] ? tokens.colors.coralSoft : tokens.colors.textSecondary,
+                          fontFamily: "'Nunito', sans-serif", minHeight: 36, padding: "4px 8px",
+                        }}
+                      >
+                        <HeartIcon filled={likedPosts[post.id]} /> {post.likes + (likedPosts[post.id] ? 1 : 0)}
+                      </button>
+                      <span style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>💬 {post.replies} respuestas</span>
+                      <button
+                        aria-label={`Responder a ${post.author}`}
+                        style={{
+                          marginLeft: "auto", padding: "8px 18px", borderRadius: tokens.radii.pill,
+                          fontSize: 13, fontWeight: 700, minHeight: 36,
+                          background: tokens.colors.oceanMist, color: tokens.colors.oceanDarker,
+                          border: "none", cursor: "pointer", fontFamily: "'Nunito', sans-serif",
+                          transition: "all 0.2s ease",
+                        }}
+                      >
+                        Responder
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Right sidebar — Experiencias Reales */}
+          <div style={{ animation: "fadeInUp 0.6s ease 0.3s both" }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: 10, marginBottom: 20,
+            }}>
+              <span style={{ fontSize: 24 }}>💛</span>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: tokens.colors.oceanDarker }}>
+                Experiencias Reales
+              </h3>
+            </div>
+            {experiencias.map((exp, i) => (
+              <Card key={exp.id} customStyle={{
+                marginBottom: 20,
+                background: `linear-gradient(135deg, ${tokens.colors.sandWarm}20, ${tokens.colors.sandLight})`,
+                borderLeft: `4px solid ${exp.color}`,
+              }} delay={0.4 + i * 0.15}>
+                <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
+                  <div style={{
+                    width: 44, height: 44, borderRadius: "50%", background: exp.color,
+                    color: "white", display: "flex", alignItems: "center", justifyContent: "center",
+                    fontWeight: 800, fontSize: 14, flexShrink: 0,
+                  }}>
+                    {exp.avatar}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.textPrimary }}>{exp.author}</div>
+                    <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500 }}>{exp.role}</div>
+                    <div style={{ fontSize: 12, color: tokens.colors.textMuted, fontStyle: "italic" }}>{exp.years}</div>
+                  </div>
+                </div>
+                <p style={{
+                  fontSize: 14, lineHeight: 1.7, color: tokens.colors.textBody,
+                  fontStyle: "italic", fontFamily: "'Nunito', sans-serif",
+                  borderLeft: `3px solid ${exp.color}30`, paddingLeft: 14,
+                }}>
+                  &ldquo;{exp.text}&rdquo;
+                </p>
+              </Card>
+            ))}
+
+            {/* Quick join CTA */}
+            <div style={{
+              background: `linear-gradient(135deg, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`,
+              borderRadius: tokens.radii.lg, padding: "24px 20px", textAlign: "center", color: "white",
+              animation: "fadeInUp 0.6s ease 0.7s both",
+            }}>
+              <div style={{ fontSize: 28, marginBottom: 10 }}>🤝</div>
+              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
+                ¿Tienes una historia para compartir?
+              </div>
+              <div style={{ fontSize: 14, opacity: 0.85, marginBottom: 16, lineHeight: 1.5 }}>
+                Tu experiencia puede inspirar a otro docente
+              </div>
+              <Button variant="coral" size="sm" aria-label="Compartir mi experiencia">
+                Compartir mi historia
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1347,60 +1667,70 @@ const PageBiblioteca = ({ setPage }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filters = [
-    { id: "todos", label: "Todos los Temas" },
-    { id: "plantillas", label: "Plantillas y Recursos" },
-    { id: "compartir", label: "Compartir e Intercambiar" },
+    { id: "todos", label: "📚 Todos los Temas" },
+    { id: "plantillas", label: "📋 Plantillas y Recursos" },
+    { id: "compartir", label: "🤝 Compartir e Intercambiar" },
   ];
 
   return (
     <div>
       {/* Hero Header */}
       <section style={{
-        background: `linear-gradient(135deg, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`,
-        padding: isMobile ? "32px 20px" : "40px 24px",
+        background: `linear-gradient(135deg, ${tokens.colors.oceanDarker}, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`,
+        padding: isMobile ? "40px 20px" : "52px 24px",
         color: "white",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: 20 }}>
+        <FloatingDecoration top="15%" right="10%" size={80} color="rgba(255,255,255,0.08)" delay={0} />
+        <FloatingDecoration top="60%" left="5%" size={50} color="rgba(255,255,255,0.06)" delay={1.5} />
+        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: 24 }}>
             <div>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 26 : 34, marginBottom: 6 }}>
-                Biblioteca Digital
+              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 28 : 36, marginBottom: 10, fontWeight: 700 }}>
+                📚 Biblioteca Digital
               </h1>
-              <p style={{ fontSize: 15, opacity: 0.85 }}>
-                Recursos clasificados por Área Académica. Comparte y descarga plantillas.
+              <p style={{ fontSize: 16, opacity: 0.9, lineHeight: 1.6, maxWidth: 500, fontFamily: "'Nunito', sans-serif" }}>
+                Recursos clasificados por Área Académica. Comparte, descarga y adapta plantillas creadas por docentes como tú.
               </p>
             </div>
             <div style={{
-              display: "flex", alignItems: "center", gap: 8,
-              background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "10px 16px",
-              width: isMobile ? "100%" : 280,
+              display: "flex", alignItems: "center", gap: 10,
+              background: "rgba(255,255,255,0.15)", borderRadius: tokens.radii.lg, padding: "14px 20px",
+              width: isMobile ? "100%" : 300,
+              border: "1px solid rgba(255,255,255,0.2)",
+              backdropFilter: "blur(8px)",
             }}>
-              <span style={{ fontSize: 16 }}>🔍</span>
+              <span style={{ fontSize: 18 }}>🔍</span>
               <input
                 type="text"
-                placeholder="Buscar recurso..."
+                placeholder="Buscar recurso, plantilla o tema..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Buscar recursos en la biblioteca"
                 style={{
                   background: "transparent", border: "none", outline: "none", color: "white",
-                  fontSize: 14, fontFamily: "'Nunito', sans-serif", width: "100%",
+                  fontSize: 15, fontFamily: "'Nunito', sans-serif", width: "100%",
+                  fontWeight: 500,
                 }}
               />
             </div>
           </div>
 
           {/* Filter Pills */}
-          <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 10, marginTop: 28, flexWrap: "wrap" }}>
             {filters.map((f) => (
               <button
                 key={f.id}
                 onClick={() => setActiveFilter(f.id)}
+                aria-pressed={activeFilter === f.id}
                 style={{
-                  padding: "7px 18px", borderRadius: 20, fontSize: 13, fontWeight: 600,
+                  padding: "10px 22px", borderRadius: tokens.radii.pill,
+                  fontSize: 14, fontWeight: 700, minHeight: 44,
                   fontFamily: "'Nunito', sans-serif", cursor: "pointer", transition: "all 0.2s ease",
-                  background: activeFilter === f.id ? "white" : "rgba(255,255,255,0.15)",
-                  color: activeFilter === f.id ? tokens.colors.oceanDeep : "white",
-                  border: "none",
+                  background: activeFilter === f.id ? "white" : "rgba(255,255,255,0.12)",
+                  color: activeFilter === f.id ? tokens.colors.oceanDarker : "rgba(255,255,255,0.9)",
+                  border: `1px solid ${activeFilter === f.id ? "white" : "rgba(255,255,255,0.2)"}`,
                 }}
               >
                 {f.label}
@@ -1411,29 +1741,32 @@ const PageBiblioteca = ({ setPage }) => {
       </section>
 
       {/* Academic Areas */}
-      <section style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 22 : 28 }}>
-            Áreas Académicas
-          </h2>
-          <Button size="sm" variant="coral">+ Subir recurso</Button>
+      <section style={{ padding: isMobile ? "36px 20px" : "52px 24px", maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
+          <SectionTitle
+            title="Áreas Académicas"
+            subtitle="Explora recursos organizados por tu área de enseñanza"
+          />
+          <Button size="sm" variant="coral" aria-label="Subir un recurso a la biblioteca">+ Subir recurso</Button>
         </div>
 
         <div style={{
           display: "grid",
           gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : isTablet ? "repeat(3, 1fr)" : "repeat(6, 1fr)",
-          gap: isMobile ? 12 : 16,
-          marginBottom: isMobile ? 40 : 56,
+          gap: isMobile ? 14 : 18,
+          marginBottom: isMobile ? 44 : 60,
         }}>
           {LIBRARY_RESOURCES.map((res, i) => (
-            <Card key={res.id} delay={i * 0.08} style={{
+            <Card key={res.id} delay={i * 0.08} customStyle={{
               padding: 0, overflow: "hidden", cursor: "pointer", textAlign: "center",
+              border: "1px solid transparent",
             }}>
-              <div style={{ height: 6, background: res.color }} />
-              <div style={{ padding: "18px 12px" }}>
-                <div style={{ fontSize: 28, marginBottom: 8 }}>{res.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{res.area}</div>
-                <div style={{ fontSize: 12, color: tokens.colors.textMuted }}>{res.count} recursos · {Math.floor(res.count / 3)} plantillas</div>
+              <div style={{ height: 6, background: res.color, borderRadius: `${tokens.radii.lg}px ${tokens.radii.lg}px 0 0` }} />
+              <div style={{ padding: "20px 14px" }}>
+                <div style={{ fontSize: 32, marginBottom: 10 }}>{res.icon}</div>
+                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textPrimary, fontFamily: "'Nunito', sans-serif" }}>{res.area}</div>
+                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500 }}>{res.count} recursos</div>
+                <div style={{ fontSize: 12, color: tokens.colors.textMuted, marginTop: 2 }}>{Math.floor(res.count / 3)} plantillas</div>
               </div>
             </Card>
           ))}
@@ -1441,32 +1774,38 @@ const PageBiblioteca = ({ setPage }) => {
 
         {/* Resource Exchange */}
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 20 : 24 }}>
-              Intercambio de Recursos
-            </h2>
-            <span style={{ fontSize: 13, color: tokens.colors.textMuted }}>
-              58 recursos compartidos por 45 docentes · Tendencia en alza 📈
-            </span>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", marginBottom: 24, gap: 12 }}>
+            <SectionTitle
+              title="Intercambio de Recursos"
+              subtitle="Recursos compartidos por docentes de la comunidad"
+            />
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              fontSize: 14, color: tokens.colors.oceanDeep, fontWeight: 600,
+              background: tokens.colors.oceanMist, padding: "8px 16px",
+              borderRadius: tokens.radii.pill, fontFamily: "'Nunito', sans-serif",
+            }}>
+              📈 58 recursos · 45 docentes
+            </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 18 }}>
             {SHARED_RESOURCES.map((res, i) => (
-              <Card key={res.id} delay={0.4 + i * 0.1} style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <Card key={res.id} delay={0.4 + i * 0.1} customStyle={{ display: "flex", alignItems: "center", gap: 18 }}>
                 <div style={{
-                  width: 44, height: 44, borderRadius: 10,
+                  width: 52, height: 52, borderRadius: tokens.radii.md,
                   background: tokens.colors.sandWarm, display: "flex", alignItems: "center",
-                  justifyContent: "center", fontSize: 22, flexShrink: 0,
+                  justifyContent: "center", fontSize: 26, flexShrink: 0,
                 }}>
                   {res.icon}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 2 }}>{res.title}</div>
-                  <div style={{ fontSize: 12, color: tokens.colors.textMuted }}>
-                    Por {res.author} · {res.type} · ⬇ {res.downloads} descargas
+                  <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4, color: tokens.colors.textPrimary }}>{res.title}</div>
+                  <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500 }}>
+                    Por {res.author} · {res.type} · ⬇ {res.downloads}
                   </div>
                 </div>
-                <Button size="sm" variant="secondary" style={{ fontSize: 12, padding: "6px 12px" }}>
+                <Button size="sm" variant="secondary" aria-label={`Descargar ${res.title}`}>
                   Descargar
                 </Button>
               </Card>
@@ -1488,23 +1827,29 @@ const PageExplorador = ({ setPage }) => {
   const progressPct = Math.round((completedCount / EXPLORER_LESSONS.length) * 100);
 
   return (
-    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "calc(100vh - 72px)" }}>
+    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "calc(100vh - 80px)" }}>
       {/* Sidebar */}
       <aside style={{
-        width: isMobile ? "100%" : 280, flexShrink: 0,
-        background: tokens.colors.oceanMist, padding: "24px 20px",
-        borderRight: isMobile ? "none" : `1px solid ${tokens.colors.oceanDeep}15`,
-        borderBottom: isMobile ? `1px solid ${tokens.colors.oceanDeep}15` : "none",
+        width: isMobile ? "100%" : 300, flexShrink: 0,
+        background: `linear-gradient(180deg, ${tokens.colors.oceanMist}, ${tokens.colors.sandLight})`,
+        padding: "28px 22px",
+        borderRight: isMobile ? "none" : `2px solid ${tokens.colors.oceanMist}`,
+        borderBottom: isMobile ? `2px solid ${tokens.colors.oceanMist}` : "none",
       }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 12, color: tokens.colors.textMuted, marginBottom: 4 }}>Módulo 1</div>
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, color: tokens.colors.oceanDeep, marginBottom: 4 }}>
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ fontSize: 13, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600, fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+            Módulo 1
+          </div>
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, color: tokens.colors.oceanDarker, marginBottom: 8, lineHeight: 1.3 }}>
             Herramientas Digitales Básicas
           </h3>
-          <div style={{ fontSize: 13, color: tokens.colors.textSecondary, marginBottom: 14 }}>
-            {progressPct}% completado
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+            <CircularProgress value={progressPct} size={52} label="" />
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: tokens.colors.oceanDarker }}>{progressPct}% completado</div>
+              <div style={{ fontSize: 13, color: tokens.colors.textSecondary }}>{completedCount}/{EXPLORER_LESSONS.length} lecciones</div>
+            </div>
           </div>
-          <ProgressBar value={progressPct} height={8} />
         </div>
 
         {/* Lesson List */}
@@ -1513,28 +1858,40 @@ const PageExplorador = ({ setPage }) => {
             <div
               key={lesson.id}
               onClick={() => lesson.completed || lesson.active ? setCurrentLesson(i) : null}
+              role={lesson.completed || lesson.active ? "button" : undefined}
+              tabIndex={lesson.completed || lesson.active ? 0 : undefined}
+              onKeyDown={(e) => {
+                if ((e.key === "Enter" || e.key === " ") && (lesson.completed || lesson.active)) setCurrentLesson(i);
+              }}
+              aria-label={`Lección ${lesson.id}: ${lesson.title}${lesson.completed ? " (completada)" : lesson.active ? " (en progreso)" : " (bloqueada)"}`}
               style={{
-                display: "flex", alignItems: "center", gap: 10, padding: "10px 12px",
-                borderRadius: 10, cursor: lesson.completed || lesson.active ? "pointer" : "default",
+                display: "flex", alignItems: "center", gap: 12, padding: "12px 14px",
+                borderRadius: tokens.radii.md, cursor: lesson.completed || lesson.active ? "pointer" : "default",
                 background: lesson.active ? "white" : "transparent",
                 border: lesson.active ? `2px solid ${tokens.colors.coralSoft}` : "2px solid transparent",
-                opacity: !lesson.completed && !lesson.active ? 0.5 : 1,
+                opacity: !lesson.completed && !lesson.active ? 0.45 : 1,
                 transition: "all 0.2s ease",
+                boxShadow: lesson.active ? tokens.shadows.sm : "none",
               }}
             >
               <div style={{
-                width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11,
-                background: lesson.completed ? tokens.colors.forestCalm : lesson.active ? tokens.colors.oceanDeep : "#DDD",
-                color: "white", fontWeight: 700,
+                width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12,
+                background: lesson.completed ? tokens.colors.forestCalm : lesson.active ? tokens.colors.oceanDeep : "#D0D0D0",
+                color: "white", fontWeight: 800,
+                boxShadow: lesson.completed ? `0 2px 6px ${tokens.colors.forestCalm}40` : "none",
               }}>
                 {lesson.completed ? "✓" : lesson.active ? i + 1 : <LockIcon />}
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: lesson.active ? 700 : 500, color: lesson.active ? tokens.colors.textPrimary : tokens.colors.textSecondary }}>
+                <div style={{
+                  fontSize: 14, fontWeight: lesson.active ? 700 : 600,
+                  color: lesson.active ? tokens.colors.textPrimary : tokens.colors.textSecondary,
+                  fontFamily: "'Nunito', sans-serif",
+                }}>
                   {lesson.id}. {lesson.title}
                 </div>
-                <div style={{ fontSize: 11, color: tokens.colors.textMuted }}>
+                <div style={{ fontSize: 12, color: tokens.colors.textMuted, fontWeight: 500 }}>
                   {lesson.type} · {lesson.duration}
                 </div>
               </div>
@@ -1544,64 +1901,102 @@ const PageExplorador = ({ setPage }) => {
       </aside>
 
       {/* Main Content — PDF Viewer Style */}
-      <main style={{ flex: 1, padding: isMobile ? "24px 20px" : "32px 40px", background: "white" }}>
+      <main style={{ flex: 1, padding: isMobile ? "28px 20px" : "36px 48px", background: "white" }}>
         {/* Breadcrumb */}
-        <div style={{ fontSize: 13, color: tokens.colors.textMuted, marginBottom: 20 }}>
-          <span style={{ cursor: "pointer" }} onClick={() => setPage("ruta")}>Módulo 1</span>
-          <span style={{ margin: "0 8px" }}>›</span>
-          <span>Lección 2: Navegador y buscador</span>
-        </div>
+        <nav aria-label="Migas de pan" style={{ fontSize: 14, color: tokens.colors.textMuted, marginBottom: 24, fontFamily: "'Nunito', sans-serif", fontWeight: 500 }}>
+          <span style={{ cursor: "pointer", color: tokens.colors.oceanDeep, fontWeight: 600 }} onClick={() => setPage("ruta")}>
+            Mi Ruta
+          </span>
+          <span style={{ margin: "0 10px", color: tokens.colors.textMuted }}>›</span>
+          <span style={{ cursor: "pointer", color: tokens.colors.oceanDeep, fontWeight: 600 }} onClick={() => setPage("ruta")}>
+            Módulo 1
+          </span>
+          <span style={{ margin: "0 10px", color: tokens.colors.textMuted }}>›</span>
+          <span>Lección 2</span>
+        </nav>
 
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 22 : 28, color: tokens.colors.textPrimary, marginBottom: 8 }}>
+        <h2 style={{
+          fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 24 : 30,
+          color: tokens.colors.textPrimary, marginBottom: 10, lineHeight: 1.2,
+        }}>
           Guía: Cómo usar el navegador
         </h2>
-        <div style={{ fontSize: 13, color: tokens.colors.textMuted, marginBottom: 28 }}>
-          📄 guia-navegador.pdf — Página 1 de 5
+        <div style={{
+          fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 32,
+          display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
+          fontFamily: "'Nunito', sans-serif", fontWeight: 500,
+        }}>
+          <span>📄 guia-navegador.pdf</span>
+          <span style={{ width: 4, height: 4, borderRadius: "50%", background: tokens.colors.textMuted }} />
+          <span>Página 1 de 5</span>
+          <span style={{ width: 4, height: 4, borderRadius: "50%", background: tokens.colors.textMuted }} />
+          <span>⏱ 15 min lectura</span>
         </div>
 
         {/* PDF-like content */}
         <div style={{
-          background: tokens.colors.sandLight, borderRadius: 12, padding: isMobile ? "24px 20px" : "36px 40px",
-          border: `1px solid ${tokens.colors.oceanMist}`, marginBottom: 24, lineHeight: 1.8,
+          background: tokens.colors.sandLight, borderRadius: tokens.radii.lg,
+          padding: isMobile ? "28px 22px" : "40px 44px",
+          border: `1px solid ${tokens.colors.oceanMist}`, marginBottom: 28, lineHeight: 1.9,
         }}>
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, color: tokens.colors.oceanDeep, marginBottom: 16 }}>
+          <h3 style={{
+            fontFamily: "'Playfair Display', serif", fontSize: 22,
+            color: tokens.colors.oceanDarker, marginBottom: 18,
+          }}>
             Capítulo 1: ¿Qué es un navegador web?
           </h3>
-          <p style={{ fontSize: 15, color: tokens.colors.textPrimary, marginBottom: 16 }}>
+          <p style={{ fontSize: 16, color: tokens.colors.textBody, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>
             Un navegador web es una aplicación que te permite acceder a páginas de internet.
             Los más comunes son <strong>Google Chrome</strong>, <strong>Mozilla Firefox</strong> y <strong>Microsoft Edge</strong>.
           </p>
-          <p style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.textPrimary, marginBottom: 8 }}>
+          <p style={{ fontWeight: 700, fontSize: 16, color: tokens.colors.textPrimary, marginBottom: 10, fontFamily: "'Nunito', sans-serif" }}>
             Pasos para abrir el navegador:
           </p>
-          <ol style={{ paddingLeft: 20, fontSize: 15, color: tokens.colors.textPrimary }}>
-            <li style={{ marginBottom: 4 }}>Busca el ícono del navegador en tu escritorio</li>
-            <li style={{ marginBottom: 4 }}>Haz doble clic sobre él</li>
-            <li>Espera a que se abra la ventana principal</li>
+          <ol style={{ paddingLeft: 24, fontSize: 16, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>
+            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Busca el ícono del navegador en tu escritorio</li>
+            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Haz doble clic sobre él</li>
+            <li style={{ paddingLeft: 4 }}>Espera a que se abra la ventana principal</li>
           </ol>
         </div>
 
-        {/* Tip Box */}
+        {/* Tip Box — improved */}
         <div style={{
-          background: tokens.colors.coralSoft + "15", border: `1px solid ${tokens.colors.coralSoft}40`,
-          borderRadius: 10, padding: "14px 18px", marginBottom: 32, fontSize: 14,
-          color: tokens.colors.textPrimary, lineHeight: 1.6,
+          background: `linear-gradient(135deg, ${tokens.colors.coralSoft}12, ${tokens.colors.sandWarm}25)`,
+          border: `2px solid ${tokens.colors.coralSoft}30`,
+          borderRadius: tokens.radii.lg, padding: "18px 22px", marginBottom: 36,
+          display: "flex", gap: 14, alignItems: "flex-start",
         }}>
-          <strong style={{ color: tokens.colors.coralSoft }}>Consejo:</strong> Si no encuentras el ícono, puedes buscarlo en el menú Inicio escribiendo el nombre.
+          <span style={{ fontSize: 24, flexShrink: 0, marginTop: 2 }}>💡</span>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.coralSoft, marginBottom: 4, fontFamily: "'Nunito', sans-serif" }}>
+              Consejo práctico
+            </div>
+            <p style={{ fontSize: 15, color: tokens.colors.textBody, lineHeight: 1.7, fontFamily: "'Nunito', sans-serif", margin: 0 }}>
+              Si no encuentras el ícono, puedes buscarlo en el menú Inicio escribiendo el nombre del navegador. ¡No tengas miedo de explorar!
+            </p>
+          </div>
         </div>
 
         {/* Navigation */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button style={{
-            display: "flex", alignItems: "center", gap: 6, background: "none", border: "none",
-            cursor: "pointer", fontSize: 14, color: tokens.colors.textSecondary, fontFamily: "'Nunito', sans-serif",
-          }}>
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          paddingTop: 24, borderTop: `1px solid ${tokens.colors.oceanMist}`,
+        }}>
+          <button
+            aria-label="Ir a la lección anterior"
+            style={{
+              display: "flex", alignItems: "center", gap: 8, background: "none", border: "none",
+              cursor: "pointer", fontSize: 15, color: tokens.colors.textSecondary,
+              fontFamily: "'Nunito', sans-serif", fontWeight: 600, minHeight: 44, padding: "8px 12px",
+              borderRadius: tokens.radii.md, transition: "all 0.2s ease",
+            }}
+          >
             ← Lección anterior
           </button>
-          <span style={{ fontSize: 13, color: tokens.colors.textMuted }}>
-            2 de {EXPLORER_LESSONS.length} lecciones
+          <span style={{ fontSize: 14, color: tokens.colors.textMuted, fontWeight: 600 }}>
+            2 de {EXPLORER_LESSONS.length}
           </span>
-          <Button size="sm" variant="coral" onClick={() => setPage("ruta")}>
+          <Button size="sm" variant="coral" onClick={() => setPage("ruta")} aria-label="Completar lección y continuar">
             Completar y continuar →
           </Button>
         </div>
@@ -1615,50 +2010,42 @@ const PageLogros = () => {
   const { isMobile } = useResponsive();
   return (
   <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
-    <h1
-      style={{
-        fontFamily: "'Playfair Display', serif",
-        fontSize: isMobile ? 28 : 36,
-        marginBottom: 8,
-        animation: "fadeInUp 0.6s ease",
-      }}
-    >
-      Tus logros
-    </h1>
-    <p style={{ fontSize: isMobile ? 15 : 17, color: tokens.colors.textSecondary, marginBottom: isMobile ? 28 : 40, animation: "fadeInUp 0.6s ease 0.1s both" }}>
-      Cada insignia representa un paso en tu camino. ¡Celebra tu progreso!
-    </p>
+    <SectionTitle
+      title="Tus logros"
+      subtitle="Cada insignia representa un paso en tu camino. ¡Celebra tu progreso!"
+    />
 
     {/* Stats */}
-    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 12 : 20, marginBottom: isMobile ? 32 : 48 }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 14 : 22, marginBottom: isMobile ? 36 : 52, marginTop: 36 }}>
       {[
-        { label: "Insignias obtenidas", value: "3 / 8", color: tokens.colors.goldBadge },
-        { label: "Nivel actual", value: "Explorador", color: tokens.colors.oceanDeep },
-        { label: "Días activa", value: "18", color: tokens.colors.coralSoft },
+        { label: "Insignias obtenidas", value: "3 / 8", color: tokens.colors.goldBadge, emoji: "🏅" },
+        { label: "Nivel actual", value: "Explorador", color: tokens.colors.oceanDeep, emoji: "🧭" },
+        { label: "Días activa", value: "18", color: tokens.colors.coralSoft, emoji: "🔥" },
       ].map((stat, i) => (
-        <Card key={i} delay={0.2 + i * 0.1} style={{ textAlign: "center" }}>
-          <div style={{ fontSize: 32, fontWeight: 700, color: stat.color, marginBottom: 4 }}>{stat.value}</div>
-          <div style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{stat.label}</div>
+        <Card key={i} delay={0.2 + i * 0.1} customStyle={{ textAlign: "center" }}>
+          <div style={{ fontSize: 32, marginBottom: 8 }}>{stat.emoji}</div>
+          <div style={{ fontSize: 34, fontWeight: 800, color: stat.color, marginBottom: 6, fontFamily: "'Nunito', sans-serif" }}>{stat.value}</div>
+          <div style={{ fontSize: 15, color: tokens.colors.textBody, fontWeight: 600, fontFamily: "'Nunito', sans-serif" }}>{stat.label}</div>
         </Card>
       ))}
     </div>
 
     {/* Badges Grid */}
-    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? 12 : 20 }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? 14 : 22 }}>
       {BADGES.map((badge, i) => (
         <Card
           key={badge.id}
           delay={0.3 + i * 0.08}
-          style={{
+          customStyle={{
             textAlign: "center",
-            opacity: badge.earned ? 1 : 0.45,
-            background: badge.earned ? "white" : "#F5F5F5",
+            opacity: badge.earned ? 1 : 0.5,
+            background: badge.earned ? `linear-gradient(135deg, white, ${tokens.colors.sandWarm}30)` : "#F5F5F5",
           }}
         >
           <div
             style={{
-              width: 72,
-              height: 72,
+              width: 80,
+              height: 80,
               borderRadius: "50%",
               background: badge.earned
                 ? `linear-gradient(135deg, ${tokens.colors.goldBadge}30, ${tokens.colors.sandWarm})`
@@ -1666,15 +2053,17 @@ const PageLogros = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 auto 12px",
-              fontSize: 32,
-              boxShadow: badge.earned ? `0 0 0 3px ${tokens.colors.goldBadge}40` : "none",
+              margin: "0 auto 14px",
+              fontSize: 36,
+              boxShadow: badge.earned ? `0 0 0 4px ${tokens.colors.goldBadge}40, 0 4px 12px ${tokens.colors.goldBadge}20` : "none",
+              animation: badge.earned ? "scaleIn 0.5s ease both" : "none",
+              animationDelay: `${0.3 + i * 0.08}s`,
             }}
           >
             {badge.earned ? badge.icon : "🔒"}
           </div>
-          <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{badge.name}</div>
-          <div style={{ fontSize: 12, color: tokens.colors.textMuted }}>
+          <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{badge.name}</div>
+          <div style={{ fontSize: 13, color: badge.earned ? tokens.colors.forestCalm : tokens.colors.textMuted, fontWeight: 600 }}>
             {badge.earned ? badge.date : "Por desbloquear"}
           </div>
         </Card>
@@ -1689,106 +2078,100 @@ const PagePerfil = () => {
   const { isMobile } = useResponsive();
   return (
   <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 800, margin: "0 auto" }}>
-    <h1
-      style={{
-        fontFamily: "'Playfair Display', serif",
-        fontSize: isMobile ? 28 : 36,
-        marginBottom: isMobile ? 24 : 32,
-        animation: "fadeInUp 0.6s ease",
-      }}
-    >
-      Mi cuenta
-    </h1>
+    <SectionTitle
+      title="Mi cuenta"
+      subtitle="Tu espacio personal en Brújula Digital"
+    />
 
-    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", gap: isMobile ? 20 : 32 }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", gap: isMobile ? 22 : 32, marginTop: 36 }}>
       {/* Profile Card */}
-      <Card style={{ textAlign: "center", animation: "fadeInUp 0.6s ease 0.1s both" }}>
+      <Card customStyle={{ textAlign: "center" }} delay={0.1}>
         <div
           style={{
-            width: 100,
-            height: 100,
+            width: 110,
+            height: 110,
             borderRadius: "50%",
             background: `linear-gradient(135deg, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`,
             color: "white",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 36,
+            fontSize: 40,
             fontWeight: 700,
-            margin: "0 auto 16px",
+            margin: "0 auto 18px",
             fontFamily: "'Playfair Display', serif",
+            boxShadow: `0 0 0 4px ${tokens.colors.oceanDeep}15, ${tokens.shadows.md}`,
           }}
         >
           CZ
         </div>
-        <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Carla Zuñiga</h2>
-        <p style={{ fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 16 }}>Docente de Inglés</p>
+        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, color: tokens.colors.oceanDarker, fontFamily: "'Playfair Display', serif" }}>Carla Zuñiga</h2>
+        <p style={{ fontSize: 15, color: tokens.colors.textBody, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>Docente de Inglés</p>
         <LevelBadge level="explorador" size="sm" />
-        <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid #EEE" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8 }}>
-            <span style={{ color: tokens.colors.textSecondary }}>Experiencia</span>
-            <span style={{ fontWeight: 600 }}>28 años</span>
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 8 }}>
-            <span style={{ color: tokens.colors.textSecondary }}>Edad</span>
-            <span style={{ fontWeight: 600 }}>50 años</span>
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14 }}>
-            <span style={{ color: tokens.colors.textSecondary }}>Miembro desde</span>
-            <span style={{ fontWeight: 600 }}>Feb 2026</span>
-          </div>
+        <div style={{ marginTop: 22, paddingTop: 22, borderTop: `1px solid ${tokens.colors.oceanMist}` }}>
+          {[
+            { label: "Experiencia", value: "28 años" },
+            { label: "Edad", value: "50 años" },
+            { label: "Miembro desde", value: "Feb 2026" },
+          ].map((item, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 15, marginBottom: i < 2 ? 10 : 0, fontFamily: "'Nunito', sans-serif" }}>
+              <span style={{ color: tokens.colors.textSecondary }}>{item.label}</span>
+              <span style={{ fontWeight: 700, color: tokens.colors.textBody }}>{item.value}</span>
+            </div>
+          ))}
         </div>
       </Card>
 
       {/* Info Cards */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-        <Card style={{ animation: "fadeInUp 0.6s ease 0.2s both" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+        <Card delay={0.2}>
           <h3
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 20,
-              marginBottom: 16,
-              color: tokens.colors.oceanDeep,
+              fontSize: 22,
+              marginBottom: 18,
+              color: tokens.colors.oceanDarker,
             }}
           >
             Progreso en la ruta
           </h3>
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, marginBottom: 6 }}>
-              <span style={{ color: tokens.colors.textSecondary }}>Nivel Explorador</span>
-              <span style={{ fontWeight: 600 }}>68%</span>
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
+              <span style={{ color: tokens.colors.textBody, fontWeight: 600 }}>Nivel Explorador</span>
+              <span style={{ fontWeight: 800, color: tokens.colors.oceanDeep }}>68%</span>
             </div>
             <ProgressBar value={68} height={10} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 12, marginTop: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 14, marginTop: 22 }}>
             {[
-              { label: "Módulos completados", value: "1 / 8" },
-              { label: "Lecciones terminadas", value: "9 / 37" },
-              { label: "Horas de práctica", value: "12h" },
+              { label: "Módulos completados", value: "1 / 8", emoji: "📚" },
+              { label: "Lecciones terminadas", value: "9 / 37", emoji: "✅" },
+              { label: "Horas de práctica", value: "12h", emoji: "⏱️" },
             ].map((stat, i) => (
               <div
                 key={i}
                 style={{
                   textAlign: "center",
-                  padding: 12,
-                  background: tokens.colors.sandLight,
-                  borderRadius: 10,
+                  padding: 14,
+                  background: `linear-gradient(135deg, ${tokens.colors.sandLight}, ${tokens.colors.oceanMist}40)`,
+                  borderRadius: tokens.radii.md,
                 }}
               >
-                <div style={{ fontSize: 22, fontWeight: 700, color: tokens.colors.oceanDeep }}>{stat.value}</div>
-                <div style={{ fontSize: 12, color: tokens.colors.textSecondary, marginTop: 2 }}>{stat.label}</div>
+                <div style={{ fontSize: 22, marginBottom: 4 }}>{stat.emoji}</div>
+                <div style={{ fontSize: 24, fontWeight: 800, color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif" }}>{stat.value}</div>
+                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, marginTop: 4, fontWeight: 600 }}>{stat.label}</div>
               </div>
             ))}
           </div>
         </Card>
 
-        <Card style={{ animation: "fadeInUp 0.6s ease 0.3s both" }}>
+        <Card delay={0.3}>
           <h3
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 20,
-              marginBottom: 16,
-              color: tokens.colors.oceanDeep,
+              fontSize: 22,
+              marginBottom: 18,
+              color: tokens.colors.oceanDarker,
             }}
           >
             Actividad reciente
@@ -1804,15 +2187,15 @@ const PagePerfil = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 12,
-                padding: "12px 0",
-                borderBottom: i < 3 ? "1px solid #F0F0F0" : "none",
+                gap: 14,
+                padding: "14px 0",
+                borderBottom: i < 3 ? `1px solid ${tokens.colors.oceanMist}` : "none",
               }}
             >
-              <span style={{ fontSize: 22 }}>{item.icon}</span>
+              <span style={{ fontSize: 24 }}>{item.icon}</span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>{item.action}</div>
-                <div style={{ fontSize: 12, color: tokens.colors.textMuted }}>{item.time}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{item.action}</div>
+                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500, marginTop: 2 }}>{item.time}</div>
               </div>
             </div>
           ))}
@@ -1830,20 +2213,22 @@ const HelpButton = () => {
     <>
       <button
         onClick={() => setOpen(!open)}
+        aria-label={open ? "Cerrar ayuda" : "Abrir ayuda"}
+        aria-expanded={open}
         style={{
           position: "fixed",
           bottom: 24,
           right: 24,
-          width: 56,
-          height: 56,
+          width: 60,
+          height: 60,
           borderRadius: "50%",
-          background: tokens.colors.coralSoft,
+          background: `linear-gradient(135deg, ${tokens.colors.coralSoft}, #E07A62)`,
           border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 4px 20px rgba(232,146,124,0.4)",
+          boxShadow: `0 4px 24px rgba(232,146,124,0.45)`,
           zIndex: 200,
           transition: "all 0.3s ease",
           transform: open ? "rotate(45deg)" : "rotate(0)",
@@ -1853,33 +2238,35 @@ const HelpButton = () => {
       </button>
       {open && (
         <div
+          role="dialog"
+          aria-label="Panel de ayuda"
           style={{
             position: "fixed",
-            bottom: 92,
+            bottom: 96,
             right: 24,
-            width: 300,
+            width: 320,
             background: "white",
-            borderRadius: 16,
-            padding: 24,
-            boxShadow: "0 8px 40px rgba(0,0,0,0.15)",
+            borderRadius: tokens.radii.lg,
+            padding: 28,
+            boxShadow: tokens.shadows.lg,
             zIndex: 200,
             animation: "slideDown 0.3s ease",
           }}
         >
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, marginBottom: 12, color: tokens.colors.oceanDeep }}>
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, marginBottom: 14, color: tokens.colors.oceanDarker }}>
             ¿Necesitas ayuda?
           </h3>
-          <p style={{ fontSize: 14, color: tokens.colors.textSecondary, lineHeight: 1.6, marginBottom: 16 }}>
+          <p style={{ fontSize: 15, color: tokens.colors.textBody, lineHeight: 1.7, marginBottom: 20, fontFamily: "'Nunito', sans-serif" }}>
             No te preocupes, estamos aquí para acompañarte. Elige cómo prefieres recibir ayuda:
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <Button size="sm" style={{ width: "100%", justifyContent: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <Button size="sm" aria-label="Iniciar chat con un mentor" style={{ width: "100%", justifyContent: "center" }}>
               💬 Chat con un mentor
             </Button>
-            <Button size="sm" variant="secondary" style={{ width: "100%", justifyContent: "center" }}>
+            <Button size="sm" variant="secondary" aria-label="Ver guías rápidas" style={{ width: "100%", justifyContent: "center" }}>
               📋 Ver guías rápidas
             </Button>
-            <Button size="sm" variant="secondary" style={{ width: "100%", justifyContent: "center" }}>
+            <Button size="sm" variant="secondary" aria-label="Solicitar una llamada de ayuda" style={{ width: "100%", justifyContent: "center" }}>
               📞 Solicitar llamada
             </Button>
           </div>
@@ -1893,71 +2280,157 @@ const HelpButton = () => {
 const Footer = () => {
   const { isMobile, isTablet } = useResponsive();
   return (
-  <footer
-    style={{
-      background: tokens.colors.textPrimary,
-      color: "white",
-      padding: isMobile ? "40px 20px" : "48px 24px",
-      marginTop: isMobile ? 40 : 64,
-    }}
-  >
+  <footer style={{ marginTop: isMobile ? 40 : 64 }}>
+    {/* Wave divider */}
+    <WaveDivider color={tokens.colors.oceanDeep} />
+
+    {/* Motivational banner */}
     <div
       style={{
-        maxWidth: 1200,
-        margin: "0 auto",
-        display: "grid",
-        gridTemplateColumns: isMobile ? "1fr 1fr" : isTablet ? "1fr 1fr" : "2fr 1fr 1fr 1fr",
-        gap: isMobile ? 24 : 40,
+        background: tokens.colors.oceanDeep,
+        padding: isMobile ? "28px 20px" : "32px 24px",
+        textAlign: "center",
       }}
     >
-      <div style={{ gridColumn: isMobile ? "1 / -1" : "auto" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <CompassIcon size={32} />
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 700 }}>
-            BRÚJULA DIGITAL
-          </span>
+      <p
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: isMobile ? 18 : 22,
+          color: "white",
+          fontWeight: 700,
+          margin: 0,
+          lineHeight: 1.4,
+        }}
+      >
+        Impulsando la transformación digital docente
+      </p>
+      <p
+        style={{
+          fontSize: isMobile ? 14 : 15,
+          color: tokens.colors.oceanMist,
+          margin: "8px 0 0",
+          fontFamily: "'Nunito', sans-serif",
+          fontWeight: 500,
+        }}
+      >
+        Formación práctica diseñada por y para educadores
+      </p>
+    </div>
+
+    {/* Main footer content */}
+    <div
+      style={{
+        background: `linear-gradient(180deg, ${tokens.colors.oceanDeep} 0%, ${tokens.colors.oceanDarker} 100%)`,
+        color: "white",
+        padding: isMobile ? "40px 20px 32px" : "56px 24px 40px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "2.5fr 1fr 1fr 1fr",
+          gap: isMobile ? 32 : 48,
+        }}
+      >
+        {/* Brand column */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+            <CompassIcon size={36} />
+            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700 }}>
+              BRÚJULA DIGITAL
+            </span>
+          </div>
+          <p style={{ fontSize: 15, color: "rgba(232,244,244,0.8)", lineHeight: 1.7, maxWidth: 300, fontFamily: "'Nunito', sans-serif" }}>
+            Tu compañera de viaje hacia la autonomía digital. Aprendizaje práctico, accesible y a tu ritmo.
+          </p>
+          <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
+            {["📧", "💬", "📱"].map((emoji, i) => (
+              <div
+                key={i}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: tokens.radii.md,
+                  background: "rgba(255,255,255,0.1)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 18,
+                  cursor: "pointer",
+                  transition: "background 0.2s ease",
+                }}
+                className="footer-link"
+              >
+                {emoji}
+              </div>
+            ))}
+          </div>
         </div>
-        <p style={{ fontSize: 14, color: "#AAA", lineHeight: 1.6, maxWidth: 280 }}>
-          Autonomía digital para docentes. Aprendizaje práctico, accesible y acompañado.
-        </p>
-      </div>
-      {[
-        { title: "Plataforma", items: ["Inicio", "Diagnóstico", "Mi Ruta", "Logros"] },
-        { title: "Comunidad", items: ["Foro docente", "Mentores", "Eventos", "Blog"] },
-        { title: "Soporte", items: ["Centro de ayuda", "Contacto", "Guías rápidas", "FAQ"] },
-      ].map((col, i) => (
-        <div key={i}>
-          <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, letterSpacing: 1, textTransform: "uppercase" }}>
-            {col.title}
-          </h4>
-          {col.items.map((item, j) => (
-            <div
-              key={j}
+
+        {/* Links columns */}
+        {[
+          { title: "Plataforma", items: ["Inicio", "Diagnóstico", "Mi Ruta", "Logros", "Biblioteca"] },
+          { title: "Comunidad", items: ["Foro docente", "Mentores", "Eventos", "Blog", "Historias de éxito"] },
+          { title: "Soporte", items: ["Centro de ayuda", "Contacto", "Guías rápidas", "FAQ", "Accesibilidad"] },
+        ].map((col, i) => (
+          <div key={i}>
+            <h4
               style={{
-                fontSize: 14,
-                color: "#AAA",
-                marginBottom: 10,
-                cursor: "pointer",
+                fontSize: 13,
+                fontWeight: 700,
+                marginBottom: 20,
+                letterSpacing: 1.5,
+                textTransform: "uppercase",
+                color: tokens.colors.sandWarm,
+                fontFamily: "'Nunito', sans-serif",
               }}
             >
-              {item}
-            </div>
-          ))}
+              {col.title}
+            </h4>
+            {col.items.map((item, j) => (
+              <div
+                key={j}
+                className="footer-link"
+                style={{
+                  fontSize: 14,
+                  color: "rgba(232,244,244,0.7)",
+                  marginBottom: 12,
+                  cursor: "pointer",
+                  fontFamily: "'Nunito', sans-serif",
+                  fontWeight: 500,
+                  transition: "color 0.2s ease, padding-left 0.2s ease",
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom bar */}
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "40px auto 0",
+          paddingTop: 24,
+          borderTop: "1px solid rgba(232,244,244,0.15)",
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+        }}
+      >
+        <div style={{ fontSize: 13, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
+          © 2026 Brújula Digital · Chispas Estratégicas
         </div>
-      ))}
-    </div>
-    <div
-      style={{
-        maxWidth: 1200,
-        margin: "32px auto 0",
-        paddingTop: 24,
-        borderTop: "1px solid #444",
-        textAlign: "center",
-        fontSize: 13,
-        color: "#777",
-      }}
-    >
-      © 2026 Brújula Digital · Chispas Estratégicas · Aprender sin Edad
+        <div style={{ fontSize: 13, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
+          Aprender no tiene edad 🌟
+        </div>
+      </div>
     </div>
   </footer>
   );
