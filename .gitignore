@@ -4,6 +4,7 @@ npm-debug.log
 yarn-error.log
 
 # Build outputs
+.next/
 dist/
 build/
 *.tsbuildinfo
@@ -37,3 +38,18 @@ temp/
 package-lock.json
 yarn.lock
 .vercel
+.github/
+# Next.js build output
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env*.local
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
