@@ -155,6 +155,37 @@ const COMMUNITY_POSTS = [
   },
 ];
 
+const BIBLIOTECA_ITEMS_P3 = [
+  { id: 1, titulo: "Examen de fracciones", materia: "📐 Matemáticas", icon: "📄", bgColor: "#E8F4F4", iconColor: tokens.colors.oceanDeep, descargas: 34, tipo: "Oficial" },
+  { id: 2, titulo: "Sistema Solar PPT", materia: "🔬 Ciencias", icon: "📊", bgColor: "#F5E6D3", iconColor: "#8B6914", descargas: 41, tipo: "Popular" },
+  { id: 3, titulo: "Comprensión lectora", materia: "📖 Lenguaje", icon: "📖", bgColor: "#E8927C20", iconColor: tokens.colors.coralSoft, descargas: 19, tipo: "Oficial" },
+  { id: 4, titulo: "Línea de tiempo", materia: "🌍 Historia", icon: "🗺️", bgColor: "#5B8A7220", iconColor: tokens.colors.forestCalm, descargas: 15, tipo: "Popular" },
+];
+
+const RUTA_MODULES_P3 = [
+  { id: 1, titulo: "Primeros Pasos", desc: "Registro en Canva, navegación de la interfaz y tu primer diseño educativo.", estado: "completado", progreso: 100, lecciones: 4, completadas: 4 },
+  { id: 2, titulo: "Diseños para el Aula", desc: "Plantillas educativas, personalización avanzada y formatos para cada materia.", estado: "en-progreso", progreso: 50, lecciones: 4, completadas: 2 },
+  { id: 3, titulo: "Presentaciones", desc: "Crea presentaciones interactivas con animaciones y transiciones.", estado: "bloqueado", progreso: 0, lecciones: 4, completadas: 0 },
+];
+
+const QUIZ_DATA_P3 = {
+  modulo: 3,
+  leccion: 3,
+  titulo: "Ejercicio: Crea tu primer correo",
+  xp: 20,
+  preguntaActual: 2,
+  totalPreguntas: 5,
+  pregunta: "¿Cuál es el primer paso para crear una cuenta de correo electrónico?",
+  opciones: [
+    { letra: "A", texto: "Escribir un correo a un amigo", correcta: false },
+    { letra: "B", texto: "Ir a la página del proveedor (Gmail, Outlook)", correcta: true },
+    { letra: "C", texto: "Descargar una aplicación de mensajería", correcta: false },
+    { letra: "D", texto: "Pedir a un compañero que lo haga", correcta: false },
+  ],
+  feedback: "¡Correcto! El primer paso es visitar la página del proveedor.",
+  tip: "Tip: Los más comunes son Gmail (Google) y Outlook (Microsoft).",
+};
+
 const DIAGNOSTIC_QUESTIONS = [
   {
     id: 1,
@@ -492,11 +523,12 @@ const Navbar = ({ currentPage, setPage }) => {
 
   const navItems = [
     { id: "inicio", label: "Inicio" },
-    { id: "diagnostico", label: "Diagnóstico" },
-    { id: "ruta", label: "Mi Ruta" },
+    { id: "ruta", label: "Ruta" },
+    { id: "explorador", label: "Explorador" },
+    { id: "biblioteca", label: "Biblioteca" },
     { id: "comunidad", label: "Comunidad" },
     { id: "logros", label: "Logros" },
-    { id: "perfil", label: "Mi Cuenta" },
+    { id: "perfil", label: "Perfil" },
   ];
 
   return (
@@ -1083,299 +1115,559 @@ const PageDiagnostico = ({ setPage }) => {
 
 // ========== PAGE: MI RUTA ==========
 const PageRuta = ({ setPage }) => {
-  const { isMobile } = useResponsive();
-  const levels = [
-    { key: "explorador", label: "Explorador Digital", color: tokens.colors.oceanDeep },
-    { key: "integrador", label: "Integrador Estratégico", color: tokens.colors.coralSoft },
-    { key: "autonomo", label: "Docente Autónomo", color: tokens.colors.forestCalm },
-  ];
+  const { isMobile, isTablet } = useResponsive();
 
-  const totalProgress = Math.round(
-    MODULES.reduce((acc, m) => acc + m.progress, 0) / MODULES.length
-  );
+  const dotColor = (mod) => mod.estado === "completado" ? tokens.colors.forestCalm : mod.estado === "en-progreso" ? tokens.colors.coralSoft : "#E0E0E0";
+  const lineColor = (mod) => mod.estado === "completado" ? tokens.colors.forestCalm : "#E0E0E0";
 
   return (
-    <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
-      {/* Header */}
-      <div style={{ marginBottom: 40, animation: "fadeInUp 0.6s ease" }}>
-        <h1
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: isMobile ? 26 : 36,
-            marginBottom: 8,
-          }}
-        >
-          Tu ruta hacia la autonomía digital
-        </h1>
-        <p style={{ fontSize: isMobile ? 15 : 17, color: tokens.colors.textSecondary, marginBottom: 24 }}>
-          Avanza paso a paso desarrollando seguridad, criterio pedagógico y autonomía.
-        </p>
-        <Card style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 16 : 24, padding: "20px 28px" }}>
-          <div>
-            <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 4 }}>Progreso general</div>
-            <div style={{ fontSize: 32, fontWeight: 700, color: tokens.colors.oceanDeep }}>{totalProgress}%</div>
+    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "calc(100vh - 64px)" }}>
+      {/* Sidebar oscuro */}
+      <div style={{
+        width: isMobile ? "100%" : 260,
+        background: tokens.colors.oceanDeep,
+        padding: isMobile ? "24px 20px" : "32px 24px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 24,
+        flexShrink: 0,
+      }}>
+        <div style={{ fontSize: 12, fontWeight: 600, color: tokens.colors.oceanMist, letterSpacing: 2, textTransform: "uppercase" }}>
+          Tu Nivel
+        </div>
+        {/* Level Card */}
+        <div style={{
+          background: "rgba(255,255,255,0.08)",
+          borderRadius: 16,
+          padding: "20px 16px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+        }}>
+          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: "white" }}>
+            🧭 Explorador
           </div>
-          <div style={{ flex: 1, width: isMobile ? "100%" : "auto" }}>
-            <ProgressBar value={totalProgress} height={12} />
+          <div style={{ fontSize: 12, color: tokens.colors.oceanMist }}>Nivel 1 de 3</div>
+          <div style={{ background: "rgba(255,255,255,0.19)", borderRadius: 4, height: 8 }}>
+            <div style={{ width: "42%", height: "100%", borderRadius: 4, background: tokens.colors.goldBadge }} />
           </div>
-          <div style={{ textAlign: isMobile ? "left" : "right" }}>
-            <div style={{ fontSize: 13, color: tokens.colors.textSecondary }}>Nivel actual</div>
-            <LevelBadge level="explorador" size="sm" />
-          </div>
-        </Card>
+          <div style={{ fontSize: 11, color: tokens.colors.goldBadge }}>1,250 / 3,000 XP</div>
+        </div>
+        {/* Divider */}
+        <div style={{ height: 1, background: "rgba(255,255,255,0.13)" }} />
+        {/* Stats */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {[
+            { emoji: "📚", label: "Lecciones", value: "7 / 20" },
+            { emoji: "🏆", label: "Insignias", value: "2 / 8" },
+            { emoji: "⏱", label: "Tiempo total", value: "4.5 hrs" },
+          ].map((s) => (
+            <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span style={{ fontSize: 20 }}>{s.emoji}</span>
+              <div>
+                <div style={{ fontSize: 11, color: tokens.colors.oceanMist }}>{s.label}</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: "white" }}>{s.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Modules by level */}
-      {levels.map((level, li) => (
-        <div key={level.key} style={{ marginBottom: 48, animation: `fadeInUp 0.6s ease ${0.2 + li * 0.15}s both` }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-            <div
-              style={{
-                width: 4,
-                height: 28,
-                borderRadius: 2,
-                background: level.color,
-              }}
-            />
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, color: level.color }}>
-              {level.label}
-            </h2>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingLeft: 20 }}>
-            {MODULES.filter((m) => m.level === level.key).map((mod, mi) => (
-              <div
-                key={mod.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 20,
-                  position: "relative",
-                }}
-              >
-                {/* Connector line */}
-                {mi > 0 && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: 19,
-                      top: -16,
-                      width: 2,
-                      height: 16,
-                      background: mod.unlocked ? level.color + "40" : "#E0E0E0",
-                    }}
-                  />
-                )}
-
-                {/* Node */}
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: "50%",
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: mod.progress === 100
-                      ? tokens.colors.forestCalm
-                      : mod.unlocked
-                      ? level.color
-                      : "#E0E0E0",
-                    color: "white",
-                    fontSize: 14,
-                    fontWeight: 700,
-                  }}
-                >
-                  {mod.progress === 100 ? <CheckIcon /> : mod.unlocked ? mod.id : <LockIcon />}
-                </div>
-
-                {/* Card */}
-                <div
-                  style={{
-                    flex: 1,
-                    background: mod.unlocked ? "white" : "#F5F5F5",
-                    borderRadius: 14,
-                    padding: "18px 22px",
-                    opacity: mod.unlocked ? 1 : 0.6,
-                    boxShadow: mod.unlocked ? "0 2px 12px rgba(0,0,0,0.06)" : "none",
-                    transition: "all 0.3s ease",
-                    cursor: mod.unlocked ? "pointer" : "default",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (mod.unlocked) e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.1)";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (mod.unlocked) e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)";
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 10 : 0, marginBottom: 6 }}>
-                    <div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <span style={{ fontSize: 20 }}>{mod.icon}</span>
-                        <h3 style={{ fontSize: isMobile ? 15 : 17, fontWeight: 700 }}>{mod.title}</h3>
-                      </div>
-                      <p style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{mod.desc}</p>
-                    </div>
-                    {mod.unlocked && mod.progress < 100 && (
-                      <Button size="sm" variant={mod.progress > 0 ? "primary" : "secondary"}>
-                        {mod.progress > 0 ? "Continuar" : "Iniciar"}
-                      </Button>
-                    )}
-                    {mod.progress === 100 && (
-                      <span style={{ fontSize: 13, fontWeight: 600, color: tokens.colors.forestCalm, flexShrink: 0 }}>
-                        ✓ Completado
-                      </span>
-                    )}
-                  </div>
-                  {mod.unlocked && (
-                    <div style={{ marginTop: 10 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: tokens.colors.textMuted, marginBottom: 4 }}>
-                        <span>{mod.completed}/{mod.lessons} lecciones</span>
-                        <span>{mod.progress}%</span>
-                      </div>
-                      <ProgressBar value={mod.progress} height={6} />
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Main timeline */}
+      <div style={{ flex: 1, padding: isMobile ? "24px 20px" : "32px 40px", display: "flex", flexDirection: "column", gap: 24 }}>
+        <div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 22 : 26, color: tokens.colors.oceanDeep, marginBottom: 4 }}>
+            Ruta: Dominando Canva
+          </h1>
+          <p style={{ fontSize: 14, color: "#666666" }}>Sigue tu camino paso a paso hacia la maestría digital</p>
         </div>
-      ))}
+
+        {RUTA_MODULES_P3.map((mod, i) => (
+          <div key={mod.id} style={{ display: "flex", gap: 20, opacity: mod.estado === "bloqueado" ? 0.5 : 1 }}>
+            {/* Dot + Line */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ width: 24, height: 24, borderRadius: 12, background: dotColor(mod), flexShrink: 0 }} />
+              {i < RUTA_MODULES_P3.length - 1 && (
+                <div style={{ width: 3, height: mod.estado === "en-progreso" ? 120 : 80, background: lineColor(mod) }} />
+              )}
+            </div>
+            {/* Card */}
+            <div style={{
+              flex: 1,
+              background: "white",
+              borderRadius: 12,
+              padding: "16px 20px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700, color: mod.estado === "bloqueado" ? "#AAAAAA" : tokens.colors.oceanDeep }}>
+                  Módulo {mod.id}: {mod.titulo}
+                </h3>
+                {mod.estado === "completado" && (
+                  <span style={{ fontSize: 11, fontWeight: 600, color: "white", background: tokens.colors.forestCalm, borderRadius: 8, padding: "4px 10px" }}>
+                    Completado
+                  </span>
+                )}
+                {mod.estado === "en-progreso" && (
+                  <span style={{ fontSize: 11, fontWeight: 600, color: "white", background: tokens.colors.coralSoft, borderRadius: 8, padding: "4px 10px" }}>
+                    En Progreso
+                  </span>
+                )}
+                {mod.estado === "bloqueado" && <LockIcon />}
+              </div>
+              <p style={{ fontSize: 13, lineHeight: 1.3, color: mod.estado === "bloqueado" ? "#CCCCCC" : "#666666" }}>
+                {mod.desc}
+              </p>
+              {mod.estado === "en-progreso" && (
+                <>
+                  <div style={{ background: tokens.colors.sandWarm, borderRadius: 3, height: 6 }}>
+                    <div style={{ width: `${mod.progreso}%`, height: "100%", borderRadius: 3, background: tokens.colors.coralSoft }} />
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: 11, color: tokens.colors.coralSoft }}>{mod.completadas} de {mod.lecciones} lecciones</span>
+                    <Button size="sm" variant="coral" onClick={() => setPage("explorador")}>Continuar</Button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 // ========== PAGE: COMUNIDAD ==========
 const PageComunidad = () => {
+  const { isMobile } = useResponsive();
+  const [activeTab, setActiveTab] = useState("foro");
   const [likedPosts, setLikedPosts] = useState({});
 
-  return (
-    <div style={{ padding: "48px 24px", maxWidth: 720, margin: "0 auto" }}>
-      <h1
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 36,
-          marginBottom: 8,
-          animation: "fadeInUp 0.6s ease",
-        }}
-      >
-        Comunidad docente
-      </h1>
-      <p style={{ fontSize: 17, color: tokens.colors.textSecondary, marginBottom: 32, animation: "fadeInUp 0.6s ease 0.1s both" }}>
-        Comparte experiencias, haz preguntas y aprende junto a otros docentes.
-      </p>
+  const posts = [
+    { id: 1, autor: "María García", subtitulo: "Profesora de Historia", avatar: tokens.colors.forestCalm, tag: "Pregunta", tagBg: tokens.colors.oceanMist, tagColor: tokens.colors.oceanDeep, texto: "¿Cómo puedo usar Canva para crear presentaciones interactivas para mis alumnos de historia?", respuestas: 5, likes: 12 },
+    { id: 2, autor: "Carlos López", subtitulo: "Profesor de Matemáticas", avatar: tokens.colors.coralSoft, tag: "Experiencia", tagBg: tokens.colors.sandWarm, tagColor: "#8B6914", texto: "💡 Mi experiencia usando Google Classroom: Después de 3 meses de uso, logré organizar mis cursos de matemáticas de forma eficiente. Los estudiantes ahora entregan tareas a tiempo y la comunicación mejoró un 80%.", respuestas: 8, likes: 24, bgColor: tokens.colors.sandLight },
+    { id: 3, autor: "Ana Rodríguez", subtitulo: "Profesora de Ciencias", avatar: tokens.colors.goldBadge, tag: "Pregunta", tagBg: tokens.colors.oceanMist, tagColor: tokens.colors.oceanDeep, texto: "¿Alguien ha probado usar Kahoot para evaluaciones? Me gustaría saber si funciona bien con grupos grandes de 40+ estudiantes.", respuestas: 3, likes: 7 },
+  ];
 
-      {/* Compose */}
-      <Card style={{ marginBottom: 24, animation: "fadeInUp 0.6s ease 0.2s both" }}>
-        <div style={{ display: "flex", gap: 12, alignItems: "start" }}>
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: "50%",
-              background: tokens.colors.oceanDeep,
-              color: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 700,
-              fontSize: 16,
-              flexShrink: 0,
-            }}
-          >
-            CZ
+  const menuItems = [
+    { id: "foro", label: "Foro de Preguntas", icon: "💬" },
+    { id: "experiencias", label: "Experiencias", icon: "❤️" },
+    { id: "recursos", label: "Recursos", icon: "📁" },
+  ];
+
+  return (
+    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "calc(100vh - 64px)", background: tokens.colors.sandLight }}>
+      {/* Sidebar */}
+      <div style={{
+        width: isMobile ? "100%" : 240,
+        padding: isMobile ? "16px" : "0",
+        display: "flex",
+        flexDirection: isMobile ? "row" : "column",
+        gap: 12,
+        flexShrink: 0,
+      }}>
+        {/* Profile Card */}
+        {!isMobile && (
+          <div style={{
+            background: "white",
+            borderRadius: 16,
+            padding: "20px 16px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 12,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
+          }}>
+            <div style={{ width: 56, height: 56, borderRadius: "50%", background: tokens.colors.oceanLight }} />
+            <div style={{ fontWeight: 700, fontSize: 14, color: tokens.colors.oceanDeep }}>Docente</div>
+            <div style={{ fontSize: 12, color: "#8E8E93" }}>Nivel: Explorador</div>
+            <div style={{ width: "100%", background: tokens.colors.oceanMist, borderRadius: 4, height: 8 }}>
+              <div style={{ width: "60%", height: "100%", borderRadius: 4, background: tokens.colors.oceanDeep }} />
+            </div>
           </div>
-          <div style={{ flex: 1 }}>
-            <div
+        )}
+        {/* Menu Card */}
+        <div style={{
+          background: "white",
+          borderRadius: 16,
+          overflow: "hidden",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.02)",
+          display: "flex",
+          flexDirection: isMobile ? "row" : "column",
+          width: isMobile ? "100%" : "auto",
+        }}>
+          {menuItems.map((item, idx) => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
               style={{
-                width: "100%",
-                padding: "14px 18px",
-                border: `2px solid #E0E0E0`,
-                borderRadius: 12,
-                fontSize: 15,
-                color: tokens.colors.textMuted,
-                background: "#FAFAFA",
-                cursor: "text",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "12px 16px",
+                border: "none",
+                cursor: "pointer",
+                fontFamily: "'Nunito', sans-serif",
+                fontSize: 13,
+                fontWeight: activeTab === item.id ? 700 : 500,
+                color: activeTab === item.id ? tokens.colors.oceanDeep : "#6B6B6B",
+                background: activeTab === item.id ? tokens.colors.oceanMist : "transparent",
+                borderRadius: idx === 0 ? (isMobile ? "16px 0 0 16px" : "16px 16px 0 0") : idx === menuItems.length - 1 ? (isMobile ? "0 16px 16px 0" : "0 0 16px 16px") : 0,
+                flex: isMobile ? 1 : "none",
+                justifyContent: isMobile ? "center" : "flex-start",
               }}
             >
-              ¿Qué quieres compartir hoy, Carla?
-            </div>
-            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 10 }}>
-              <Button size="sm">Publicar</Button>
+              <span>{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Feed */}
+      <div style={{ flex: 1, padding: isMobile ? "0 16px 24px" : "24px 48px", display: "flex", flexDirection: "column", gap: 16 }}>
+        {/* Compose Box */}
+        <div style={{
+          background: "white",
+          borderRadius: 16,
+          padding: "16px 20px",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.02)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+        }}>
+          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: tokens.colors.oceanLight, flexShrink: 0 }} />
+            <div style={{
+              flex: 1,
+              padding: "10px 16px",
+              borderRadius: 20,
+              background: tokens.colors.sandWarm,
+              fontSize: 13,
+              color: "#9E8E7E",
+              cursor: "text",
+            }}>
+              ¿Qué quieres compartir con la comunidad?
             </div>
           </div>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: 16 }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: tokens.colors.oceanDeep, background: tokens.colors.oceanMist, borderRadius: 16, padding: "6px 12px", cursor: "pointer" }}>
+              ❓ Pregunta
+            </span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: "#8B6914", background: tokens.colors.sandWarm, borderRadius: 16, padding: "6px 12px", cursor: "pointer" }}>
+              ❤️ Experiencia
+            </span>
+          </div>
         </div>
-      </Card>
 
-      {/* Posts */}
-      {COMMUNITY_POSTS.map((post, i) => (
-        <Card key={post.id} style={{ marginBottom: 16 }} delay={0.3 + i * 0.1}>
-          <div style={{ display: "flex", gap: 12 }}>
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: "50%",
-                background: post.color,
-                color: "white",
+        {/* Posts */}
+        {posts.map((post) => (
+          <div key={post.id} style={{
+            background: post.bgColor || "white",
+            borderRadius: 16,
+            padding: "16px 20px",
+            boxShadow: post.bgColor ? "none" : "0 2px 12px rgba(0,0,0,0.02)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: post.avatar, flexShrink: 0 }} />
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 13 }}>{post.autor}</div>
+                  <div style={{ fontSize: 11, color: "#8E8E93" }}>{post.subtitulo}</div>
+                </div>
+              </div>
+              <span style={{ fontSize: 11, fontWeight: 600, color: post.tagColor, background: post.tagBg, borderRadius: 12, padding: "4px 10px" }}>
+                {post.tag}
+              </span>
+            </div>
+            <p style={{ fontSize: 14, lineHeight: 1.4, color: post.bgColor ? "#555555" : "#333333" }}>
+              {post.texto}
+            </p>
+            <div style={{ display: "flex", gap: 20 }}>
+              <button
+                onClick={() => setLikedPosts((p) => ({ ...p, [post.id]: !p[post.id] }))}
+                style={{ display: "flex", alignItems: "center", gap: 4, background: "none", border: "none", cursor: "pointer", fontSize: 12, color: likedPosts[post.id] ? tokens.colors.coralSoft : "#8E8E93", fontFamily: "'Nunito', sans-serif" }}
+              >
+                <HeartIcon filled={likedPosts[post.id]} /> {post.likes + (likedPosts[post.id] ? 1 : 0)}
+              </button>
+              <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: "#8E8E93" }}>
+                <ChatIcon /> {post.respuestas} respuestas
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ========== PAGE: BIBLIOTECA ==========
+const PageBiblioteca = ({ setPage }) => {
+  const { isMobile } = useResponsive();
+  const [activeTab, setActiveTab] = useState("todos");
+  const tabs = ["Todos", "Mis recursos", "Favoritos"];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "calc(100vh - 64px)" }}>
+      {/* Hero */}
+      <div style={{
+        background: tokens.colors.oceanDeep,
+        padding: isMobile ? "20px 16px" : "24px 32px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 16,
+      }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 20 : 22, fontWeight: 700, color: "white" }}>
+          Mi Colección Digital
+        </h1>
+        <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)" }}>
+          Comparte tus mejores recursos y descubre los de otros docentes
+        </p>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          background: "white",
+          borderRadius: 20,
+          padding: "0 14px",
+          height: 40,
+          width: isMobile ? "100%" : 420,
+        }}>
+          <span style={{ fontSize: 16, color: "#8E8E93" }}>🔍</span>
+          <span style={{ fontSize: 12, color: "#8E8E93" }}>Buscar plantillas, guías, presentaciones...</span>
+        </div>
+        <div style={{ display: "flex", gap: 24 }}>
+          {["📚 77 recursos", "👥 45 docentes activos", "⬇ 320 descargas"].map((stat) => (
+            <span key={stat} style={{ fontSize: 12, fontWeight: 600, color: "white" }}>{stat}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ flex: 1, padding: isMobile ? "16px" : "20px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
+        {/* Tab row */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+          <div style={{ display: "flex", gap: 8 }}>
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab.toLowerCase())}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: 20,
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontWeight: activeTab === tab.toLowerCase() ? 700 : 400,
+                  fontFamily: "'Nunito', sans-serif",
+                  background: activeTab === tab.toLowerCase() ? tokens.colors.oceanDeep : tokens.colors.oceanMist,
+                  color: activeTab === tab.toLowerCase() ? "white" : tokens.colors.oceanDeep,
+                }}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <button style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            padding: "8px 16px",
+            borderRadius: 20,
+            border: "none",
+            cursor: "pointer",
+            fontSize: 12,
+            fontWeight: 700,
+            fontFamily: "'Nunito', sans-serif",
+            background: tokens.colors.coralSoft,
+            color: "white",
+          }}>
+            📤 Compartir recurso
+          </button>
+        </div>
+
+        {/* Cards grid */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+          gap: 14,
+        }}>
+          {BIBLIOTECA_ITEMS_P3.map((item) => (
+            <div key={item.id} style={{
+              background: "white",
+              borderRadius: 14,
+              overflow: "hidden",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
+              cursor: "pointer",
+              transition: "transform 0.2s ease",
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "none"}
+            >
+              <div style={{
+                height: 80,
+                background: item.bgColor,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontWeight: 700,
-                fontSize: 14,
-                flexShrink: 0,
-              }}
-            >
-              {post.avatar}
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                <span style={{ fontWeight: 700, fontSize: 15 }}>{post.author}</span>
-                <span style={{ fontSize: 13, color: tokens.colors.textMuted }}>{post.time}</span>
+                fontSize: 32,
+              }}>
+                {item.icon}
               </div>
-              <p style={{ fontSize: 15, lineHeight: 1.6, color: tokens.colors.textPrimary, marginBottom: 14 }}>
-                {post.text}
-              </p>
-              <div style={{ display: "flex", gap: 20 }}>
-                <button
-                  onClick={() => setLikedPosts((p) => ({ ...p, [post.id]: !p[post.id] }))}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: 14,
-                    color: likedPosts[post.id] ? tokens.colors.coralSoft : tokens.colors.textSecondary,
-                    fontFamily: "'Nunito', sans-serif",
-                  }}
-                >
-                  <HeartIcon filled={likedPosts[post.id]} />
-                  {post.likes + (likedPosts[post.id] ? 1 : 0)}
-                </button>
-                <button
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: 14,
-                    color: tokens.colors.textSecondary,
-                    fontFamily: "'Nunito', sans-serif",
-                  }}
-                >
-                  <ChatIcon /> {post.replies} respuestas
-                </button>
+              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: 6 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#333333" }}>{item.titulo}</div>
+                <div style={{ fontSize: 10, color: "#8E8E93" }}>{item.materia}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 10, color: tokens.colors.oceanLight }}>⬇ {item.descargas}</span>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: item.tipo === "Oficial" ? tokens.colors.oceanDeep : tokens.colors.coralSoft }}>
+                    {item.tipo}
+                  </span>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ========== PAGE: EXPLORADOR ==========
+const PageExplorador = ({ setPage }) => {
+  const { isMobile } = useResponsive();
+  const [selectedOption, setSelectedOption] = useState(1);
+  const [showFeedback, setShowFeedback] = useState(true);
+  const quiz = QUIZ_DATA_P3;
+  const progreso = (quiz.preguntaActual / quiz.totalPreguntas) * 100;
+
+  return (
+    <div style={{ minHeight: "calc(100vh - 64px)", padding: isMobile ? "16px" : "24px 32px", display: "flex", flexDirection: "column", gap: 18 }}>
+      {/* Header Row */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+        <div>
+          <div style={{ fontSize: 11, color: "#8E8E93" }}>Módulo {quiz.modulo} · Lección {quiz.leccion}</div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 18 : 20, fontWeight: 700, color: tokens.colors.oceanDeep }}>
+            {quiz.titulo}
+          </h1>
+        </div>
+        <div style={{ display: "flex", gap: 12 }}>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#8B6914", background: "rgba(242,201,76,0.13)", borderRadius: 20, padding: "6px 12px" }}>
+            ⭐ +{quiz.xp} XP
+          </span>
+          <span style={{ fontSize: 12, color: tokens.colors.oceanDeep, background: tokens.colors.oceanMist, borderRadius: 20, padding: "6px 12px" }}>
+            Pregunta {quiz.preguntaActual} de {quiz.totalPreguntas}
+          </span>
+        </div>
+      </div>
+
+      {/* Progress Track */}
+      <div style={{ background: tokens.colors.oceanMist, borderRadius: 3, height: 6 }}>
+        <div style={{ width: `${progreso}%`, height: "100%", borderRadius: 3, background: tokens.colors.oceanLight }} />
+      </div>
+
+      {/* Question Card */}
+      <div style={{
+        background: "white",
+        borderRadius: 12,
+        padding: isMobile ? "16px" : "20px 24px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 16,
+      }}>
+        <h2 style={{ fontSize: 15, fontWeight: 700, color: "#333333" }}>
+          {quiz.pregunta}
+        </h2>
+        {quiz.opciones.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => { setSelectedOption(i); setShowFeedback(opt.correcta); }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              padding: "14px 18px",
+              borderRadius: 10,
+              border: "none",
+              cursor: "pointer",
+              background: selectedOption === i ? tokens.colors.oceanMist : "white",
+              fontFamily: "'Nunito', sans-serif",
+              fontSize: 13,
+              fontWeight: selectedOption === i ? 700 : 400,
+              color: selectedOption === i ? tokens.colors.oceanDeep : "#555555",
+              textAlign: "left",
+              width: "100%",
+              transition: "all 0.2s ease",
+            }}
+          >
+            <div style={{
+              width: 22,
+              height: 22,
+              borderRadius: "50%",
+              background: selectedOption === i ? tokens.colors.oceanLight : "white",
+              border: selectedOption === i ? "none" : "2px solid #E0E0E0",
+              flexShrink: 0,
+            }} />
+            {opt.letra}. {opt.texto}
+          </button>
+        ))}
+      </div>
+
+      {/* Feedback */}
+      {showFeedback && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          background: "rgba(91,138,114,0.08)",
+          borderRadius: 10,
+          padding: "14px 18px",
+        }}>
+          <span style={{ fontSize: 16 }}>✅</span>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#3D6B52" }}>{quiz.feedback}</div>
+            <div style={{ fontSize: 11, color: tokens.colors.forestCalm }}>{quiz.tip}</div>
           </div>
-        </Card>
-      ))}
+        </div>
+      )}
+
+      {/* Button Row */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <button style={{
+          padding: "0 16px",
+          height: 38,
+          borderRadius: 8,
+          border: "none",
+          background: "white",
+          cursor: "pointer",
+          fontSize: 12,
+          color: "#888888",
+          fontFamily: "'Nunito', sans-serif",
+          width: 160,
+        }}>
+          ← Pregunta anterior
+        </button>
+        <button style={{
+          padding: "0 16px",
+          height: 38,
+          borderRadius: 8,
+          border: "none",
+          background: tokens.colors.coralSoft,
+          cursor: "pointer",
+          fontSize: 13,
+          fontWeight: 700,
+          color: "white",
+          fontFamily: "'Nunito', sans-serif",
+          width: 180,
+        }}>
+          Siguiente pregunta →
+        </button>
+      </div>
     </div>
   );
 };
@@ -1750,6 +2042,10 @@ export default function BrujulaDigital() {
         return <PageDiagnostico setPage={setPage} />;
       case "ruta":
         return <PageRuta setPage={setPage} />;
+      case "explorador":
+        return <PageExplorador setPage={setPage} />;
+      case "biblioteca":
+        return <PageBiblioteca setPage={setPage} />;
       case "comunidad":
         return <PageComunidad />;
       case "logros":
