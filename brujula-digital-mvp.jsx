@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 // ========== DESIGN TOKENS ==========
 const tokens = {
@@ -9,8 +9,8 @@ const tokens = {
     oceanMist: "#E8F4F4",
     sandWarm: "#F5E6D3",
     sandLight: "#FDF8F3",
-    coralSoft: "#E8927C",
-    coralDeep: "#D4735C",
+    coralSoft: "#D4735C",
+    coralDeep: "#C06040",
     goldBadge: "#F2C94C",
     goldLight: "#FFF8E1",
     forestCalm: "#5B8A72",
@@ -18,7 +18,7 @@ const tokens = {
     textPrimary: "#1A2024",
     textBody: "#2D3748",
     textSecondary: "#4A5568",
-    textMuted: "#A0AEC0",
+    textMuted: "#6B7A8D",
     white: "#FFFFFF",
     bgAlt: "#FFFFFF",
   },
@@ -26,7 +26,7 @@ const tokens = {
     sm: "0 2px 8px rgba(0,0,0,0.06)",
     md: "0 4px 24px rgba(0,0,0,0.08)",
     lg: "0 8px 40px rgba(0,0,0,0.12)",
-    coral: "0 4px 16px rgba(232,146,124,0.35)",
+    coral: "0 4px 16px rgba(212,115,92,0.35)",
     teal: "0 4px 16px rgba(44,110,111,0.25)",
   },
   radii: {
@@ -38,107 +38,152 @@ const tokens = {
   },
 };
 
-// ========== DUMMY DATA ==========
-const MODULES = [
+// ========== CURRÍCULO UNIFICADO ==========
+const CURRICULUM = [
   {
     id: 1,
     level: "explorador",
-    title: "Primeros pasos digitales",
-    desc: "Aprende a navegar con confianza por tu computadora y el navegador web.",
-    progress: 100,
+    title: "Navegando el Mundo Digital",
+    desc: "Aprende a moverte con confianza por internet, Google y YouTube.",
     lessons: 4,
     completed: 4,
+    progress: 100,
     icon: "🧭",
     unlocked: true,
+    tools: ["Navegador", "Google", "YouTube"],
+    lessonList: [
+      { id: 1, title: "¿Qué es internet?", type: "Texto + visual", duration: "5 min", completed: true },
+      { id: 2, title: "Tu primera búsqueda en Google", type: "Guía paso a paso", duration: "8 min", completed: true },
+      { id: 3, title: "Guardar y organizar favoritos", type: "Guía práctica", duration: "6 min", completed: true },
+      { id: 4, title: "YouTube como herramienta educativa", type: "Video guía", duration: "7 min", completed: true },
+    ],
+    activities: [
+      { id: 1, title: "Encontrar 3 videos para tu materia", type: "Ejercicio", duration: "10 min", completed: true },
+    ],
   },
   {
     id: 2,
     level: "explorador",
-    title: "Correo y comunicación",
-    desc: "Domina Gmail, adjuntar archivos y organizar tu bandeja de entrada.",
-    progress: 75,
-    lessons: 5,
-    completed: 3,
+    title: "Correo y Comunicación",
+    desc: "Domina Gmail: envía correos, adjunta archivos y organiza tu bandeja.",
+    lessons: 4,
+    completed: 2,
+    progress: 50,
     icon: "📧",
     unlocked: true,
+    tools: ["Gmail", "Google Drive"],
+    lessonList: [
+      { id: 1, title: "Tu correo electrónico", type: "Texto + pasos", duration: "5 min", completed: true },
+      { id: 2, title: "Enviar tu primer correo", type: "Guía paso a paso", duration: "8 min", completed: true, active: true },
+      { id: 3, title: "Archivos adjuntos", type: "Guía práctica", duration: "7 min", completed: false },
+      { id: 4, title: "Organizar tu bandeja", type: "Guía práctica", duration: "6 min", completed: false },
+    ],
+    activities: [
+      { id: 1, title: "Crear cuenta Gmail", type: "Práctica", duration: "5 min", completed: true },
+      { id: 2, title: "Enviar correo con adjunto a un colega", type: "Ejercicio", duration: "10 min", completed: false, active: true },
+      { id: 3, title: "Organizar bandeja con etiquetas", type: "Proyecto", duration: "10 min", completed: false },
+    ],
   },
   {
     id: 3,
-    level: "explorador",
-    title: "Videoconferencias sin estrés",
-    desc: "Zoom y Google Meet: desde unirte hasta compartir pantalla.",
-    progress: 30,
-    lessons: 6,
-    completed: 2,
-    icon: "📹",
-    unlocked: true,
+    level: "integrador",
+    title: "Presentaciones con Canva",
+    desc: "Crea presentaciones profesionales y atractivas para tus clases.",
+    lessons: 5,
+    completed: 0,
+    progress: 0,
+    icon: "🎨",
+    unlocked: false,
+    tools: ["Canva"],
+    lessonList: [
+      { id: 1, title: "¿Qué es Canva?", type: "Video", duration: "5 min", completed: false },
+      { id: 2, title: "Crear una presentación desde cero", type: "PDF guía", duration: "8 min", completed: false },
+      { id: 3, title: "Añadir imágenes y elementos", type: "Video", duration: "6 min", completed: false },
+      { id: 4, title: "Animaciones y transiciones", type: "Video", duration: "7 min", completed: false },
+      { id: 5, title: "Compartir y presentar", type: "Ejercicio", duration: "10 min", completed: false },
+    ],
+    activities: [
+      { id: 1, title: "Crear tu cuenta en Canva", type: "Práctica", duration: "5 min", completed: false },
+      { id: 2, title: "Diseña tu primera diapositiva", type: "Ejercicio", duration: "10 min", completed: false },
+      { id: 3, title: "Presentación completa de 5 slides", type: "Proyecto", duration: "15 min", completed: false },
+    ],
   },
   {
     id: 4,
     level: "integrador",
-    title: "Google Classroom esencial",
-    desc: "Crea clases, comparte material y gestiona tareas con facilidad.",
-    progress: 0,
+    title: "Tu Aula Virtual",
+    desc: "Configura y gestiona tu clase en Google Classroom paso a paso.",
     lessons: 5,
     completed: 0,
+    progress: 0,
     icon: "📚",
     unlocked: false,
+    tools: ["Google Classroom"],
+    lessonList: [
+      { id: 1, title: "¿Qué es Google Classroom?", type: "Texto + visual", duration: "5 min", completed: false },
+      { id: 2, title: "Crear tu primera clase", type: "Guía paso a paso", duration: "8 min", completed: false },
+      { id: 3, title: "Publicar material", type: "Guía práctica", duration: "7 min", completed: false },
+      { id: 4, title: "Crear y revisar tareas", type: "Guía práctica", duration: "8 min", completed: false },
+      { id: 5, title: "Comunicarte con estudiantes", type: "Guía práctica", duration: "5 min", completed: false },
+    ],
+    activities: [
+      { id: 1, title: "Crear una clase con código", type: "Práctica", duration: "5 min", completed: false },
+      { id: 2, title: "Publicar un material y una tarea", type: "Ejercicio", duration: "10 min", completed: false },
+      { id: 3, title: "Configurar una clase completa", type: "Proyecto", duration: "15 min", completed: false },
+    ],
   },
   {
     id: 5,
     level: "integrador",
-    title: "Presentaciones dinámicas",
-    desc: "Google Slides, Canva y herramientas para clases visuales.",
-    progress: 0,
+    title: "Evaluación Digital",
+    desc: "Crea evaluaciones interactivas con Google Forms y Quizizz.",
     lessons: 4,
     completed: 0,
-    icon: "🎨",
+    progress: 0,
+    icon: "✅",
     unlocked: false,
+    tools: ["Google Forms", "Quizizz"],
+    lessonList: [
+      { id: 1, title: "Formas de evaluar digitalmente", type: "Texto", duration: "5 min", completed: false },
+      { id: 2, title: "Google Forms para evaluaciones", type: "Guía paso a paso", duration: "8 min", completed: false },
+      { id: 3, title: "Quizizz: evaluación gamificada", type: "Guía práctica", duration: "8 min", completed: false },
+      { id: 4, title: "Analizar resultados", type: "Guía práctica", duration: "6 min", completed: false },
+    ],
+    activities: [
+      { id: 1, title: "Crear un formulario evaluativo", type: "Práctica", duration: "5 min", completed: false },
+      { id: 2, title: "Crear un quiz en Quizizz", type: "Ejercicio", duration: "10 min", completed: false },
+      { id: 3, title: "Crear una evaluación digital completa", type: "Proyecto", duration: "15 min", completed: false },
+    ],
   },
   {
     id: 6,
-    level: "integrador",
-    title: "Evaluación digital",
-    desc: "Quizizz, Wordwall y formularios para evaluar de forma entretenida.",
-    progress: 0,
-    lessons: 6,
-    completed: 0,
-    icon: "✅",
-    unlocked: false,
-  },
-  {
-    id: 7,
     level: "autonomo",
-    title: "Seguridad y privacidad",
-    desc: "Protege tu información y la de tus estudiantes en el mundo digital.",
-    progress: 0,
-    lessons: 4,
-    completed: 0,
-    icon: "🔒",
-    unlocked: false,
-  },
-  {
-    id: 8,
-    level: "autonomo",
-    title: "Proyecto integrador",
+    title: "Proyecto Final Integrador",
     desc: "Diseña una clase completa usando todas las herramientas aprendidas.",
-    progress: 0,
     lessons: 3,
     completed: 0,
+    progress: 0,
     icon: "🏆",
     unlocked: false,
+    tools: ["Todas las anteriores"],
+    lessonList: [
+      { id: 1, title: "Planifica tu clase digital", type: "Guía", duration: "10 min", completed: false },
+      { id: 2, title: "Crea los materiales", type: "Proyecto guiado", duration: "15 min", completed: false },
+      { id: 3, title: "Comparte con la comunidad", type: "Social", duration: "10 min", completed: false },
+    ],
+    activities: [
+      { id: 1, title: "Presentar tu proyecto final", type: "Proyecto", duration: "20 min", completed: false },
+    ],
   },
 ];
 
-const BADGES = [
-  { id: 1, name: "Primer inicio", icon: "🌟", earned: true, date: "15 Feb 2026" },
-  { id: 2, name: "Correo enviado", icon: "💌", earned: true, date: "18 Feb 2026" },
-  { id: 3, name: "Primera videollamada", icon: "📹", earned: true, date: "20 Feb 2026" },
-  { id: 4, name: "Explorador digital", icon: "🧭", earned: false, date: null },
-  { id: 5, name: "Integrador estratégico", icon: "🔗", earned: false, date: null },
-  { id: 6, name: "Docente autónomo", icon: "⭐", earned: false, date: null },
-  { id: 7, name: "Mentor activo", icon: "🤝", earned: false, date: null },
-  { id: 8, name: "Resiliencia digital", icon: "💪", earned: false, date: null },
+const COMPETENCIAS = [
+  { id: 1, name: "Navegación Digital", icon: "🧭", moduleId: 1, earned: true, date: "15 Feb 2026" },
+  { id: 2, name: "Comunicación Digital", icon: "📧", moduleId: 2, earned: false, date: null },
+  { id: 3, name: "Creación Visual", icon: "🎨", moduleId: 3, earned: false, date: null },
+  { id: 4, name: "Gestión del Aula Virtual", icon: "📚", moduleId: 4, earned: false, date: null },
+  { id: 5, name: "Evaluación Digital", icon: "✅", moduleId: 5, earned: false, date: null },
+  { id: 6, name: "Docente Digital Autónomo", icon: "🏆", moduleId: 6, earned: false, date: null },
 ];
 
 const COMMUNITY_POSTS = [
@@ -150,7 +195,7 @@ const COMMUNITY_POSTS = [
     text: "¡Hoy logré compartir pantalla en Zoom sin ayuda! Mis alumnos aplaudieron 😊",
     likes: 12,
     replies: 3,
-    color: "#E8927C",
+    color: "#D4735C",
   },
   {
     id: 2,
@@ -175,7 +220,7 @@ const COMMUNITY_POSTS = [
 ];
 
 const LIBRARY_RESOURCES = [
-  { id: 1, area: "Matemáticas", color: "#E8927C", count: 12, icon: "📐", desc: "Recursos para enseñanza de matemáticas" },
+  { id: 1, area: "Matemáticas", color: "#D4735C", count: 12, icon: "📐", desc: "Recursos para enseñanza de matemáticas" },
   { id: 2, area: "Ciencias", color: "#4A9B9C", count: 8, icon: "🔬", desc: "Experimentos y material científico" },
   { id: 3, area: "Lenguaje", color: "#F2C94C", count: 15, icon: "📝", desc: "Plantillas y actividades de lectoescritura" },
   { id: 4, area: "Historia", color: "#5B8A72", count: 7, icon: "🏛️", desc: "Líneas de tiempo y recursos históricos" },
@@ -209,12 +254,12 @@ const DIAGNOSTIC_QUESTIONS = [
   },
   {
     id: 2,
-    question: "Cuando algo falla en tu computadora o plataforma, ¿qué haces primero?",
+    question: "Imagina que necesitas enviar un documento a un colega. ¿Qué harías?",
     options: [
-      "Pido ayuda inmediatamente",
-      "Intento resolverlo pero me frustro rápido",
-      "Busco un tutorial o pregunto a un colega",
-      "Investigo y pruebo diferentes soluciones",
+      "Le pido a alguien que lo haga por mí",
+      "Lo imprimo y se lo doy en persona",
+      "Lo envío por WhatsApp o correo como adjunto",
+      "Lo subo a Google Drive y comparto el enlace",
     ],
   },
   {
@@ -229,7 +274,27 @@ const DIAGNOSTIC_QUESTIONS = [
   },
   {
     id: 4,
-    question: "¿Qué herramientas digitales usas actualmente?",
+    question: "Tu director te pide crear una presentación para la reunión de mañana. ¿Qué haces?",
+    options: [
+      "No sabría por dónde empezar y pediría ayuda",
+      "Intentaría en PowerPoint pero con mucha dificultad",
+      "Usaría PowerPoint o Google Slides con cierta confianza",
+      "Usaría Canva o Slides y añadiría animaciones",
+    ],
+  },
+  {
+    id: 5,
+    question: "Cuando algo falla en tu computadora o plataforma, ¿qué haces primero?",
+    options: [
+      "Pido ayuda inmediatamente",
+      "Intento resolverlo pero me frustro rápido",
+      "Busco un tutorial o pregunto a un colega",
+      "Investigo y pruebo diferentes soluciones",
+    ],
+  },
+  {
+    id: 6,
+    question: "¿Qué herramientas digitales usas actualmente en tu trabajo?",
     options: [
       "Solo WhatsApp y llamadas",
       "WhatsApp, correo y alguna red social",
@@ -238,13 +303,23 @@ const DIAGNOSTIC_QUESTIONS = [
     ],
   },
   {
-    id: 5,
+    id: 7,
     question: "Si tuvieras que dar una clase online mañana, ¿cómo te sentirías?",
     options: [
       "Aterrorizado/a, no sabría por dónde empezar",
       "Preocupado/a, necesitaría mucha ayuda",
       "Algo nervioso/a, pero podría hacerlo con preparación",
-      "Seguro/a, ya tengo experiencia",
+      "Seguro/a, ya tengo experiencia con clases online",
+    ],
+  },
+  {
+    id: 8,
+    question: "¿Cómo evalúas actualmente el aprendizaje de tus estudiantes?",
+    options: [
+      "Solo con exámenes en papel",
+      "Papel principalmente, a veces algo digital",
+      "Uso formularios digitales o plataformas de vez en cuando",
+      "Uso herramientas digitales como Google Forms o Quizizz regularmente",
     ],
   },
 ];
@@ -263,14 +338,14 @@ const styles = {
       --ocean-mist: #E8F4F4;
       --sand-warm: #F5E6D3;
       --sand-light: #FDF8F3;
-      --coral-soft: #E8927C;
+      --coral-soft: #D4735C;
       --coral-deep: #D4735C;
       --gold-badge: #F2C94C;
       --forest-calm: #5B8A72;
       --text-primary: #1A2024;
       --text-body: #2D3748;
       --text-secondary: #4A5568;
-      --text-muted: #A0AEC0;
+      --text-muted: #6B7A8D;
     }
     
     body {
@@ -372,7 +447,7 @@ const CompassIcon = ({ size = 32 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
     <circle cx="24" cy="24" r="22" stroke="#2C6E6F" strokeWidth="2.5" fill="#E8F4F4" />
     <circle cx="24" cy="24" r="18" stroke="#B2BEC3" strokeWidth="0.5" fill="none" />
-    <polygon points="24,6 27,22 24,26 21,22" fill="#E8927C" />
+    <polygon points="24,6 27,22 24,26 21,22" fill="#D4735C" />
     <polygon points="24,42 27,26 24,22 21,26" fill="#2C6E6F" />
     <circle cx="24" cy="24" r="3" fill="#2C6E6F" />
     <circle cx="24" cy="24" r="1.5" fill="white" />
@@ -402,7 +477,7 @@ const HelpIcon = () => (
 );
 
 const HeartIcon = ({ filled }) => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill={filled ? "#E8927C" : "none"} stroke="#E8927C" strokeWidth="2">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill={filled ? "#D4735C" : "none"} stroke="#D4735C" strokeWidth="2">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
   </svg>
 );
@@ -525,7 +600,7 @@ const ProgressBar = ({ value, height = 8, showLabel = false }) => (
           position: "absolute",
           right: 0,
           top: -20,
-          fontSize: 13,
+          fontSize: 14,
           fontWeight: 600,
           color: tokens.colors.oceanDeep,
         }}
@@ -645,12 +720,10 @@ const Navbar = ({ currentPage, setPage }) => {
 
   const navItems = [
     { id: "inicio", label: "Inicio" },
-    { id: "ruta", label: "Ruta" },
-    { id: "explorador", label: "Explorador" },
+    { id: "ruta", label: "Mi Ruta" },
     { id: "biblioteca", label: "Biblioteca" },
     { id: "comunidad", label: "Comunidad" },
-    { id: "logros", label: "Logros" },
-    { id: "perfil", label: "Perfil" },
+    { id: "perfil", label: "Mi Perfil" },
   ];
 
   return (
@@ -699,7 +772,7 @@ const Navbar = ({ currentPage, setPage }) => {
               BRÚJULA DIGITAL
             </div>
             {!isMobile && (
-              <div style={{ fontSize: 12, color: tokens.colors.textSecondary, fontWeight: 600 }}>
+              <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 600 }}>
                 Autonomía digital para docentes
               </div>
             )}
@@ -874,14 +947,14 @@ const PageInicio = ({ setPage }) => {
           }}>
             {[
               { num: "127+", label: "docentes activos" },
-              { num: "8", label: "módulos prácticos" },
+              { num: "6", label: "módulos prácticos" },
               { num: "100%", label: "gratuito" },
             ].map((stat, i) => (
               <div key={i} style={{ textAlign: "center" }}>
                 <div style={{ fontSize: 22, fontWeight: 800, color: tokens.colors.oceanDarker, fontFamily: "'Nunito', sans-serif" }}>
                   {stat.num}
                 </div>
-                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 600 }}>
+                <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 600 }}>
                   {stat.label}
                 </div>
               </div>
@@ -917,10 +990,9 @@ const PageInicio = ({ setPage }) => {
 
     {/* ¿Cómo funciona? */}
     <section style={{ padding: isMobile ? "52px 20px" : "88px 24px", maxWidth: 1200, margin: "0 auto" }}>
-      <SectionTitle
-        title="¿Cómo funciona?"
-        subtitle="Tres pasos simples hacia tu autonomía digital"
-      />
+      <SectionTitle subtitle="Tres pasos simples hacia tu autonomía digital">
+        ¿Cómo funciona?
+      </SectionTitle>
       <div style={{ marginTop: 44, display: "grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: isMobile ? 22 : 36 }}>
         {[
           {
@@ -945,7 +1017,7 @@ const PageInicio = ({ setPage }) => {
           <Card key={i} delay={i * 0.15}>
             <div
               style={{
-                fontSize: 13,
+                fontSize: 14,
                 fontWeight: 800,
                 color: tokens.colors.coralSoft,
                 marginBottom: 14,
@@ -980,24 +1052,23 @@ const PageInicio = ({ setPage }) => {
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <SectionTitle
-          title="Explora las etapas"
-          subtitle="Tu camino hacia la autonomía digital, paso a paso"
-        />
+        <SectionTitle subtitle="Tu camino hacia la autonomía digital, paso a paso">
+          Explora las etapas
+        </SectionTitle>
         <div style={{ marginTop: 44, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 22 : 36 }}>
           {[
             {
               level: "explorador",
               title: "Explorador Digital",
-              desc: "Estás comenzando a explorar el mundo digital educativo. Aquí ganarás confianza con las herramientas básicas.",
-              modules: 3,
+              desc: "Domina la navegación web y el correo electrónico. Herramientas básicas para tu día a día docente.",
+              modules: 2,
               color: tokens.colors.oceanDeep,
               bg: tokens.colors.oceanMist,
             },
             {
               level: "integrador",
               title: "Integrador Estratégico",
-              desc: "Estás integrando tecnología de manera reflexiva en tus clases. Aprenderás a elegir la herramienta adecuada.",
+              desc: "Crea presentaciones en Canva, gestiona tu aula virtual y evalúa digitalmente.",
               modules: 3,
               color: tokens.colors.coralSoft,
               bg: "#FFF3E0",
@@ -1005,8 +1076,8 @@ const PageInicio = ({ setPage }) => {
             {
               level: "autonomo",
               title: "Docente Autónomo",
-              desc: "Has alcanzado autonomía digital y criterio pedagógico. Resuelves problemas y guías a otros.",
-              modules: 2,
+              desc: "Diseña una clase completa integrando todas las herramientas. Listo/a para liderar.",
+              modules: 1,
               color: tokens.colors.forestCalm,
               bg: "#E8F5E9",
             },
@@ -1051,10 +1122,9 @@ const PageInicio = ({ setPage }) => {
 
     {/* Testimonios */}
     <section style={{ padding: isMobile ? "52px 20px" : "88px 24px", maxWidth: 1200, margin: "0 auto" }}>
-      <SectionTitle
-        title="Voces de docentes como tú"
-        subtitle="Historias reales de quienes ya encontraron su rumbo digital"
-      />
+      <SectionTitle subtitle="Historias reales de quienes ya encontraron su rumbo digital">
+        Voces de docentes como tú
+      </SectionTitle>
       <div style={{ marginTop: 44, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 18 : 28 }}>
         {[
           {
@@ -1107,27 +1177,75 @@ const PageInicio = ({ setPage }) => {
 };
 
 // ========== PAGE: DIAGNÓSTICO ==========
-const PageDiagnostico = ({ setPage }) => {
+const PageDiagnostico = ({ setPage, updateState }) => {
   const { isMobile } = useResponsive();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleAnswer = (qId, optionIndex) => {
+  const levelConfig = {
+    explorador: {
+      icon: "🧭",
+      label: "Explorador Digital",
+      color: tokens.colors.oceanDeep,
+      description: "Estás comenzando tu camino digital y eso es algo muy valioso. Tu ruta arranca con los fundamentos: navegación web y correo electrónico. Paso a paso ganarás confianza.",
+      modules: CURRICULUM.filter((m) => m.level === "explorador"),
+    },
+    integrador: {
+      icon: "🚀",
+      label: "Integrador Digital",
+      color: tokens.colors.forestCalm,
+      description: "Ya tienes bases sólidas. Tu ruta se enfoca en herramientas para el aula: presentaciones, classroom y evaluación digital. ¡Vas a transformar tus clases!",
+      modules: CURRICULUM.filter((m) => m.level === "integrador"),
+    },
+    autonomo: {
+      icon: "⭐",
+      label: "Autónomo Digital",
+      color: tokens.colors.goldBadge,
+      description: "Tienes un dominio notable de herramientas digitales. Tu ruta incluye el proyecto integrador donde aplicarás todo lo aprendido. ¡Eres un referente para tus colegas!",
+      modules: CURRICULUM.filter((m) => m.level === "autonomo"),
+    },
+  };
+
+  const calculateLevel = () => {
+    const totalScore = Object.values(answers).reduce((sum, val) => sum + val, 0);
+    if (totalScore >= 17) return "autonomo";
+    if (totalScore >= 9) return "integrador";
+    return "explorador";
+  };
+
+  const handleSelect = (optionIndex) => {
     setSelectedOption(optionIndex);
-    setTimeout(() => {
-      setAnswers((prev) => ({ ...prev, [qId]: optionIndex }));
-      setSelectedOption(null);
-      if (step < DIAGNOSTIC_QUESTIONS.length - 1) {
-        setStep((s) => s + 1);
-      } else {
-        setShowResult(true);
+    setAnswers((prev) => ({ ...prev, [DIAGNOSTIC_QUESTIONS[step].id]: optionIndex }));
+  };
+
+  const handleNext = () => {
+    if (selectedOption === null) return;
+    if (step < DIAGNOSTIC_QUESTIONS.length - 1) {
+      setSelectedOption(answers[DIAGNOSTIC_QUESTIONS[step + 1]?.id] ?? null);
+      setStep((s) => s + 1);
+    } else {
+      const level = calculateLevel();
+      if (updateState) {
+        updateState({ nivel: level, diagnosticoCompleto: true });
       }
-    }, 400);
+      setShowResult(true);
+    }
+  };
+
+  const handlePrev = () => {
+    if (step > 0) {
+      setSelectedOption(answers[DIAGNOSTIC_QUESTIONS[step - 1]?.id] ?? null);
+      setStep((s) => s - 1);
+    }
   };
 
   if (showResult) {
+    const level = calculateLevel();
+    const config = levelConfig[level];
+    const totalModules = config.modules.length;
+
     return (
       <div style={{ padding: isMobile ? "48px 20px" : "72px 24px", maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
         <div style={{ animation: "badgeUnlock 0.8s ease both" }}>
@@ -1142,43 +1260,92 @@ const PageDiagnostico = ({ setPage }) => {
               justifyContent: "center",
               margin: "0 auto 28px",
               fontSize: 60,
-              boxShadow: `0 0 0 6px ${tokens.colors.oceanDeep}15, 0 0 0 12px ${tokens.colors.oceanDeep}08`,
+              boxShadow: `0 0 0 6px ${config.color}15, 0 0 0 12px ${config.color}08`,
             }}
           >
-            🧭
+            {config.icon}
           </div>
         </div>
         <h2
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: isMobile ? 32 : 40,
+            fontSize: isMobile ? 28 : 36,
             marginBottom: 14,
             color: tokens.colors.oceanDarker,
             animation: "fadeInUp 0.6s ease 0.3s both",
           }}
         >
-          ¡Bienvenida, Carla!
+          ¡Resultado listo!
         </h2>
         <p style={{ fontSize: 18, color: tokens.colors.textBody, marginBottom: 10, animation: "fadeInUp 0.6s ease 0.5s both", fontFamily: "'Nunito', sans-serif" }}>
-          Tu nivel actual es:
+          Tu nivel es:
         </p>
         <div style={{ animation: "fadeInUp 0.6s ease 0.6s both", marginBottom: 28 }}>
-          <LevelBadge level="explorador" size="md" />
+          <LevelBadge level={level} size="md" />
         </div>
         <p
           style={{
             fontSize: 17,
             color: tokens.colors.textBody,
             lineHeight: 1.8,
-            marginBottom: 36,
+            marginBottom: 32,
             animation: "fadeInUp 0.6s ease 0.7s both",
             fontFamily: "'Nunito', sans-serif",
           }}
         >
-          Estás comenzando tu camino digital y eso es algo muy valioso.
-          Tu ruta personalizada tiene <strong>3 módulos</strong> diseñados especialmente
-          para que ganes confianza paso a paso. No hay prisa — cada logro cuenta.
+          {config.description}
         </p>
+
+        <div style={{ animation: "fadeInUp 0.6s ease 0.8s both", marginBottom: 36, textAlign: "left" }}>
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, color: tokens.colors.oceanDarker, marginBottom: 16 }}>
+            Tus próximos módulos ({totalModules})
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {config.modules.map((mod, i) => (
+              <div
+                key={mod.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 14,
+                  padding: "14px 18px",
+                  background: "white",
+                  borderRadius: tokens.radii.md,
+                  border: `1px solid ${tokens.colors.oceanMist}`,
+                  boxShadow: tokens.shadows.sm,
+                }}
+              >
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    background: `${config.color}15`,
+                    color: config.color,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 700,
+                    fontSize: 15,
+                    fontFamily: "'Nunito', sans-serif",
+                    flexShrink: 0,
+                  }}
+                >
+                  {i + 1}
+                </div>
+                <div>
+                  <div style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: 15, color: tokens.colors.textBody }}>
+                    {mod.title}
+                  </div>
+                  <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: 14, color: tokens.colors.textSecondary }}>
+                    {mod.lessons} lecciones · {mod.tools.join(", ")}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div style={{ animation: "fadeInUp 0.6s ease 0.9s both" }}>
           <Button size="lg" onClick={() => setPage("ruta")} aria-label="Ver mi ruta personalizada">
             Ver mi ruta personalizada <ArrowRightIcon />
@@ -1190,6 +1357,7 @@ const PageDiagnostico = ({ setPage }) => {
 
   const currentQ = DIAGNOSTIC_QUESTIONS[step];
   const progress = ((step) / DIAGNOSTIC_QUESTIONS.length) * 100;
+  const isLastQuestion = step === DIAGNOSTIC_QUESTIONS.length - 1;
 
   return (
     <div style={{ padding: isMobile ? "40px 20px" : "56px 24px", maxWidth: 700, margin: "0 auto" }}>
@@ -1218,7 +1386,7 @@ const PageDiagnostico = ({ setPage }) => {
           {currentQ.options.map((opt, i) => (
             <button
               key={i}
-              onClick={() => handleAnswer(currentQ.id, i)}
+              onClick={() => handleSelect(i)}
               role="radio"
               aria-checked={selectedOption === i}
               style={{
@@ -1238,14 +1406,14 @@ const PageDiagnostico = ({ setPage }) => {
                 boxShadow: selectedOption === i ? tokens.shadows.teal : tokens.shadows.sm,
               }}
               onMouseEnter={(e) => {
-                if (selectedOption === null) {
+                if (selectedOption !== i) {
                   e.currentTarget.style.borderColor = tokens.colors.oceanLight;
                   e.currentTarget.style.background = tokens.colors.oceanMist;
                   e.currentTarget.style.boxShadow = tokens.shadows.md;
                 }
               }}
               onMouseLeave={(e) => {
-                if (selectedOption === null) {
+                if (selectedOption !== i) {
                   e.currentTarget.style.borderColor = "#D4D8DD";
                   e.currentTarget.style.background = "white";
                   e.currentTarget.style.boxShadow = tokens.shadows.sm;
@@ -1258,9 +1426,74 @@ const PageDiagnostico = ({ setPage }) => {
         </div>
       </div>
 
+      <div
+        style={{
+          display: "flex",
+          justifyContent: step > 0 ? "space-between" : "flex-end",
+          alignItems: "center",
+          marginTop: 32,
+          gap: 16,
+        }}
+      >
+        {step > 0 && (
+          <button
+            onClick={handlePrev}
+            style={{
+              padding: "12px 24px",
+              background: "transparent",
+              color: tokens.colors.oceanDeep,
+              border: `2px solid ${tokens.colors.oceanDeep}`,
+              borderRadius: tokens.radii.md,
+              fontSize: 16,
+              fontFamily: "'Nunito', sans-serif",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = tokens.colors.oceanMist;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            ← Anterior
+          </button>
+        )}
+        <button
+          onClick={handleNext}
+          disabled={selectedOption === null}
+          style={{
+            padding: "12px 28px",
+            background: selectedOption !== null ? tokens.colors.oceanDeep : "#D4D8DD",
+            color: selectedOption !== null ? "white" : "#9CA3AF",
+            border: "none",
+            borderRadius: tokens.radii.md,
+            fontSize: 16,
+            fontFamily: "'Nunito', sans-serif",
+            fontWeight: 700,
+            cursor: selectedOption !== null ? "pointer" : "not-allowed",
+            transition: "all 0.2s ease",
+            boxShadow: selectedOption !== null ? tokens.shadows.teal : "none",
+          }}
+          onMouseEnter={(e) => {
+            if (selectedOption !== null) {
+              e.currentTarget.style.background = tokens.colors.oceanLight;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (selectedOption !== null) {
+              e.currentTarget.style.background = tokens.colors.oceanDeep;
+            }
+          }}
+        >
+          {isLastQuestion ? "Ver mi resultado" : "Siguiente →"}
+        </button>
+      </div>
+
       <p
         style={{
-          marginTop: 36,
+          marginTop: 24,
           textAlign: "center",
           fontSize: 15,
           color: tokens.colors.textSecondary,
@@ -1277,15 +1510,15 @@ const PageDiagnostico = ({ setPage }) => {
 const PageRuta = ({ setPage }) => {
   const { isMobile } = useResponsive();
 
-  const rutaModules = [
-    { id: 1, title: "Introducción a Canva", desc: "Aprende a crear tu primer diseño con la herramienta más intuitiva de la educación.", lessons: 4, completed: 4, progress: 100, unlocked: true, icon: "🎨" },
-    { id: 2, title: "Presentaciones en Canva", desc: "Crea presentaciones interactivas y atractivas que reflejen tu estilo de enseñanza.", lessons: 5, completed: 3, progress: 60, unlocked: true, icon: "📊" },
-    { id: 3, title: "Infografías Educativas", desc: "Diseña infografías claras y visuales para tus clases.", lessons: 4, completed: 0, progress: 0, unlocked: false, icon: "📋" },
-    { id: 4, title: "Videos Educativos con Canva", desc: "Aprende a crear videos cortos para tus estudiantes.", lessons: 3, completed: 0, progress: 0, unlocked: false, icon: "🎬" },
-  ];
+  const totalProgress = Math.round(CURRICULUM.reduce((acc, m) => acc + m.progress, 0) / CURRICULUM.length);
+  const completedCount = CURRICULUM.filter(m => m.progress === 100).length;
 
-  const totalProgress = Math.round(rutaModules.reduce((acc, m) => acc + m.progress, 0) / rutaModules.length);
-  const completedCount = rutaModules.filter(m => m.progress === 100).length;
+  // Agrupar módulos por nivel
+  const levels = [
+    { key: "explorador", label: "Nivel Explorador", color: tokens.colors.oceanDeep },
+    { key: "integrador", label: "Nivel Integrador", color: tokens.colors.coralSoft },
+    { key: "autonomo", label: "Nivel Autónomo", color: tokens.colors.forestCalm },
+  ];
 
   return (
     <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
@@ -1300,10 +1533,9 @@ const PageRuta = ({ setPage }) => {
         animation: "fadeInUp 0.6s ease",
       }}>
         <div>
-          <SectionTitle
-            title="Tu Ruta de Aprendizaje"
-            subtitle="Cada paso te acerca a la autonomía digital"
-          />
+          <SectionTitle subtitle="Cada paso te acerca a la autonomía digital">
+            Tu Ruta de Aprendizaje
+          </SectionTitle>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12 }}>
             <LevelBadge level="Explorador" size="md" />
             <StreakBadge days={5} />
@@ -1313,9 +1545,9 @@ const PageRuta = ({ setPage }) => {
           <CircularProgress value={totalProgress} size={isMobile ? 72 : 88} label="general" />
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 28, fontWeight: 800, color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif" }}>
-              {completedCount}/{rutaModules.length}
+              {completedCount}/{CURRICULUM.length}
             </div>
-            <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 600 }}>
+            <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 600 }}>
               módulos
             </div>
           </div>
@@ -1349,10 +1581,40 @@ const PageRuta = ({ setPage }) => {
         </div>
       )}
 
-      {/* Module timeline */}
+      {/* Module timeline grouped by level */}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {rutaModules.map((mod, i) => (
-          <div key={mod.id} style={{ display: "flex", gap: isMobile ? 16 : 24, animation: `fadeInUp 0.6s ease ${i * 0.12 + 0.3}s both` }}>
+        {levels.map((level) => {
+          const levelModules = CURRICULUM.filter(m => m.level === level.key);
+          if (levelModules.length === 0) return null;
+          return (
+            <div key={level.key}>
+              {/* Level separator */}
+              <div style={{
+                display: "flex", alignItems: "center", gap: 12,
+                margin: "20px 0 16px",
+                paddingLeft: 8,
+              }}>
+                <div style={{
+                  height: 2, flex: 1, maxWidth: 40,
+                  background: `linear-gradient(90deg, ${level.color}, transparent)`,
+                }} />
+                <span style={{
+                  fontSize: 14, fontWeight: 700, color: level.color,
+                  textTransform: "uppercase", letterSpacing: "1px",
+                  fontFamily: "'Nunito', sans-serif",
+                }}>
+                  {level.label}
+                </span>
+                <div style={{
+                  height: 2, flex: 1,
+                  background: `linear-gradient(90deg, transparent, ${level.color}30)`,
+                }} />
+              </div>
+
+              {levelModules.map((mod) => {
+                const globalIndex = CURRICULUM.indexOf(mod);
+                return (
+          <div key={mod.id} style={{ display: "flex", gap: isMobile ? 16 : 24, animation: `fadeInUp 0.6s ease ${globalIndex * 0.12 + 0.3}s both` }}>
             {/* Numbered circle + connector */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 52, flexShrink: 0 }}>
               <div style={{
@@ -1367,7 +1629,7 @@ const PageRuta = ({ setPage }) => {
               }}>
                 {mod.progress === 100 ? <CheckIcon /> : mod.id}
               </div>
-              {i < rutaModules.length - 1 && (
+              {globalIndex < CURRICULUM.length - 1 && (
                 <div style={{
                   width: 3, flex: 1, minHeight: 40,
                   background: mod.progress === 100
@@ -1379,7 +1641,7 @@ const PageRuta = ({ setPage }) => {
             </div>
 
             {/* Module card */}
-            <Card delay={i * 0.12 + 0.3} customStyle={{
+            <Card delay={globalIndex * 0.12 + 0.3} customStyle={{
               flex: 1,
               background: mod.unlocked ? "white" : "#FAFAFA",
               marginBottom: 20,
@@ -1428,7 +1690,7 @@ const PageRuta = ({ setPage }) => {
               </div>
               {mod.unlocked && (
                 <div style={{ marginTop: 12 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600 }}>
                     <span>{mod.completed}/{mod.lessons} lecciones</span>
                     <span style={{ color: mod.progress === 100 ? tokens.colors.forestCalm : tokens.colors.oceanDeep }}>{mod.progress}%</span>
                   </div>
@@ -1442,16 +1704,20 @@ const PageRuta = ({ setPage }) => {
               )}
             </Card>
           </div>
-        ))}
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
 // ========== PAGE: COMUNIDAD (P1 — Two-column with Tabs) ==========
-const PageComunidad = () => {
+const PageComunidad = ({ appState, toggleLike }) => {
   const { isMobile } = useResponsive();
-  const [likedPosts, setLikedPosts] = useState({});
+  const likedPosts = appState?.likes || {};
   const [activeTab, setActiveTab] = useState("foro");
 
   const tabs = [
@@ -1477,10 +1743,9 @@ const PageComunidad = () => {
         <FloatingDecoration top="10%" left="5%" size={60} color={tokens.colors.coralSoft} delay={0} />
         <FloatingDecoration top="20%" right="8%" size={40} color={tokens.colors.goldBadge} delay={1} />
         <div style={{ maxWidth: 1100, margin: "0 auto", animation: "fadeInUp 0.6s ease", position: "relative", zIndex: 1 }}>
-          <SectionTitle
-            title="Comunidad Docente"
-            subtitle="No estás solo(a) en este camino. Aquí encontrarás colegas que comparten tus mismas preguntas y entusiasmo."
-          />
+          <SectionTitle subtitle="No estás solo(a) en este camino. Aquí encontrarás colegas que comparten tus mismas preguntas y entusiasmo.">
+            Comunidad Docente
+          </SectionTitle>
           <div style={{ display: "flex", gap: 20, marginTop: 20, flexWrap: "wrap" }}>
             <div style={{
               display: "flex", alignItems: "center", gap: 8, fontSize: 15,
@@ -1559,14 +1824,14 @@ const PageComunidad = () => {
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, flexWrap: "wrap", gap: 4 }}>
                       <span style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.oceanDarker }}>{post.author}</span>
-                      <span style={{ fontSize: 13, color: tokens.colors.textMuted }}>{post.time}</span>
+                      <span style={{ fontSize: 14, color: tokens.colors.textMuted }}>{post.time}</span>
                     </div>
                     <p style={{ fontSize: 15, lineHeight: 1.7, color: tokens.colors.textBody, marginBottom: 14, fontFamily: "'Nunito', sans-serif" }}>
                       {post.text}
                     </p>
                     <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
                       <button
-                        onClick={() => setLikedPosts((p) => ({ ...p, [post.id]: !p[post.id] }))}
+                        onClick={() => toggleLike?.(post.id)}
                         aria-label={likedPosts[post.id] ? "Quitar me gusta" : "Dar me gusta"}
                         style={{
                           display: "flex", alignItems: "center", gap: 6, background: "none", border: "none",
@@ -1582,7 +1847,7 @@ const PageComunidad = () => {
                         aria-label={`Responder a ${post.author}`}
                         style={{
                           marginLeft: "auto", padding: "8px 18px", borderRadius: tokens.radii.pill,
-                          fontSize: 13, fontWeight: 700, minHeight: 36,
+                          fontSize: 14, fontWeight: 700, minHeight: 36,
                           background: tokens.colors.oceanMist, color: tokens.colors.oceanDarker,
                           border: "none", cursor: "pointer", fontFamily: "'Nunito', sans-serif",
                           transition: "all 0.2s ease",
@@ -1623,8 +1888,8 @@ const PageComunidad = () => {
                   </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.textPrimary }}>{exp.author}</div>
-                    <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500 }}>{exp.role}</div>
-                    <div style={{ fontSize: 12, color: tokens.colors.textMuted, fontStyle: "italic" }}>{exp.years}</div>
+                    <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>{exp.role}</div>
+                    <div style={{ fontSize: 14, color: tokens.colors.textMuted, fontStyle: "italic" }}>{exp.years}</div>
                   </div>
                 </div>
                 <p style={{
@@ -1744,10 +2009,9 @@ const PageBiblioteca = ({ setPage }) => {
       {/* Academic Areas */}
       <section style={{ padding: isMobile ? "36px 20px" : "52px 24px", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
-          <SectionTitle
-            title="Áreas Académicas"
-            subtitle="Explora recursos organizados por tu área de enseñanza"
-          />
+          <SectionTitle subtitle="Explora recursos organizados por tu área de enseñanza">
+            Áreas Académicas
+          </SectionTitle>
           <Button size="sm" variant="coral" aria-label="Subir un recurso a la biblioteca">+ Subir recurso</Button>
         </div>
 
@@ -1766,8 +2030,8 @@ const PageBiblioteca = ({ setPage }) => {
               <div style={{ padding: "20px 14px" }}>
                 <div style={{ fontSize: 32, marginBottom: 10 }}>{res.icon}</div>
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textPrimary, fontFamily: "'Nunito', sans-serif" }}>{res.area}</div>
-                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500 }}>{res.count} recursos</div>
-                <div style={{ fontSize: 12, color: tokens.colors.textMuted, marginTop: 2 }}>{Math.floor(res.count / 3)} plantillas</div>
+                <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>{res.count} recursos</div>
+                <div style={{ fontSize: 14, color: tokens.colors.textMuted, marginTop: 2 }}>{Math.floor(res.count / 3)} plantillas</div>
               </div>
             </Card>
           ))}
@@ -1776,10 +2040,9 @@ const PageBiblioteca = ({ setPage }) => {
         {/* Resource Exchange */}
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", marginBottom: 24, gap: 12 }}>
-            <SectionTitle
-              title="Intercambio de Recursos"
-              subtitle="Recursos compartidos por docentes de la comunidad"
-            />
+            <SectionTitle subtitle="Recursos compartidos por docentes de la comunidad">
+              Intercambio de Recursos
+            </SectionTitle>
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               fontSize: 14, color: tokens.colors.oceanDeep, fontWeight: 600,
@@ -1802,7 +2065,7 @@ const PageBiblioteca = ({ setPage }) => {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4, color: tokens.colors.textPrimary }}>{res.title}</div>
-                  <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500 }}>
+                  <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>
                     Por {res.author} · {res.type} · ⬇ {res.downloads}
                   </div>
                 </div>
@@ -1838,7 +2101,7 @@ const PageExplorador = ({ setPage }) => {
         borderBottom: isMobile ? `2px solid ${tokens.colors.oceanMist}` : "none",
       }}>
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 13, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600, fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+          <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600, fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px", textTransform: "uppercase" }}>
             Módulo 2
           </div>
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, color: tokens.colors.oceanDarker, marginBottom: 8, lineHeight: 1.3 }}>
@@ -1848,7 +2111,7 @@ const PageExplorador = ({ setPage }) => {
             <CircularProgress value={progressPct} size={52} label="" />
             <div>
               <div style={{ fontSize: 15, fontWeight: 700, color: tokens.colors.oceanDarker }}>{progressPct}% completado</div>
-              <div style={{ fontSize: 13, color: tokens.colors.textSecondary }}>{completedCount}/{EXPLORER_LESSONS.length} lecciones</div>
+              <div style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{completedCount}/{EXPLORER_LESSONS.length} lecciones</div>
             </div>
           </div>
         </div>
@@ -1892,7 +2155,7 @@ const PageExplorador = ({ setPage }) => {
                 }}>
                   {lesson.id}. {lesson.title}
                 </div>
-                <div style={{ fontSize: 12, color: tokens.colors.textMuted, fontWeight: 500 }}>
+                <div style={{ fontSize: 14, color: tokens.colors.textMuted, fontWeight: 500 }}>
                   {lesson.type} · {lesson.duration}
                 </div>
               </div>
@@ -2028,13 +2291,13 @@ const PageExplorador = ({ setPage }) => {
                   }}>
                     Actividad {act.id}: {act.title}
                   </div>
-                  <div style={{ fontSize: 13, color: tokens.colors.textMuted, fontWeight: 500, fontFamily: "'Nunito', sans-serif" }}>
+                  <div style={{ fontSize: 14, color: tokens.colors.textMuted, fontWeight: 500, fontFamily: "'Nunito', sans-serif" }}>
                     {act.type} · {act.duration}{act.completed ? " · Completada" : act.active ? " · En progreso" : " · Bloqueada"}
                   </div>
                 </div>
                 {act.active && (
                   <span style={{
-                    fontSize: 13, fontWeight: 700, color: tokens.colors.coralSoft,
+                    fontSize: 14, fontWeight: 700, color: tokens.colors.coralSoft,
                     whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif",
                   }}>
                     Iniciar →
@@ -2076,19 +2339,19 @@ const PageExplorador = ({ setPage }) => {
 // ========== PAGE: LOGROS ==========
 const PageLogros = () => {
   const { isMobile } = useResponsive();
+  const earnedCount = COMPETENCIAS.filter(c => c.earned).length;
   return (
   <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
-    <SectionTitle
-      title="Tus logros"
-      subtitle="Cada insignia representa un paso en tu camino. ¡Celebra tu progreso!"
-    />
+    <SectionTitle subtitle="Cada competencia representa un logro real en tu desarrollo profesional digital.">
+      Tus Competencias
+    </SectionTitle>
 
     {/* Stats */}
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 14 : 22, marginBottom: isMobile ? 36 : 52, marginTop: 36 }}>
       {[
-        { label: "Insignias obtenidas", value: "3 / 8", color: tokens.colors.goldBadge, emoji: "🏅" },
+        { label: "Competencias adquiridas", value: `${earnedCount} / ${COMPETENCIAS.length}`, color: tokens.colors.goldBadge, emoji: "🏅" },
         { label: "Nivel actual", value: "Explorador", color: tokens.colors.oceanDeep, emoji: "🧭" },
-        { label: "Días activa", value: "18", color: tokens.colors.coralSoft, emoji: "🔥" },
+        { label: "Días activa", value: "18", color: tokens.colors.coralSoft, emoji: "📅" },
       ].map((stat, i) => (
         <Card key={i} delay={0.2 + i * 0.1} customStyle={{ textAlign: "center" }}>
           <div style={{ fontSize: 32, marginBottom: 8 }}>{stat.emoji}</div>
@@ -2098,16 +2361,16 @@ const PageLogros = () => {
       ))}
     </div>
 
-    {/* Badges Grid */}
-    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? 14 : 22 }}>
-      {BADGES.map((badge, i) => (
+    {/* Competencias Grid */}
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: isMobile ? 14 : 22 }}>
+      {COMPETENCIAS.map((comp, i) => (
         <Card
-          key={badge.id}
+          key={comp.id}
           delay={0.3 + i * 0.08}
           customStyle={{
             textAlign: "center",
-            opacity: badge.earned ? 1 : 0.5,
-            background: badge.earned ? `linear-gradient(135deg, white, ${tokens.colors.sandWarm}30)` : "#F5F5F5",
+            opacity: comp.earned ? 1 : 0.5,
+            background: comp.earned ? `linear-gradient(135deg, white, ${tokens.colors.sandWarm}30)` : "#F5F5F5",
           }}
         >
           <div
@@ -2115,7 +2378,7 @@ const PageLogros = () => {
               width: 80,
               height: 80,
               borderRadius: "50%",
-              background: badge.earned
+              background: comp.earned
                 ? `linear-gradient(135deg, ${tokens.colors.goldBadge}30, ${tokens.colors.sandWarm})`
                 : "#ECECEC",
               display: "flex",
@@ -2123,16 +2386,16 @@ const PageLogros = () => {
               justifyContent: "center",
               margin: "0 auto 14px",
               fontSize: 36,
-              boxShadow: badge.earned ? `0 0 0 4px ${tokens.colors.goldBadge}40, 0 4px 12px ${tokens.colors.goldBadge}20` : "none",
-              animation: badge.earned ? "scaleIn 0.5s ease both" : "none",
+              boxShadow: comp.earned ? `0 0 0 4px ${tokens.colors.goldBadge}40, 0 4px 12px ${tokens.colors.goldBadge}20` : "none",
+              animation: comp.earned ? "scaleIn 0.5s ease both" : "none",
               animationDelay: `${0.3 + i * 0.08}s`,
             }}
           >
-            {badge.earned ? badge.icon : "🔒"}
+            {comp.earned ? comp.icon : "🔒"}
           </div>
-          <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{badge.name}</div>
-          <div style={{ fontSize: 13, color: badge.earned ? tokens.colors.forestCalm : tokens.colors.textMuted, fontWeight: 600 }}>
-            {badge.earned ? badge.date : "Por desbloquear"}
+          <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{comp.name}</div>
+          <div style={{ fontSize: 14, color: comp.earned ? tokens.colors.forestCalm : tokens.colors.textMuted, fontWeight: 600 }}>
+            {comp.earned ? `Adquirida · ${comp.date}` : "Por desbloquear"}
           </div>
         </Card>
       ))}
@@ -2146,10 +2409,9 @@ const PagePerfil = () => {
   const { isMobile } = useResponsive();
   return (
   <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 800, margin: "0 auto" }}>
-    <SectionTitle
-      title="Mi cuenta"
-      subtitle="Tu espacio personal en Brújula Digital"
-    />
+    <SectionTitle subtitle="Tu espacio personal en Brújula Digital">
+      Mi Perfil
+    </SectionTitle>
 
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr", gap: isMobile ? 22 : 32, marginTop: 36 }}>
       {/* Profile Card */}
@@ -2212,9 +2474,9 @@ const PagePerfil = () => {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 14, marginTop: 22 }}>
             {[
-              { label: "Módulos completados", value: "1 / 8", emoji: "📚" },
-              { label: "Lecciones terminadas", value: "9 / 37", emoji: "✅" },
-              { label: "Horas de práctica", value: "12h", emoji: "⏱️" },
+              { label: "Módulos completados", value: "1 / 6", emoji: "📚" },
+              { label: "Lecciones terminadas", value: "6 / 25", emoji: "✅" },
+              { label: "Horas de práctica", value: "3h", emoji: "⏱️" },
             ].map((stat, i) => (
               <div
                 key={i}
@@ -2227,7 +2489,7 @@ const PagePerfil = () => {
               >
                 <div style={{ fontSize: 22, marginBottom: 4 }}>{stat.emoji}</div>
                 <div style={{ fontSize: 24, fontWeight: 800, color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif" }}>{stat.value}</div>
-                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, marginTop: 4, fontWeight: 600 }}>{stat.label}</div>
+                <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginTop: 4, fontWeight: 600 }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -2245,9 +2507,9 @@ const PagePerfil = () => {
             Actividad reciente
           </h3>
           {[
-            { action: "Completó lección: Compartir pantalla en Zoom", time: "Hoy, 10:30 AM", icon: "📹" },
-            { action: "Ganó insignia: Primera videollamada", time: "Ayer, 3:15 PM", icon: "🏅" },
-            { action: "Completó módulo: Primeros pasos digitales", time: "12 Mar 2026", icon: "✅" },
+            { action: "Completó lección: Enviar tu primer correo", time: "Hoy, 10:30 AM", icon: "📧" },
+            { action: "Ganó competencia: Navegación Digital", time: "Ayer, 3:15 PM", icon: "🏅" },
+            { action: "Completó módulo: Navegando el Mundo Digital", time: "12 Mar 2026", icon: "✅" },
             { action: "Publicó en la comunidad", time: "10 Mar 2026", icon: "💬" },
           ].map((item, i) => (
             <div
@@ -2263,7 +2525,7 @@ const PagePerfil = () => {
               <span style={{ fontSize: 24 }}>{item.icon}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 15, fontWeight: 700, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{item.action}</div>
-                <div style={{ fontSize: 13, color: tokens.colors.textSecondary, fontWeight: 500, marginTop: 2 }}>{item.time}</div>
+                <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500, marginTop: 2 }}>{item.time}</div>
               </div>
             </div>
           ))}
@@ -2446,7 +2708,7 @@ const Footer = () => {
           <div key={i}>
             <h4
               style={{
-                fontSize: 13,
+                fontSize: 14,
                 fontWeight: 700,
                 marginBottom: 20,
                 letterSpacing: 1.5,
@@ -2492,10 +2754,10 @@ const Footer = () => {
           gap: 12,
         }}
       >
-        <div style={{ fontSize: 13, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
+        <div style={{ fontSize: 14, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
           © 2026 Brújula Digital · Chispas Estratégicas
         </div>
-        <div style={{ fontSize: 13, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
+        <div style={{ fontSize: 14, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
           Aprender no tiene edad 🌟
         </div>
       </div>
@@ -2505,8 +2767,68 @@ const Footer = () => {
 };
 
 // ========== MAIN APP ==========
+// ========== PERSISTENCIA CON LOCAL STORAGE ==========
+const STORAGE_KEY = "brujula_state";
+
+const defaultState = {
+  nivel: null,
+  nombre: "Carla",
+  leccionesCompletadas: [],
+  modulosCompletados: [1],
+  likes: {},
+  racha: { ultimoAcceso: null, dias: 5 },
+  diagnosticoCompleto: false,
+};
+
+const loadState = () => {
+  if (typeof window === "undefined") return defaultState;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? { ...defaultState, ...JSON.parse(saved) } : defaultState;
+  } catch {
+    return defaultState;
+  }
+};
+
+const saveState = (state) => {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch { /* ignore quota errors */ }
+};
+
+const useAppState = () => {
+  const [state, setState] = useState(defaultState);
+
+  useEffect(() => {
+    setState(loadState());
+  }, []);
+
+  const updateState = (updates) => {
+    setState((prev) => {
+      const next = { ...prev, ...updates };
+      saveState(next);
+      return next;
+    });
+  };
+
+  const toggleLike = (postId) => {
+    setState((prev) => {
+      const next = {
+        ...prev,
+        likes: { ...prev.likes, [postId]: !prev.likes[postId] },
+      };
+      saveState(next);
+      return next;
+    });
+  };
+
+  return { state, updateState, toggleLike };
+};
+
 export default function BrujulaDigital() {
   const [currentPage, setCurrentPage] = useState("inicio");
+  const { state: appState, updateState, toggleLike } = useAppState();
 
   const setPage = (page) => {
     setCurrentPage(page);
@@ -2516,23 +2838,23 @@ export default function BrujulaDigital() {
   const renderPage = () => {
     switch (currentPage) {
       case "inicio":
-        return <PageInicio setPage={setPage} />;
+        return <PageInicio setPage={setPage} appState={appState} />;
       case "diagnostico":
-        return <PageDiagnostico setPage={setPage} />;
+        return <PageDiagnostico setPage={setPage} updateState={updateState} />;
       case "ruta":
-        return <PageRuta setPage={setPage} />;
+        return <PageRuta setPage={setPage} appState={appState} />;
       case "explorador":
-        return <PageExplorador setPage={setPage} />;
+        return <PageExplorador setPage={setPage} appState={appState} />;
       case "biblioteca":
         return <PageBiblioteca setPage={setPage} />;
       case "comunidad":
-        return <PageComunidad />;
+        return <PageComunidad appState={appState} toggleLike={toggleLike} />;
       case "logros":
-        return <PageLogros />;
+        return <PageLogros appState={appState} />;
       case "perfil":
-        return <PagePerfil />;
+        return <PagePerfil appState={appState} />;
       default:
-        return <PageInicio setPage={setPage} />;
+        return <PageInicio setPage={setPage} appState={appState} />;
     }
   };
 

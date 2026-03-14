@@ -685,20 +685,20 @@ npx @21st-dev/cli@latest install cursor --api-key TU_KEY
 
 ## 7. Fases de Implementación
 
-### Fase 1: Fundamentos (1-2 sesiones)
-- [ ] Fix SectionTitle bug
-- [ ] Unificar currículo: crear `CURRICULUM` con 6 módulos
-- [ ] Implementar localStorage para persistencia
-- [ ] Fix de contraste (textMuted, coral)
-- [ ] Aumentar tamaños de texto mínimos
-- [ ] Reducir navbar a 5 items
+### Fase 1: Fundamentos (1-2 sesiones) ✅
+- [x] Fix SectionTitle bug
+- [x] Unificar currículo: crear `CURRICULUM` con 6 módulos
+- [x] Implementar localStorage para persistencia
+- [x] Fix de contraste (textMuted, coral)
+- [x] Aumentar tamaños de texto mínimos
+- [x] Reducir navbar a 5 items
 
-### Fase 2: Diagnóstico Real (1 sesión)
-- [ ] Expandir a 8 preguntas basadas en escenarios
-- [ ] Implementar scoring y asignación de nivel real
-- [ ] Agregar botón "Anterior"
-- [ ] Resultado personalizado con ruta real
-- [ ] Guardar nivel en localStorage
+### Fase 2: Diagnóstico Real (1 sesión) ✅
+- [x] Expandir a 8 preguntas basadas en escenarios
+- [x] Implementar scoring y asignación de nivel real
+- [x] Agregar botón "Anterior"
+- [x] Resultado personalizado con ruta real
+- [x] Guardar nivel en localStorage
 
 ### Fase 3: Ruta y Explorador (2-3 sesiones)
 - [ ] Reestructurar PageRuta con 6 módulos + niveles
