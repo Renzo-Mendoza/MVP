@@ -710,13 +710,13 @@ npx @21st-dev/cli@latest install cursor --api-key TU_KEY
 - [x] Botón "Completar" funcional con localStorage
 
 ### Fase 4: Comunidad y Biblioteca (1-2 sesiones)
-- [ ] Tabs funcionales en Comunidad
-- [ ] Composición de posts con localStorage
-- [ ] Expandir posts (6-9 variados)
-- [ ] Búsqueda funcional en Biblioteca
-- [ ] Filtros funcionales
-- [ ] Expandir recursos (8-12)
-- [ ] Drill-down de áreas
+- [x] Tabs funcionales en Comunidad
+- [x] Composición de posts con localStorage
+- [x] Expandir posts (6-9 variados)
+- [x] Búsqueda funcional en Biblioteca
+- [x] Filtros funcionales
+- [x] Expandir recursos (8-12)
+- [x] Drill-down de áreas
 
 ### Fase 5: Perfil, Footer, Ayuda (1 sesión)
 - [ ] Fusionar Logros en Perfil como "Competencias"

@@ -226,6 +226,7 @@ const COMMUNITY_POSTS = [
     likes: 12,
     replies: 3,
     color: "#D4735C",
+    tab: "foro",
   },
   {
     id: 2,
@@ -236,6 +237,7 @@ const COMMUNITY_POSTS = [
     likes: 4,
     replies: 7,
     color: "#4A9B9C",
+    tab: "foro",
   },
   {
     id: 3,
@@ -246,21 +248,85 @@ const COMMUNITY_POSTS = [
     likes: 23,
     replies: 5,
     color: "#5B8A72",
+    tab: "foro",
+  },
+  {
+    id: 4,
+    author: "Carmen L.",
+    avatar: "CL",
+    time: "Hace 1 día",
+    text: "¿Cómo puedo crear un formulario en Google Forms para evaluar a mis alumnos de 5.° grado? Nunca he usado esa herramienta.",
+    likes: 8,
+    replies: 11,
+    color: "#E8927C",
+    tab: "foro",
+  },
+  {
+    id: 5,
+    author: "Luis M.",
+    avatar: "LM",
+    time: "Hace 2 días",
+    text: "Acabo de terminar mi primera presentación en Canva. No es perfecta pero mis estudiantes me dijeron que se veía muy profesional 🎨",
+    likes: 31,
+    replies: 8,
+    color: "#F2C94C",
+    tab: "foro",
+  },
+  {
+    id: 6,
+    author: "Teresa V.",
+    avatar: "TV",
+    time: "Hace 3 días",
+    text: "¿Alguien sabe cómo organizar las tareas en Google Classroom por tema? Tengo todo desordenado y no encuentro lo que busco.",
+    likes: 6,
+    replies: 4,
+    color: "#9B59B6",
+    tab: "foro",
+  },
+  {
+    id: 7,
+    author: "Jorge P.",
+    avatar: "JP",
+    time: "Hace 4 días",
+    text: "Compartí el enlace de mi clase de Classroom con los padres de familia y ahora pueden ver las tareas. ¡Qué diferencia!",
+    likes: 17,
+    replies: 6,
+    color: "#2C6E6F",
+    tab: "foro",
+  },
+  {
+    id: 8,
+    author: "Susana R.",
+    avatar: "SR",
+    time: "Hace 5 días",
+    text: "Mi primera videollamada con padres de familia fue un éxito. Usé los tips del módulo de comunicación digital y todo fluyó.",
+    likes: 19,
+    replies: 3,
+    color: "#D4735C",
+    tab: "foro",
   },
 ];
 
 const LIBRARY_RESOURCES = [
-  { id: 1, area: "Matemáticas", color: "#D4735C", count: 12, icon: "📐", desc: "Recursos para enseñanza de matemáticas" },
-  { id: 2, area: "Ciencias", color: "#4A9B9C", count: 8, icon: "🔬", desc: "Experimentos y material científico" },
-  { id: 3, area: "Lenguaje", color: "#F2C94C", count: 15, icon: "📝", desc: "Plantillas y actividades de lectoescritura" },
-  { id: 4, area: "Historia", color: "#5B8A72", count: 7, icon: "🏛️", desc: "Líneas de tiempo y recursos históricos" },
-  { id: 5, area: "Arte y Música", color: "#9B59B6", count: 6, icon: "🎨", desc: "Material creativo y audiovisual" },
-  { id: 6, area: "Tecnología", color: "#2C6E6F", count: 10, icon: "💻", desc: "Tutoriales y herramientas digitales" },
+  { id: 1, area: "Matemáticas", color: "#D4735C", count: 12, icon: "📐", desc: "Recursos para enseñanza de matemáticas", filter: "plantillas" },
+  { id: 2, area: "Ciencias", color: "#4A9B9C", count: 8, icon: "🔬", desc: "Experimentos y material científico", filter: "plantillas" },
+  { id: 3, area: "Lenguaje", color: "#F2C94C", count: 15, icon: "📝", desc: "Plantillas y actividades de lectoescritura", filter: "plantillas" },
+  { id: 4, area: "Historia", color: "#5B8A72", count: 7, icon: "🏛️", desc: "Líneas de tiempo y recursos históricos", filter: "plantillas" },
+  { id: 5, area: "Arte y Música", color: "#9B59B6", count: 6, icon: "🎨", desc: "Material creativo y audiovisual", filter: "plantillas" },
+  { id: 6, area: "Tecnología", color: "#2C6E6F", count: 10, icon: "💻", desc: "Tutoriales y herramientas digitales", filter: "plantillas" },
 ];
 
 const SHARED_RESOURCES = [
-  { id: 1, title: "Plantilla de examen — Álgebra", author: "Patricia A.", downloads: 34, type: "PDF", icon: "📄" },
-  { id: 2, title: "Presentación — Sistema Solar", author: "Roberto G.", downloads: 21, type: "PPT", icon: "📊" },
+  { id: 1, title: "Plantilla de examen — Álgebra", author: "Patricia A.", downloads: 34, type: "PDF", icon: "📄", area: "Matemáticas" },
+  { id: 2, title: "Presentación — Sistema Solar", author: "Roberto G.", downloads: 21, type: "PPT", icon: "📊", area: "Ciencias" },
+  { id: 3, title: "Rúbrica de evaluación — Lectura comprensiva", author: "Carmen L.", downloads: 45, type: "PDF", icon: "📄", area: "Lenguaje" },
+  { id: 4, title: "Línea de tiempo — Independencia del Perú", author: "Luis M.", downloads: 18, type: "PDF", icon: "📄", area: "Historia" },
+  { id: 5, title: "Quiz interactivo — Fracciones", author: "Teresa V.", downloads: 29, type: "Quizizz", icon: "🎮", area: "Matemáticas" },
+  { id: 6, title: "Plantilla Canva — Infografía de clase", author: "Jorge P.", downloads: 52, type: "Canva", icon: "🎨", area: "Arte y Música" },
+  { id: 7, title: "Guía — Configurar Google Classroom", author: "Susana R.", downloads: 67, type: "PDF", icon: "📄", area: "Tecnología" },
+  { id: 8, title: "Presentación — Ecosistemas", author: "Ana García", downloads: 15, type: "PPT", icon: "📊", area: "Ciencias" },
+  { id: 9, title: "Formulario — Encuesta a padres", author: "Pedro S.", downloads: 38, type: "Forms", icon: "📋", area: "Tecnología" },
+  { id: 10, title: "Banco de preguntas — Gramática", author: "María del Carmen O.", downloads: 22, type: "PDF", icon: "📄", area: "Lenguaje" },
 ];
 
 const DIAGNOSTIC_QUESTIONS = [
@@ -1741,11 +1807,33 @@ const PageRuta = ({ setPage, curriculum, openModule }) => {
   );
 };
 
-// ========== PAGE: COMUNIDAD (P1 — Two-column with Tabs) ==========
-const PageComunidad = ({ appState, toggleLike }) => {
+// ========== PAGE: COMUNIDAD (Tabs funcionales + Composición) ==========
+const PageComunidad = ({ appState, toggleLike, updateState }) => {
   const { isMobile } = useResponsive();
   const likedPosts = appState?.likes || {};
   const [activeTab, setActiveTab] = useState("foro");
+  const [newPostText, setNewPostText] = useState("");
+  const userPosts = appState?.communityPosts || [];
+
+  const handlePublish = () => {
+    const trimmed = newPostText.trim();
+    if (!trimmed) return;
+    const post = {
+      id: Date.now(),
+      author: appState.nombre || "Docente",
+      avatar: (appState.nombre || "D").slice(0, 2).toUpperCase(),
+      time: "Ahora",
+      text: trimmed,
+      likes: 0,
+      replies: 0,
+      color: tokens.colors.oceanDeep,
+      tab: "foro",
+    };
+    updateState({ communityPosts: [post, ...userPosts] });
+    setNewPostText("");
+  };
+
+  const allPosts = [...userPosts, ...COMMUNITY_POSTS];
 
   const tabs = [
     { id: "foro", label: "💬 Foro de Preguntas", emoji: "💬" },
@@ -1756,6 +1844,8 @@ const PageComunidad = ({ appState, toggleLike }) => {
   const experiencias = [
     { id: 1, author: "Ana García", avatar: "AG", color: tokens.colors.coralSoft, role: "Docente de Matemáticas · Arequipa", text: "Gracias a Brújula Digital aprendí a usar Canva para mis materiales. Ahora mis estudiantes prestan más atención y mis colegas me piden ayuda. ¡Es un cambio increíble!", years: "28 años enseñando" },
     { id: 2, author: "Pedro Sánchez", avatar: "PS", color: tokens.colors.forestCalm, role: "Docente de Ciencias · Lima", text: "Al principio tenía mucho miedo de usar tecnología en clase. El Módulo de videoconferencias me ayudó paso a paso. Ahora mis clases en línea fluyen con naturalidad.", years: "22 años enseñando" },
+    { id: 3, author: "Rosa Mendoza", avatar: "RM", color: tokens.colors.oceanDeep, role: "Docente de Lenguaje · Cusco", text: "Mis estudiantes ahora entregan tareas por Google Classroom. Antes todo era en papel y se perdía la mitad. Estoy muy agradecida con esta plataforma.", years: "25 años enseñando" },
+    { id: 4, author: "Carlos Huamán", avatar: "CH", color: tokens.colors.goldBadge, role: "Docente de Historia · Trujillo", text: "Creé mi primer quiz en Quizizz y los chicos estaban emocionadísimos. Nunca pensé que evaluar pudiera ser tan divertido para ellos.", years: "20 años enseñando" },
   ];
 
   return (
@@ -1816,87 +1906,114 @@ const PageComunidad = ({ appState, toggleLike }) => {
           ))}
         </div>
 
-        {/* Two-column layout */}
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 32 }}>
-          {/* Left — Forum */}
-          <div>
-            {/* Compose */}
-            <Card customStyle={{ marginBottom: 24 }} delay={0.2}>
-              <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 14, color: tokens.colors.oceanDarker, fontFamily: "'Nunito', sans-serif" }}>
-                📝 Comparte tu pregunta
-              </div>
-              <div style={{
-                width: "100%", padding: "16px 20px", border: `2px solid ${tokens.colors.oceanMist}`, borderRadius: tokens.radii.md,
-                fontSize: 15, color: tokens.colors.textMuted, background: tokens.colors.sandLight, marginBottom: 14,
-                fontFamily: "'Nunito', sans-serif", lineHeight: 1.5,
-              }}>
-                ¿Tienes alguna duda? Escribe aquí con confianza, todos pasamos por lo mismo...
-              </div>
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button size="sm" aria-label="Publicar pregunta">Publicar →</Button>
-              </div>
-            </Card>
-
-            {/* Posts */}
-            {COMMUNITY_POSTS.map((post, i) => (
-              <Card key={post.id} customStyle={{ marginBottom: 20 }} delay={0.3 + i * 0.1}>
-                <div style={{ display: "flex", gap: 14 }}>
-                  <div style={{
-                    width: 44, height: 44, borderRadius: "50%", background: post.color,
-                    color: "white", display: "flex", alignItems: "center", justifyContent: "center",
-                    fontWeight: 800, fontSize: 14, flexShrink: 0,
-                  }}>
-                    {post.avatar}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, flexWrap: "wrap", gap: 4 }}>
-                      <span style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.oceanDarker }}>{post.author}</span>
-                      <span style={{ fontSize: 14, color: tokens.colors.textMuted }}>{post.time}</span>
-                    </div>
-                    <p style={{ fontSize: 15, lineHeight: 1.7, color: tokens.colors.textBody, marginBottom: 14, fontFamily: "'Nunito', sans-serif" }}>
-                      {post.text}
-                    </p>
-                    <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
-                      <button
-                        onClick={() => toggleLike?.(post.id)}
-                        aria-label={likedPosts[post.id] ? "Quitar me gusta" : "Dar me gusta"}
-                        style={{
-                          display: "flex", alignItems: "center", gap: 6, background: "none", border: "none",
-                          cursor: "pointer", fontSize: 14, fontWeight: 600,
-                          color: likedPosts[post.id] ? tokens.colors.coralSoft : tokens.colors.textSecondary,
-                          fontFamily: "'Nunito', sans-serif", minHeight: 36, padding: "4px 8px",
-                        }}
-                      >
-                        <HeartIcon filled={likedPosts[post.id]} /> {post.likes + (likedPosts[post.id] ? 1 : 0)}
-                      </button>
-                      <span style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>💬 {post.replies} respuestas</span>
-                      <button
-                        aria-label={`Responder a ${post.author}`}
-                        style={{
-                          marginLeft: "auto", padding: "8px 18px", borderRadius: tokens.radii.pill,
-                          fontSize: 14, fontWeight: 700, minHeight: 36,
-                          background: tokens.colors.oceanMist, color: tokens.colors.oceanDarker,
-                          border: "none", cursor: "pointer", fontFamily: "'Nunito', sans-serif",
-                          transition: "all 0.2s ease",
-                        }}
-                      >
-                        Responder
-                      </button>
-                    </div>
-                  </div>
+        {/* Tab Content */}
+        {activeTab === "foro" && (
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 32 }}>
+            <div>
+              {/* Compose */}
+              <Card customStyle={{ marginBottom: 24 }} delay={0.2}>
+                <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 14, color: tokens.colors.oceanDarker, fontFamily: "'Nunito', sans-serif" }}>
+                  📝 Comparte tu pregunta
+                </div>
+                <textarea
+                  value={newPostText}
+                  onChange={(e) => setNewPostText(e.target.value)}
+                  placeholder="¿Tienes alguna duda? Escribe aquí con confianza, todos pasamos por lo mismo..."
+                  aria-label="Escribir una nueva pregunta"
+                  rows={3}
+                  style={{
+                    width: "100%", padding: "16px 20px", border: `2px solid ${tokens.colors.oceanMist}`, borderRadius: tokens.radii.md,
+                    fontSize: 15, color: tokens.colors.textPrimary, background: tokens.colors.sandLight, marginBottom: 14,
+                    fontFamily: "'Nunito', sans-serif", lineHeight: 1.5, resize: "vertical", outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 14, color: tokens.colors.textMuted }}>
+                    {newPostText.length > 0 ? `${newPostText.length} caracteres` : ""}
+                  </span>
+                  <Button size="sm" onClick={handlePublish} aria-label="Publicar pregunta">Publicar →</Button>
                 </div>
               </Card>
-            ))}
-          </div>
 
-          {/* Right sidebar — Experiencias Reales */}
-          <div style={{ animation: "fadeInUp 0.6s ease 0.3s both" }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: 10, marginBottom: 20,
-            }}>
+              {/* Posts */}
+              {allPosts.map((post, i) => (
+                <Card key={post.id} customStyle={{ marginBottom: 20 }} delay={0.3 + Math.min(i, 3) * 0.1}>
+                  <div style={{ display: "flex", gap: 14 }}>
+                    <div style={{
+                      width: 44, height: 44, borderRadius: "50%", background: post.color,
+                      color: "white", display: "flex", alignItems: "center", justifyContent: "center",
+                      fontWeight: 800, fontSize: 14, flexShrink: 0,
+                    }}>
+                      {post.avatar}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, flexWrap: "wrap", gap: 4 }}>
+                        <span style={{ fontWeight: 700, fontSize: 15, color: tokens.colors.oceanDarker }}>{post.author}</span>
+                        <span style={{ fontSize: 14, color: tokens.colors.textMuted }}>{post.time}</span>
+                      </div>
+                      <p style={{ fontSize: 15, lineHeight: 1.7, color: tokens.colors.textBody, marginBottom: 14, fontFamily: "'Nunito', sans-serif" }}>
+                        {post.text}
+                      </p>
+                      <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
+                        <button
+                          onClick={() => toggleLike?.(post.id)}
+                          aria-label={likedPosts[post.id] ? "Quitar me gusta" : "Dar me gusta"}
+                          style={{
+                            display: "flex", alignItems: "center", gap: 6, background: "none", border: "none",
+                            cursor: "pointer", fontSize: 14, fontWeight: 600,
+                            color: likedPosts[post.id] ? tokens.colors.coralSoft : tokens.colors.textSecondary,
+                            fontFamily: "'Nunito', sans-serif", minHeight: 36, padding: "4px 8px",
+                          }}
+                        >
+                          <HeartIcon filled={likedPosts[post.id]} /> {post.likes + (likedPosts[post.id] ? 1 : 0)}
+                        </button>
+                        <span style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>💬 {post.replies} respuestas</span>
+                        <button
+                          aria-label={`Responder a ${post.author}`}
+                          style={{
+                            marginLeft: "auto", padding: "8px 18px", borderRadius: tokens.radii.pill,
+                            fontSize: 14, fontWeight: 700, minHeight: 36,
+                            background: tokens.colors.oceanMist, color: tokens.colors.oceanDarker,
+                            border: "none", cursor: "pointer", fontFamily: "'Nunito', sans-serif",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          Responder
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            {/* Sidebar — stats */}
+            <div style={{ animation: "fadeInUp 0.6s ease 0.3s both" }}>
+              <Card customStyle={{ marginBottom: 20, background: `linear-gradient(135deg, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`, color: "white" }}>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: 28, marginBottom: 10 }}>🤝</div>
+                  <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
+                    ¿Tienes una historia para compartir?
+                  </div>
+                  <div style={{ fontSize: 14, opacity: 0.85, marginBottom: 16, lineHeight: 1.5 }}>
+                    Tu experiencia puede inspirar a otro docente
+                  </div>
+                  <Button variant="coral" size="sm" onClick={() => setActiveTab("experiencias")} aria-label="Compartir mi experiencia">
+                    Ver experiencias →
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "experiencias" && (
+          <div style={{ maxWidth: 700 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
               <span style={{ fontSize: 24 }}>💛</span>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: tokens.colors.oceanDarker }}>
-                Experiencias Reales
+                Experiencias Reales de Docentes
               </h3>
             </div>
             {experiencias.map((exp, i) => (
@@ -1904,7 +2021,7 @@ const PageComunidad = ({ appState, toggleLike }) => {
                 marginBottom: 20,
                 background: `linear-gradient(135deg, ${tokens.colors.sandWarm}20, ${tokens.colors.sandLight})`,
                 borderLeft: `4px solid ${exp.color}`,
-              }} delay={0.4 + i * 0.15}>
+              }} delay={i * 0.12}>
                 <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
                   <div style={{
                     width: 44, height: 44, borderRadius: "50%", background: exp.color,
@@ -1920,7 +2037,7 @@ const PageComunidad = ({ appState, toggleLike }) => {
                   </div>
                 </div>
                 <p style={{
-                  fontSize: 14, lineHeight: 1.7, color: tokens.colors.textBody,
+                  fontSize: 15, lineHeight: 1.7, color: tokens.colors.textBody,
                   fontStyle: "italic", fontFamily: "'Nunito', sans-serif",
                   borderLeft: `3px solid ${exp.color}30`, paddingLeft: 14,
                 }}>
@@ -1928,42 +2045,90 @@ const PageComunidad = ({ appState, toggleLike }) => {
                 </p>
               </Card>
             ))}
+          </div>
+        )}
 
-            {/* Quick join CTA */}
-            <div style={{
-              background: `linear-gradient(135deg, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`,
-              borderRadius: tokens.radii.lg, padding: "24px 20px", textAlign: "center", color: "white",
-              animation: "fadeInUp 0.6s ease 0.7s both",
-            }}>
-              <div style={{ fontSize: 28, marginBottom: 10 }}>🤝</div>
-              <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
-                ¿Tienes una historia para compartir?
-              </div>
-              <div style={{ fontSize: 14, opacity: 0.85, marginBottom: 16, lineHeight: 1.5 }}>
-                Tu experiencia puede inspirar a otro docente
-              </div>
-              <Button variant="coral" size="sm" aria-label="Compartir mi experiencia">
-                Compartir mi historia
-              </Button>
+        {activeTab === "recursos" && (
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
+              <span style={{ fontSize: 24 }}>📎</span>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: tokens.colors.oceanDarker }}>
+                Recursos Compartidos por Docentes
+              </h3>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 18 }}>
+              {SHARED_RESOURCES.map((res, i) => (
+                <Card key={res.id} delay={i * 0.08} customStyle={{ display: "flex", alignItems: "center", gap: 18 }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: tokens.radii.md,
+                    background: tokens.colors.sandWarm, display: "flex", alignItems: "center",
+                    justifyContent: "center", fontSize: 26, flexShrink: 0,
+                  }}>
+                    {res.icon}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4, color: tokens.colors.textPrimary }}>{res.title}</div>
+                    <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>
+                      Por {res.author} · {res.type} · ⬇ {res.downloads}
+                    </div>
+                  </div>
+                  <Button size="sm" variant="secondary" aria-label={`Descargar ${res.title}`}>
+                    Descargar
+                  </Button>
+                </Card>
+              ))}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
-// ========== PAGE: BIBLIOTECA DIGITAL (P1 — Hero + Academic Areas) ==========
+// ========== PAGE: BIBLIOTECA DIGITAL (P1 — Hero + Academic Areas + Drill-down) ==========
 const PageBiblioteca = ({ setPage }) => {
   const { isMobile, isTablet } = useResponsive();
   const [activeFilter, setActiveFilter] = useState("todos");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedArea, setSelectedArea] = useState(null);
 
   const filters = [
     { id: "todos", label: "📚 Todos los Temas" },
     { id: "plantillas", label: "📋 Plantillas y Recursos" },
     { id: "compartir", label: "🤝 Compartir e Intercambiar" },
   ];
+
+  const query = searchQuery.trim().toLowerCase();
+
+  // Filtrar áreas académicas por búsqueda
+  const filteredAreas = LIBRARY_RESOURCES.filter((res) => {
+    if (activeFilter === "compartir") return false;
+    if (query && !res.area.toLowerCase().includes(query)) return false;
+    return true;
+  });
+
+  // Filtrar recursos compartidos por búsqueda, filtro y área seleccionada
+  const filteredShared = SHARED_RESOURCES.filter((res) => {
+    if (activeFilter === "plantillas") return false;
+    if (selectedArea && res.area !== selectedArea) return false;
+    if (query) {
+      const text = `${res.title} ${res.author} ${res.type} ${res.area}`.toLowerCase();
+      if (!text.includes(query)) return false;
+    }
+    return true;
+  });
+
+  const handleAreaClick = (areaName) => {
+    setSelectedArea(areaName);
+    setActiveFilter("compartir");
+  };
+
+  const handleBackToAll = () => {
+    setSelectedArea(null);
+    setActiveFilter("todos");
+  };
+
+  const selectedAreaObj = selectedArea ? LIBRARY_RESOURCES.find((r) => r.area === selectedArea) : null;
 
   return (
     <div>
@@ -2007,6 +2172,9 @@ const PageBiblioteca = ({ setPage }) => {
                   fontWeight: 500,
                 }}
               />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery("")} style={{ background: "none", border: "none", color: "white", cursor: "pointer", fontSize: 16, padding: 4 }} aria-label="Limpiar búsqueda">✕</button>
+              )}
             </div>
           </div>
 
@@ -2015,7 +2183,7 @@ const PageBiblioteca = ({ setPage }) => {
             {filters.map((f) => (
               <button
                 key={f.id}
-                onClick={() => setActiveFilter(f.id)}
+                onClick={() => { setActiveFilter(f.id); setSelectedArea(null); }}
                 aria-pressed={activeFilter === f.id}
                 style={{
                   padding: "10px 22px", borderRadius: tokens.radii.pill,
@@ -2033,76 +2201,129 @@ const PageBiblioteca = ({ setPage }) => {
         </div>
       </section>
 
-      {/* Academic Areas */}
       <section style={{ padding: isMobile ? "36px 20px" : "52px 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
-          <SectionTitle subtitle="Explora recursos organizados por tu área de enseñanza">
-            Áreas Académicas
-          </SectionTitle>
-          <Button size="sm" variant="coral" aria-label="Subir un recurso a la biblioteca">+ Subir recurso</Button>
-        </div>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : isTablet ? "repeat(3, 1fr)" : "repeat(6, 1fr)",
-          gap: isMobile ? 14 : 18,
-          marginBottom: isMobile ? 44 : 60,
-        }}>
-          {LIBRARY_RESOURCES.map((res, i) => (
-            <Card key={res.id} delay={i * 0.08} customStyle={{
-              padding: 0, overflow: "hidden", cursor: "pointer", textAlign: "center",
-              border: "1px solid transparent",
+        {/* Drill-down breadcrumb */}
+        {selectedArea && (
+          <div style={{ marginBottom: 24, display: "flex", alignItems: "center", gap: 10 }}>
+            <button onClick={handleBackToAll} style={{
+              background: tokens.colors.oceanMist, border: "none", borderRadius: tokens.radii.pill,
+              padding: "8px 18px", fontSize: 14, fontWeight: 700, cursor: "pointer",
+              color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif",
+              display: "flex", alignItems: "center", gap: 6, minHeight: 40,
             }}>
-              <div style={{ height: 6, background: res.color, borderRadius: `${tokens.radii.lg}px ${tokens.radii.lg}px 0 0` }} />
-              <div style={{ padding: "20px 14px" }}>
-                <div style={{ fontSize: 32, marginBottom: 10 }}>{res.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textPrimary, fontFamily: "'Nunito', sans-serif" }}>{res.area}</div>
-                <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>{res.count} recursos</div>
-                <div style={{ fontSize: 14, color: tokens.colors.textMuted, marginTop: 2 }}>{Math.floor(res.count / 3)} plantillas</div>
-              </div>
-            </Card>
-          ))}
-        </div>
+              ← Todas las áreas
+            </button>
+            {selectedAreaObj && (
+              <span style={{ fontSize: 15, fontWeight: 600, color: tokens.colors.textPrimary, fontFamily: "'Nunito', sans-serif" }}>
+                {selectedAreaObj.icon} {selectedAreaObj.area}
+              </span>
+            )}
+          </div>
+        )}
 
-        {/* Resource Exchange */}
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", marginBottom: 24, gap: 12 }}>
-            <SectionTitle subtitle="Recursos compartidos por docentes de la comunidad">
-              Intercambio de Recursos
-            </SectionTitle>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              fontSize: 14, color: tokens.colors.oceanDeep, fontWeight: 600,
-              background: tokens.colors.oceanMist, padding: "8px 16px",
-              borderRadius: tokens.radii.pill, fontFamily: "'Nunito', sans-serif",
-            }}>
-              📈 58 recursos · 45 docentes
+        {/* Academic Areas Grid */}
+        {activeFilter !== "compartir" && !selectedArea && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28, flexWrap: "wrap", gap: 16 }}>
+              <SectionTitle subtitle="Explora recursos organizados por tu área de enseñanza">
+                Áreas Académicas
+              </SectionTitle>
+              <Button size="sm" variant="coral" aria-label="Subir un recurso a la biblioteca">+ Subir recurso</Button>
             </div>
-          </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 18 }}>
-            {SHARED_RESOURCES.map((res, i) => (
-              <Card key={res.id} delay={0.4 + i * 0.1} customStyle={{ display: "flex", alignItems: "center", gap: 18 }}>
-                <div style={{
-                  width: 52, height: 52, borderRadius: tokens.radii.md,
-                  background: tokens.colors.sandWarm, display: "flex", alignItems: "center",
-                  justifyContent: "center", fontSize: 26, flexShrink: 0,
-                }}>
-                  {res.icon}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4, color: tokens.colors.textPrimary }}>{res.title}</div>
-                  <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>
-                    Por {res.author} · {res.type} · ⬇ {res.downloads}
-                  </div>
-                </div>
-                <Button size="sm" variant="secondary" aria-label={`Descargar ${res.title}`}>
-                  Descargar
-                </Button>
-              </Card>
-            ))}
+            {filteredAreas.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 20px", color: tokens.colors.textMuted, fontFamily: "'Nunito', sans-serif" }}>
+                <span style={{ fontSize: 36 }}>🔍</span>
+                <p style={{ fontSize: 16, marginTop: 12, fontWeight: 600 }}>No se encontraron áreas para "{searchQuery}"</p>
+              </div>
+            ) : (
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : isTablet ? "repeat(3, 1fr)" : "repeat(6, 1fr)",
+                gap: isMobile ? 14 : 18,
+                marginBottom: isMobile ? 44 : 60,
+              }}>
+                {filteredAreas.map((res, i) => (
+                  <Card key={res.id} delay={i * 0.08} customStyle={{
+                    padding: 0, overflow: "hidden", cursor: "pointer", textAlign: "center",
+                    border: "1px solid transparent",
+                  }}>
+                    <div onClick={() => handleAreaClick(res.area)} style={{ cursor: "pointer" }} role="button" tabIndex={0} aria-label={`Ver recursos de ${res.area}`} onKeyDown={(e) => e.key === "Enter" && handleAreaClick(res.area)}>
+                      <div style={{ height: 6, background: res.color, borderRadius: `${tokens.radii.lg}px ${tokens.radii.lg}px 0 0` }} />
+                      <div style={{ padding: "20px 14px" }}>
+                        <div style={{ fontSize: 32, marginBottom: 10 }}>{res.icon}</div>
+                        <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textPrimary, fontFamily: "'Nunito', sans-serif" }}>{res.area}</div>
+                        <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>{res.count} recursos</div>
+                        <div style={{ fontSize: 14, color: tokens.colors.textMuted, marginTop: 2 }}>{Math.floor(res.count / 3)} plantillas</div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
+        )}
+
+        {/* Shared Resources / Intercambio */}
+        {activeFilter !== "plantillas" && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", marginBottom: 24, gap: 12 }}>
+              <SectionTitle subtitle={selectedArea ? `Recursos compartidos en ${selectedArea}` : "Recursos compartidos por docentes de la comunidad"}>
+                {selectedArea ? `Recursos de ${selectedArea}` : "Intercambio de Recursos"}
+              </SectionTitle>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                fontSize: 14, color: tokens.colors.oceanDeep, fontWeight: 600,
+                background: tokens.colors.oceanMist, padding: "8px 16px",
+                borderRadius: tokens.radii.pill, fontFamily: "'Nunito', sans-serif",
+              }}>
+                📈 {filteredShared.length} recursos encontrados
+              </div>
+            </div>
+
+            {filteredShared.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 20px", color: tokens.colors.textMuted, fontFamily: "'Nunito', sans-serif" }}>
+                <span style={{ fontSize: 36 }}>📂</span>
+                <p style={{ fontSize: 16, marginTop: 12, fontWeight: 600 }}>
+                  {searchQuery ? `No se encontraron recursos para "${searchQuery}"` : selectedArea ? `Aún no hay recursos compartidos en ${selectedArea}` : "No hay recursos en esta categoría"}
+                </p>
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 18 }}>
+                {filteredShared.map((res, i) => (
+                  <Card key={res.id} delay={0.1 + i * 0.06} customStyle={{ display: "flex", alignItems: "center", gap: 18 }}>
+                    <div style={{
+                      width: 52, height: 52, borderRadius: tokens.radii.md,
+                      background: tokens.colors.sandWarm, display: "flex", alignItems: "center",
+                      justifyContent: "center", fontSize: 26, flexShrink: 0,
+                    }}>
+                      {res.icon}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4, color: tokens.colors.textPrimary }}>{res.title}</div>
+                      <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500 }}>
+                        Por {res.author} · {res.type} · ⬇ {res.downloads}
+                      </div>
+                      {!selectedArea && res.area && (
+                        <button onClick={() => handleAreaClick(res.area)} style={{
+                          background: "none", border: "none", cursor: "pointer", padding: 0,
+                          fontSize: 13, color: tokens.colors.oceanLight, fontWeight: 600, marginTop: 4,
+                          fontFamily: "'Nunito', sans-serif",
+                        }}>
+                          📁 {res.area}
+                        </button>
+                      )}
+                    </div>
+                    <Button size="sm" variant="secondary" aria-label={`Descargar ${res.title}`}>
+                      Descargar
+                    </Button>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );
@@ -2973,7 +3194,7 @@ export default function BrujulaDigital() {
       case "biblioteca":
         return <PageBiblioteca setPage={setPage} />;
       case "comunidad":
-        return <PageComunidad appState={appState} toggleLike={toggleLike} />;
+        return <PageComunidad appState={appState} toggleLike={toggleLike} updateState={updateState} />;
       case "logros":
         return <PageLogros appState={appState} />;
       case "perfil":
