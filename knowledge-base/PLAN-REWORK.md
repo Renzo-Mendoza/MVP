@@ -719,11 +719,11 @@ npx @21st-dev/cli@latest install cursor --api-key TU_KEY
 - [x] Drill-down de áreas
 
 ### Fase 5: Perfil, Footer, Ayuda (1 sesión)
-- [ ] Fusionar Logros en Perfil como "Competencias"
-- [ ] Datos reales desde localStorage
-- [ ] Limpiar Footer (solo links funcionales)
-- [ ] HelpButton con al menos 1 opción real
-- [ ] Botón "Repetir diagnóstico"
+- [x] Fusionar Logros en Perfil como "Competencias"
+- [x] Datos reales desde localStorage
+- [x] Limpiar Footer (solo links funcionales)
+- [x] HelpButton con al menos 1 opción real
+- [x] Botón "Repetir diagnóstico"
 
 ### Fase 6: Pulido (1 sesión)
 - [ ] Verificar todos los flujos end-to-end

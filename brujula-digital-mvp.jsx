@@ -207,14 +207,21 @@ const computeCurriculum = (appState) => {
   });
 };
 
-const COMPETENCIAS = [
-  { id: 1, name: "Navegación Digital", icon: "🧭", moduleId: 1, earned: true, date: "15 Feb 2026" },
-  { id: 2, name: "Comunicación Digital", icon: "📧", moduleId: 2, earned: false, date: null },
-  { id: 3, name: "Creación Visual", icon: "🎨", moduleId: 3, earned: false, date: null },
-  { id: 4, name: "Gestión del Aula Virtual", icon: "📚", moduleId: 4, earned: false, date: null },
-  { id: 5, name: "Evaluación Digital", icon: "✅", moduleId: 5, earned: false, date: null },
-  { id: 6, name: "Docente Digital Autónomo", icon: "🏆", moduleId: 6, earned: false, date: null },
+const COMPETENCIAS_BASE = [
+  { id: 1, name: "Navegación Digital", icon: "🧭", moduleId: 1 },
+  { id: 2, name: "Comunicación Digital", icon: "📧", moduleId: 2 },
+  { id: 3, name: "Creación Visual", icon: "🎨", moduleId: 3 },
+  { id: 4, name: "Gestión del Aula Virtual", icon: "📚", moduleId: 4 },
+  { id: 5, name: "Evaluación Digital", icon: "✅", moduleId: 5 },
+  { id: 6, name: "Docente Digital Autónomo", icon: "🏆", moduleId: 6 },
 ];
+
+const computeCompetencias = (appState) =>
+  COMPETENCIAS_BASE.map((c) => ({
+    ...c,
+    earned: (appState.modulosCompletados || []).includes(c.moduleId),
+    date: (appState.modulosCompletados || []).includes(c.moduleId) ? "Completado" : null,
+  }));
 
 const COMMUNITY_POSTS = [
   {
@@ -2655,10 +2662,13 @@ const PageExplorador = ({ setPage, curriculum, activeModuleId, completeLesson })
   );
 };
 
-// ========== PAGE: LOGROS ==========
-const PageLogros = () => {
+// ========== PAGE: LOGROS (redirige a Perfil — Competencias integradas) ==========
+const PageLogros = ({ appState, setPage }) => {
   const { isMobile } = useResponsive();
-  const earnedCount = COMPETENCIAS.filter(c => c.earned).length;
+  const competencias = computeCompetencias(appState);
+  const earnedCount = competencias.filter(c => c.earned).length;
+  const niveles = ["Explorador", "Integrador", "Autónomo"];
+  const nivelActual = appState.nivel || niveles[Math.min(Math.floor(earnedCount / 2), 2)];
   return (
   <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
     <SectionTitle subtitle="Cada competencia representa un logro real en tu desarrollo profesional digital.">
@@ -2668,9 +2678,9 @@ const PageLogros = () => {
     {/* Stats */}
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 14 : 22, marginBottom: isMobile ? 36 : 52, marginTop: 36 }}>
       {[
-        { label: "Competencias adquiridas", value: `${earnedCount} / ${COMPETENCIAS.length}`, color: tokens.colors.goldBadge, emoji: "🏅" },
-        { label: "Nivel actual", value: "Explorador", color: tokens.colors.oceanDeep, emoji: "🧭" },
-        { label: "Días activa", value: "18", color: tokens.colors.coralSoft, emoji: "📅" },
+        { label: "Competencias adquiridas", value: `${earnedCount} / ${competencias.length}`, color: tokens.colors.goldBadge, emoji: "🏅" },
+        { label: "Nivel actual", value: nivelActual, color: tokens.colors.oceanDeep, emoji: "🧭" },
+        { label: "Racha de días", value: `${appState.racha?.dias || 0}`, color: tokens.colors.coralSoft, emoji: "🔥" },
       ].map((stat, i) => (
         <Card key={i} delay={0.2 + i * 0.1} customStyle={{ textAlign: "center" }}>
           <div style={{ fontSize: 32, marginBottom: 8 }}>{stat.emoji}</div>
@@ -2682,7 +2692,7 @@ const PageLogros = () => {
 
     {/* Competencias Grid */}
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: isMobile ? 14 : 22 }}>
-      {COMPETENCIAS.map((comp, i) => (
+      {competencias.map((comp, i) => (
         <Card
           key={comp.id}
           delay={0.3 + i * 0.08}
@@ -2714,20 +2724,37 @@ const PageLogros = () => {
           </div>
           <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{comp.name}</div>
           <div style={{ fontSize: 14, color: comp.earned ? tokens.colors.forestCalm : tokens.colors.textMuted, fontWeight: 600 }}>
-            {comp.earned ? `Adquirida · ${comp.date}` : "Por desbloquear"}
+            {comp.earned ? "Adquirida ✓" : "Por desbloquear"}
           </div>
         </Card>
       ))}
+    </div>
+
+    {/* Link to Perfil */}
+    <div style={{ textAlign: "center", marginTop: 36 }}>
+      <Button onClick={() => setPage("perfil")} variant="secondary" aria-label="Ver perfil completo">
+        Ver mi perfil completo →
+      </Button>
     </div>
   </div>
   );
 };
 
-// ========== PAGE: PERFIL ==========
-const PagePerfil = () => {
+// ========== PAGE: PERFIL (con datos reales + Competencias + Repetir diagnóstico) ==========
+const PagePerfil = ({ appState, setPage }) => {
   const { isMobile } = useResponsive();
+  const competencias = computeCompetencias(appState);
+  const earnedCount = competencias.filter(c => c.earned).length;
+  const totalLessons = CURRICULUM.reduce((s, m) => s + m.lessonList.length, 0);
+  const completedLessons = (appState.leccionesCompletadas || []).filter(k => !k.includes("-act-")).length;
+  const modulosCompletos = (appState.modulosCompletados || []).length;
+  const progressPct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+  const niveles = ["Explorador", "Integrador", "Autónomo"];
+  const nivelActual = appState.nivel || niveles[Math.min(Math.floor(earnedCount / 2), 2)];
+  const initials = (appState.nombre || "U").slice(0, 2).toUpperCase();
+
   return (
-  <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 800, margin: "0 auto" }}>
+  <div style={{ padding: isMobile ? "32px 20px" : "48px 24px", maxWidth: 900, margin: "0 auto" }}>
     <SectionTitle subtitle="Tu espacio personal en Brújula Digital">
       Mi Perfil
     </SectionTitle>
@@ -2737,31 +2764,24 @@ const PagePerfil = () => {
       <Card customStyle={{ textAlign: "center" }} delay={0.1}>
         <div
           style={{
-            width: 110,
-            height: 110,
-            borderRadius: "50%",
+            width: 110, height: 110, borderRadius: "50%",
             background: `linear-gradient(135deg, ${tokens.colors.oceanDeep}, ${tokens.colors.oceanLight})`,
-            color: "white",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 40,
-            fontWeight: 700,
-            margin: "0 auto 18px",
+            color: "white", display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 40, fontWeight: 700, margin: "0 auto 18px",
             fontFamily: "'Playfair Display', serif",
             boxShadow: `0 0 0 4px ${tokens.colors.oceanDeep}15, ${tokens.shadows.md}`,
           }}
         >
-          CZ
+          {initials}
         </div>
-        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, color: tokens.colors.oceanDarker, fontFamily: "'Playfair Display', serif" }}>Carla Zuñiga</h2>
-        <p style={{ fontSize: 15, color: tokens.colors.textBody, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>Docente de Inglés</p>
-        <LevelBadge level="explorador" size="sm" />
+        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, color: tokens.colors.oceanDarker, fontFamily: "'Playfair Display', serif" }}>{appState.nombre || "Docente"}</h2>
+        <p style={{ fontSize: 15, color: tokens.colors.textBody, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>Docente</p>
+        <LevelBadge level={nivelActual.toLowerCase()} size="sm" />
         <div style={{ marginTop: 22, paddingTop: 22, borderTop: `1px solid ${tokens.colors.oceanMist}` }}>
           {[
-            { label: "Experiencia", value: "28 años" },
-            { label: "Edad", value: "50 años" },
-            { label: "Miembro desde", value: "Feb 2026" },
+            { label: "Nivel", value: nivelActual },
+            { label: "Racha", value: `${appState.racha?.dias || 0} días` },
+            { label: "Diagnóstico", value: appState.diagnosticoCompleto ? "Completo ✓" : "Pendiente" },
           ].map((item, i) => (
             <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 15, marginBottom: i < 2 ? 10 : 0, fontFamily: "'Nunito', sans-serif" }}>
               <span style={{ color: tokens.colors.textSecondary }}>{item.label}</span>
@@ -2769,43 +2789,39 @@ const PagePerfil = () => {
             </div>
           ))}
         </div>
+
+        {/* Repetir diagnóstico */}
+        <div style={{ marginTop: 22 }}>
+          <Button onClick={() => setPage("diagnostico")} size="sm" variant="coral" aria-label="Repetir diagnóstico" style={{ width: "100%", justifyContent: "center" }}>
+            🔄 Repetir diagnóstico
+          </Button>
+        </div>
       </Card>
 
       {/* Info Cards */}
       <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
         <Card delay={0.2}>
-          <h3
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 22,
-              marginBottom: 18,
-              color: tokens.colors.oceanDarker,
-            }}
-          >
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, marginBottom: 18, color: tokens.colors.oceanDarker }}>
             Progreso en la ruta
           </h3>
           <div style={{ marginBottom: 18 }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
-              <span style={{ color: tokens.colors.textBody, fontWeight: 600 }}>Nivel Explorador</span>
-              <span style={{ fontWeight: 800, color: tokens.colors.oceanDeep }}>68%</span>
+              <span style={{ color: tokens.colors.textBody, fontWeight: 600 }}>Nivel {nivelActual}</span>
+              <span style={{ fontWeight: 800, color: tokens.colors.oceanDeep }}>{progressPct}%</span>
             </div>
-            <ProgressBar value={68} height={10} />
+            <ProgressBar value={progressPct} height={10} />
           </div>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 14, marginTop: 22 }}>
             {[
-              { label: "Módulos completados", value: "1 / 6", emoji: "📚" },
-              { label: "Lecciones terminadas", value: "6 / 25", emoji: "✅" },
-              { label: "Horas de práctica", value: "3h", emoji: "⏱️" },
+              { label: "Módulos completados", value: `${modulosCompletos} / ${CURRICULUM.length}`, emoji: "📚" },
+              { label: "Lecciones terminadas", value: `${completedLessons} / ${totalLessons}`, emoji: "✅" },
+              { label: "Competencias", value: `${earnedCount} / ${competencias.length}`, emoji: "🏅" },
             ].map((stat, i) => (
-              <div
-                key={i}
-                style={{
-                  textAlign: "center",
-                  padding: 14,
-                  background: `linear-gradient(135deg, ${tokens.colors.sandLight}, ${tokens.colors.oceanMist}40)`,
-                  borderRadius: tokens.radii.md,
-                }}
-              >
+              <div key={i} style={{
+                textAlign: "center", padding: 14,
+                background: `linear-gradient(135deg, ${tokens.colors.sandLight}, ${tokens.colors.oceanMist}40)`,
+                borderRadius: tokens.radii.md,
+              }}>
                 <div style={{ fontSize: 22, marginBottom: 4 }}>{stat.emoji}</div>
                 <div style={{ fontSize: 24, fontWeight: 800, color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif" }}>{stat.value}</div>
                 <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginTop: 4, fontWeight: 600 }}>{stat.label}</div>
@@ -2814,40 +2830,34 @@ const PagePerfil = () => {
           </div>
         </Card>
 
+        {/* Competencias integradas */}
         <Card delay={0.3}>
-          <h3
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 22,
-              marginBottom: 18,
-              color: tokens.colors.oceanDarker,
-            }}
-          >
-            Actividad reciente
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, marginBottom: 18, color: tokens.colors.oceanDarker }}>
+            Competencias
           </h3>
-          {[
-            { action: "Completó lección: Enviar tu primer correo", time: "Hoy, 10:30 AM", icon: "📧" },
-            { action: "Ganó competencia: Navegación Digital", time: "Ayer, 3:15 PM", icon: "🏅" },
-            { action: "Completó módulo: Navegando el Mundo Digital", time: "12 Mar 2026", icon: "✅" },
-            { action: "Publicó en la comunidad", time: "10 Mar 2026", icon: "💬" },
-          ].map((item, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "14px 0",
-                borderBottom: i < 3 ? `1px solid ${tokens.colors.oceanMist}` : "none",
-              }}
-            >
-              <span style={{ fontSize: 24 }}>{item.icon}</span>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 15, fontWeight: 700, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{item.action}</div>
-                <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 500, marginTop: 2 }}>{item.time}</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+            {competencias.map((comp) => (
+              <div key={comp.id} style={{
+                textAlign: "center", padding: "14px 8px",
+                borderRadius: tokens.radii.md,
+                opacity: comp.earned ? 1 : 0.45,
+                background: comp.earned ? `linear-gradient(135deg, ${tokens.colors.goldBadge}15, ${tokens.colors.sandWarm}30)` : tokens.colors.oceanMist + "30",
+              }}>
+                <div style={{
+                  width: 52, height: 52, borderRadius: "50%", margin: "0 auto 8px",
+                  background: comp.earned ? `linear-gradient(135deg, ${tokens.colors.goldBadge}30, ${tokens.colors.sandWarm})` : "#ECECEC",
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24,
+                  boxShadow: comp.earned ? `0 0 0 3px ${tokens.colors.goldBadge}30` : "none",
+                }}>
+                  {comp.earned ? comp.icon : "🔒"}
+                </div>
+                <div style={{ fontWeight: 700, fontSize: 13, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>{comp.name}</div>
+                <div style={{ fontSize: 12, color: comp.earned ? tokens.colors.forestCalm : tokens.colors.textMuted, fontWeight: 600, marginTop: 2 }}>
+                  {comp.earned ? "Adquirida ✓" : "Pendiente"}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </Card>
       </div>
     </div>
@@ -2856,8 +2866,17 @@ const PagePerfil = () => {
 };
 
 // ========== HELP BUTTON (GLOBAL) ==========
-const HelpButton = () => {
+const HelpButton = ({ setPage }) => {
   const [open, setOpen] = useState(false);
+  const [showFaq, setShowFaq] = useState(false);
+
+  const faqs = [
+    { q: "¿Cómo empiezo?", a: "Haz el diagnóstico inicial para conocer tu nivel y recibir una ruta personalizada." },
+    { q: "¿Puedo repetir el diagnóstico?", a: "Sí, ve a Mi Perfil y presiona 'Repetir diagnóstico' para actualizar tu nivel." },
+    { q: "¿Cómo completo una lección?", a: "Entra a Mi Ruta, selecciona un módulo y presiona 'Completar lección' al terminar." },
+    { q: "¿Dónde veo mi progreso?", a: "En Mi Perfil puedes ver módulos completados, lecciones y competencias adquiridas." },
+  ];
+
   return (
     <>
       <button
@@ -2865,60 +2884,67 @@ const HelpButton = () => {
         aria-label={open ? "Cerrar ayuda" : "Abrir ayuda"}
         aria-expanded={open}
         style={{
-          position: "fixed",
-          bottom: 24,
-          right: 24,
-          width: 60,
-          height: 60,
+          position: "fixed", bottom: 24, right: 24, width: 60, height: 60,
           borderRadius: "50%",
           background: `linear-gradient(135deg, ${tokens.colors.coralSoft}, #E07A62)`,
-          border: "none",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: `0 4px 24px rgba(232,146,124,0.45)`,
-          zIndex: 200,
-          transition: "all 0.3s ease",
-          transform: open ? "rotate(45deg)" : "rotate(0)",
+          border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: `0 4px 24px rgba(232,146,124,0.45)`, zIndex: 200,
+          transition: "all 0.3s ease", transform: open ? "rotate(45deg)" : "rotate(0)",
         }}
       >
         <HelpIcon />
       </button>
       {open && (
-        <div
-          role="dialog"
-          aria-label="Panel de ayuda"
-          style={{
-            position: "fixed",
-            bottom: 96,
-            right: 24,
-            width: 320,
-            background: "white",
-            borderRadius: tokens.radii.lg,
-            padding: 28,
-            boxShadow: tokens.shadows.lg,
-            zIndex: 200,
-            animation: "slideDown 0.3s ease",
-          }}
-        >
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, marginBottom: 14, color: tokens.colors.oceanDarker }}>
-            ¿Necesitas ayuda?
-          </h3>
-          <p style={{ fontSize: 15, color: tokens.colors.textBody, lineHeight: 1.7, marginBottom: 20, fontFamily: "'Nunito', sans-serif" }}>
-            No te preocupes, estamos aquí para acompañarte. Elige cómo prefieres recibir ayuda:
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <Button size="sm" aria-label="Iniciar chat con un mentor" style={{ width: "100%", justifyContent: "center" }}>
-              💬 Chat con un mentor
-            </Button>
-            <Button size="sm" variant="secondary" aria-label="Ver guías rápidas" style={{ width: "100%", justifyContent: "center" }}>
-              📋 Ver guías rápidas
-            </Button>
-            <Button size="sm" variant="secondary" aria-label="Solicitar una llamada de ayuda" style={{ width: "100%", justifyContent: "center" }}>
-              📞 Solicitar llamada
-            </Button>
-          </div>
+        <div role="dialog" aria-label="Panel de ayuda" style={{
+          position: "fixed", bottom: 96, right: 24, width: 340,
+          background: "white", borderRadius: tokens.radii.lg, padding: 28,
+          boxShadow: tokens.shadows.lg, zIndex: 200, animation: "slideDown 0.3s ease",
+          maxHeight: "70vh", overflowY: "auto",
+        }}>
+          {!showFaq ? (
+            <>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, marginBottom: 14, color: tokens.colors.oceanDarker }}>
+                ¿Necesitas ayuda?
+              </h3>
+              <p style={{ fontSize: 15, color: tokens.colors.textBody, lineHeight: 1.7, marginBottom: 20, fontFamily: "'Nunito', sans-serif" }}>
+                No te preocupes, estamos aquí para acompañarte.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <Button size="sm" onClick={() => setShowFaq(true)} aria-label="Ver preguntas frecuentes" style={{ width: "100%", justifyContent: "center" }}>
+                  ❓ Preguntas frecuentes
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => { setPage("diagnostico"); setOpen(false); }} aria-label="Hacer el diagnóstico" style={{ width: "100%", justifyContent: "center" }}>
+                  🧭 Hacer diagnóstico
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => { setPage("comunidad"); setOpen(false); }} aria-label="Ir a la comunidad" style={{ width: "100%", justifyContent: "center" }}>
+                  💬 Ir a la comunidad
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, color: tokens.colors.oceanDarker, margin: 0 }}>
+                  Preguntas frecuentes
+                </h3>
+                <button onClick={() => setShowFaq(false)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 14, color: tokens.colors.oceanDeep, fontWeight: 700, fontFamily: "'Nunito', sans-serif" }}>
+                  ← Volver
+                </button>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {faqs.map((faq, i) => (
+                  <div key={i} style={{ padding: 14, background: tokens.colors.oceanMist + "40", borderRadius: tokens.radii.md }}>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: tokens.colors.oceanDarker, marginBottom: 6, fontFamily: "'Nunito', sans-serif" }}>
+                      {faq.q}
+                    </div>
+                    <div style={{ fontSize: 14, color: tokens.colors.textBody, lineHeight: 1.6, fontFamily: "'Nunito', sans-serif" }}>
+                      {faq.a}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </>
@@ -2926,63 +2952,44 @@ const HelpButton = () => {
 };
 
 // ========== FOOTER ==========
-const Footer = () => {
+const Footer = ({ setPage }) => {
   const { isMobile, isTablet } = useResponsive();
+
+  const footerNav = [
+    { label: "Inicio", page: "inicio" },
+    { label: "Diagnóstico", page: "diagnostico" },
+    { label: "Mi Ruta", page: "ruta" },
+    { label: "Biblioteca", page: "biblioteca" },
+    { label: "Comunidad", page: "comunidad" },
+    { label: "Mi Perfil", page: "perfil" },
+  ];
+
   return (
   <footer style={{ marginTop: isMobile ? 40 : 64 }}>
     {/* Wave divider */}
     <WaveDivider color={tokens.colors.oceanDeep} />
 
     {/* Motivational banner */}
-    <div
-      style={{
-        background: tokens.colors.oceanDeep,
-        padding: isMobile ? "28px 20px" : "32px 24px",
-        textAlign: "center",
-      }}
-    >
-      <p
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: isMobile ? 18 : 22,
-          color: "white",
-          fontWeight: 700,
-          margin: 0,
-          lineHeight: 1.4,
-        }}
-      >
+    <div style={{ background: tokens.colors.oceanDeep, padding: isMobile ? "28px 20px" : "32px 24px", textAlign: "center" }}>
+      <p style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 18 : 22, color: "white", fontWeight: 700, margin: 0, lineHeight: 1.4 }}>
         Impulsando la transformación digital docente
       </p>
-      <p
-        style={{
-          fontSize: isMobile ? 14 : 15,
-          color: tokens.colors.oceanMist,
-          margin: "8px 0 0",
-          fontFamily: "'Nunito', sans-serif",
-          fontWeight: 500,
-        }}
-      >
+      <p style={{ fontSize: isMobile ? 14 : 15, color: tokens.colors.oceanMist, margin: "8px 0 0", fontFamily: "'Nunito', sans-serif", fontWeight: 500 }}>
         Formación práctica diseñada por y para educadores
       </p>
     </div>
 
     {/* Main footer content */}
-    <div
-      style={{
-        background: `linear-gradient(180deg, ${tokens.colors.oceanDeep} 0%, ${tokens.colors.oceanDarker} 100%)`,
-        color: "white",
-        padding: isMobile ? "40px 20px 32px" : "56px 24px 40px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "2.5fr 1fr 1fr 1fr",
-          gap: isMobile ? 32 : 48,
-        }}
-      >
+    <div style={{
+      background: `linear-gradient(180deg, ${tokens.colors.oceanDeep} 0%, ${tokens.colors.oceanDarker} 100%)`,
+      color: "white", padding: isMobile ? "40px 20px 32px" : "56px 24px 40px",
+    }}>
+      <div style={{
+        maxWidth: 1200, margin: "0 auto",
+        display: "grid",
+        gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "2.5fr 1fr",
+        gap: isMobile ? 32 : 48,
+      }}>
         {/* Brand column */}
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
@@ -2994,85 +3001,39 @@ const Footer = () => {
           <p style={{ fontSize: 15, color: "rgba(232,244,244,0.8)", lineHeight: 1.7, maxWidth: 300, fontFamily: "'Nunito', sans-serif" }}>
             Tu compañera de viaje hacia la autonomía digital. Aprendizaje práctico, accesible y a tu ritmo.
           </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
-            {["📧", "💬", "📱"].map((emoji, i) => (
-              <div
-                key={i}
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: tokens.radii.md,
-                  background: "rgba(255,255,255,0.1)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 18,
-                  cursor: "pointer",
-                  transition: "background 0.2s ease",
-                }}
-                className="footer-link"
-              >
-                {emoji}
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Links columns */}
-        {[
-          { title: "Plataforma", items: ["Inicio", "Diagnóstico", "Mi Ruta", "Logros", "Biblioteca"] },
-          { title: "Comunidad", items: ["Foro docente", "Mentores", "Eventos", "Blog", "Historias de éxito"] },
-          { title: "Soporte", items: ["Centro de ayuda", "Contacto", "Guías rápidas", "FAQ", "Accesibilidad"] },
-        ].map((col, i) => (
-          <div key={i}>
-            <h4
+        {/* Navigable links only */}
+        <div>
+          <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 20, letterSpacing: 1.5, textTransform: "uppercase", color: tokens.colors.sandWarm, fontFamily: "'Nunito', sans-serif" }}>
+            Plataforma
+          </h4>
+          {footerNav.map((item, j) => (
+            <button
+              key={j}
+              onClick={() => setPage(item.page)}
               style={{
-                fontSize: 14,
-                fontWeight: 700,
-                marginBottom: 20,
-                letterSpacing: 1.5,
-                textTransform: "uppercase",
-                color: tokens.colors.sandWarm,
-                fontFamily: "'Nunito', sans-serif",
+                display: "block", fontSize: 14, color: "rgba(232,244,244,0.7)",
+                marginBottom: 12, cursor: "pointer", fontFamily: "'Nunito', sans-serif",
+                fontWeight: 500, background: "none", border: "none", padding: 0,
+                transition: "color 0.2s ease",
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "white"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(232,244,244,0.7)"; }}
             >
-              {col.title}
-            </h4>
-            {col.items.map((item, j) => (
-              <div
-                key={j}
-                className="footer-link"
-                style={{
-                  fontSize: 14,
-                  color: "rgba(232,244,244,0.7)",
-                  marginBottom: 12,
-                  cursor: "pointer",
-                  fontFamily: "'Nunito', sans-serif",
-                  fontWeight: 500,
-                  transition: "color 0.2s ease, padding-left 0.2s ease",
-                }}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        ))}
+              {item.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Bottom bar */}
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "40px auto 0",
-          paddingTop: 24,
-          borderTop: "1px solid rgba(232,244,244,0.15)",
-          display: "flex",
-          flexDirection: isMobile ? "column" : "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 12,
-        }}
-      >
+      <div style={{
+        maxWidth: 1200, margin: "40px auto 0", paddingTop: 24,
+        borderTop: "1px solid rgba(232,244,244,0.15)",
+        display: "flex", flexDirection: isMobile ? "column" : "row",
+        alignItems: "center", justifyContent: "space-between", gap: 12,
+      }}>
         <div style={{ fontSize: 14, color: "rgba(232,244,244,0.5)", fontFamily: "'Nunito', sans-serif" }}>
           © 2026 Brújula Digital · Chispas Estratégicas
         </div>
@@ -3196,9 +3157,9 @@ export default function BrujulaDigital() {
       case "comunidad":
         return <PageComunidad appState={appState} toggleLike={toggleLike} updateState={updateState} />;
       case "logros":
-        return <PageLogros appState={appState} />;
+        return <PageLogros appState={appState} setPage={setPage} />;
       case "perfil":
-        return <PagePerfil appState={appState} />;
+        return <PagePerfil appState={appState} setPage={setPage} />;
       default:
         return <PageInicio setPage={setPage} appState={appState} />;
     }
@@ -3209,8 +3170,8 @@ export default function BrujulaDigital() {
       <style>{styles.global}</style>
       <Navbar currentPage={currentPage} setPage={setPage} />
       <main>{renderPage()}</main>
-      <Footer />
-      <HelpButton />
+      <Footer setPage={setPage} />
+      <HelpButton setPage={setPage} />
     </div>
   );
 }
