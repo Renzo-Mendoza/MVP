@@ -726,10 +726,10 @@ npx @21st-dev/cli@latest install cursor --api-key TU_KEY
 - [x] Botón "Repetir diagnóstico"
 
 ### Fase 6: Pulido (1 sesión)
-- [ ] Verificar todos los flujos end-to-end
-- [ ] Verificar responsive en mobile/tablet
-- [ ] Verificar contraste y tamaños de texto
-- [ ] Eliminar código muerto (MODULES viejo, useRef, ChatIcon)
+- [x] Verificar todos los flujos end-to-end
+- [x] Verificar responsive en mobile/tablet
+- [x] Verificar contraste y tamaños de texto
+- [x] Eliminar código muerto (MODULES viejo, useRef, ChatIcon)
 - [ ] Deploy final
 
 ---
