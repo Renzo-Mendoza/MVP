@@ -701,13 +701,13 @@ npx @21st-dev/cli@latest install cursor --api-key TU_KEY
 - [x] Guardar nivel en localStorage
 
 ### Fase 3: Ruta y Explorador (2-3 sesiones)
-- [ ] Reestructurar PageRuta con 6 módulos + niveles
-- [ ] Implementar desbloqueo progresivo real
-- [ ] Crear contenido de lecciones para los 6 módulos
-- [ ] Explorador dinámico: contenido cambia por lección
-- [ ] Actividades interactivas (checklist)
+- [x] Reestructurar PageRuta con 6 módulos + niveles
+- [x] Implementar desbloqueo progresivo real
+- [x] Crear contenido de lecciones para los 6 módulos
+- [x] Explorador dinámico: contenido cambia por lección
+- [x] Actividades interactivas (checklist)
 - [ ] Mini-autoevaluaciones
-- [ ] Botón "Completar" funcional con localStorage
+- [x] Botón "Completar" funcional con localStorage
 
 ### Fase 4: Comunidad y Biblioteca (1-2 sesiones)
 - [ ] Tabs funcionales en Comunidad

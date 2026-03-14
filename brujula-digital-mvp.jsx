@@ -177,6 +177,36 @@ const CURRICULUM = [
   },
 ];
 
+// ========== CURRICULUM DINÁMICO ==========
+const computeCurriculum = (appState) => {
+  return CURRICULUM.map((mod, index) => {
+    const completedLessons = mod.lessonList.filter(
+      (l) => appState.leccionesCompletadas.includes(`${mod.id}-${l.id}`)
+    );
+    const completedCount = completedLessons.length;
+    const totalLessons = mod.lessonList.length;
+    const progress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+
+    const prevCompleted = index === 0 || appState.modulosCompletados.includes(CURRICULUM[index - 1].id);
+    const unlocked = prevCompleted;
+
+    const lessonList = mod.lessonList.map((l, lIndex) => {
+      const isCompleted = appState.leccionesCompletadas.includes(`${mod.id}-${l.id}`);
+      const prevDone = lIndex === 0 || appState.leccionesCompletadas.includes(`${mod.id}-${mod.lessonList[lIndex - 1].id}`);
+      return { ...l, completed: isCompleted, active: !isCompleted && prevDone && unlocked };
+    });
+
+    const allLessonsDone = completedCount === totalLessons;
+    const activities = mod.activities.map((a, aIndex) => {
+      const isCompleted = appState.leccionesCompletadas.includes(`${mod.id}-act-${a.id}`);
+      const prevDone = aIndex === 0 ? allLessonsDone : appState.leccionesCompletadas.includes(`${mod.id}-act-${mod.activities[aIndex - 1].id}`);
+      return { ...a, completed: isCompleted, active: !isCompleted && prevDone && unlocked };
+    });
+
+    return { ...mod, completed: completedCount, lessons: totalLessons, progress, unlocked, lessonList, activities };
+  });
+};
+
 const COMPETENCIAS = [
   { id: 1, name: "Navegación Digital", icon: "🧭", moduleId: 1, earned: true, date: "15 Feb 2026" },
   { id: 2, name: "Comunicación Digital", icon: "📧", moduleId: 2, earned: false, date: null },
@@ -231,14 +261,6 @@ const LIBRARY_RESOURCES = [
 const SHARED_RESOURCES = [
   { id: 1, title: "Plantilla de examen — Álgebra", author: "Patricia A.", downloads: 34, type: "PDF", icon: "📄" },
   { id: 2, title: "Presentación — Sistema Solar", author: "Roberto G.", downloads: 21, type: "PPT", icon: "📊" },
-];
-
-const EXPLORER_LESSONS = [
-  { id: 1, title: "¿Qué es Canva?", type: "Video", duration: "5 min", completed: true },
-  { id: 2, title: "Crear una presentación desde cero", type: "PDF guía", duration: "8 min", completed: false, active: true },
-  { id: 3, title: "Añadir imágenes y elementos", type: "Video", duration: "6 min", completed: false },
-  { id: 4, title: "Animaciones y transiciones", type: "Video", duration: "7 min", completed: false },
-  { id: 5, title: "Compartir y presentar", type: "Ejercicio", duration: "10 min", completed: false },
 ];
 
 const DIAGNOSTIC_QUESTIONS = [
@@ -1507,11 +1529,11 @@ const PageDiagnostico = ({ setPage, updateState }) => {
 };
 
 // ========== PAGE: MI RUTA (P1 — Linear Path) ==========
-const PageRuta = ({ setPage }) => {
+const PageRuta = ({ setPage, curriculum, openModule }) => {
   const { isMobile } = useResponsive();
 
-  const totalProgress = Math.round(CURRICULUM.reduce((acc, m) => acc + m.progress, 0) / CURRICULUM.length);
-  const completedCount = CURRICULUM.filter(m => m.progress === 100).length;
+  const totalProgress = Math.round(curriculum.reduce((acc, m) => acc + m.progress, 0) / curriculum.length);
+  const completedCount = curriculum.filter(m => m.progress === 100).length;
 
   // Agrupar módulos por nivel
   const levels = [
@@ -1545,7 +1567,7 @@ const PageRuta = ({ setPage }) => {
           <CircularProgress value={totalProgress} size={isMobile ? 72 : 88} label="general" />
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 28, fontWeight: 800, color: tokens.colors.oceanDeep, fontFamily: "'Nunito', sans-serif" }}>
-              {completedCount}/{CURRICULUM.length}
+              {completedCount}/{curriculum.length}
             </div>
             <div style={{ fontSize: 14, color: tokens.colors.textSecondary, fontWeight: 600 }}>
               módulos
@@ -1584,7 +1606,7 @@ const PageRuta = ({ setPage }) => {
       {/* Module timeline grouped by level */}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {levels.map((level) => {
-          const levelModules = CURRICULUM.filter(m => m.level === level.key);
+          const levelModules = curriculum.filter(m => m.level === level.key);
           if (levelModules.length === 0) return null;
           return (
             <div key={level.key}>
@@ -1612,7 +1634,7 @@ const PageRuta = ({ setPage }) => {
               </div>
 
               {levelModules.map((mod) => {
-                const globalIndex = CURRICULUM.indexOf(mod);
+                const globalIndex = curriculum.indexOf(mod);
                 return (
           <div key={mod.id} style={{ display: "flex", gap: isMobile ? 16 : 24, animation: `fadeInUp 0.6s ease ${globalIndex * 0.12 + 0.3}s both` }}>
             {/* Numbered circle + connector */}
@@ -1629,7 +1651,7 @@ const PageRuta = ({ setPage }) => {
               }}>
                 {mod.progress === 100 ? <CheckIcon /> : mod.id}
               </div>
-              {globalIndex < CURRICULUM.length - 1 && (
+              {globalIndex < curriculum.length - 1 && (
                 <div style={{
                   width: 3, flex: 1, minHeight: 40,
                   background: mod.progress === 100
@@ -1673,8 +1695,13 @@ const PageRuta = ({ setPage }) => {
                   <p style={{ fontSize: 15, color: tokens.colors.textSecondary, lineHeight: 1.5, fontFamily: "'Nunito', sans-serif" }}>{mod.desc}</p>
                 </div>
                 {mod.unlocked && mod.progress < 100 && mod.progress > 0 && (
-                  <Button size="sm" onClick={() => setPage("explorador")} aria-label={`Continuar módulo ${mod.title}`}>
+                  <Button size="sm" onClick={() => openModule(mod.id)} aria-label={`Continuar módulo ${mod.title}`}>
                     Continuar →
+                  </Button>
+                )}
+                {mod.unlocked && mod.progress === 0 && (
+                  <Button size="sm" variant="coral" onClick={() => openModule(mod.id)} aria-label={`Empezar módulo ${mod.title}`}>
+                    Empezar →
                   </Button>
                 )}
                 {mod.progress === 100 && (
@@ -2081,14 +2108,53 @@ const PageBiblioteca = ({ setPage }) => {
   );
 };
 
-// ========== PAGE: EXPLORADOR DIGITAL (P1 — Sidebar + PDF Viewer) ==========
-const PageExplorador = ({ setPage }) => {
-  const { isMobile } = useResponsive();
-  const [currentLesson, setCurrentLesson] = useState(1);
+// ========== PAGE: EXPLORADOR DIGITAL (Dinámico) ==========
+const MODULE_TIPS = {
+  1: "Recuerda: el navegador es tu ventana al mundo digital. No tengas miedo de explorar y hacer clic.",
+  2: "Gmail guarda borradores automáticamente. Si necesitas una pausa, tu correo estará seguro.",
+  3: "Canva tiene una sección de \"Educación\" con plantillas gratuitas especialmente diseñadas para docentes.",
+  4: "Google Classroom facilita la organización. Empieza con una clase sencilla y ve agregando contenido.",
+  5: "Las evaluaciones digitales ahorran tiempo de corrección y dan resultados al instante.",
+  6: "Integra al menos 2 herramientas aprendidas en tu proyecto final para crear una clase completa.",
+};
 
-  const activeLesson = EXPLORER_LESSONS.find((l) => l.active) || EXPLORER_LESSONS[currentLesson];
-  const completedCount = EXPLORER_LESSONS.filter((l) => l.completed).length;
-  const progressPct = Math.round((completedCount / EXPLORER_LESSONS.length) * 100);
+const getLessonSteps = (mod, lesson) => {
+  const tool = mod.tools[0] || "la herramienta";
+  const base = [
+    `Abre ${tool} en tu navegador o dispositivo.`,
+    `Sigue las instrucciones de "${lesson.title}" paso a paso.`,
+    `Practica cada acción antes de avanzar al siguiente paso.`,
+    `Cuando te sientas cómodo/a, marca la lección como completada.`,
+  ];
+  return base;
+};
+
+const PageExplorador = ({ setPage, curriculum, activeModuleId, completeLesson }) => {
+  const { isMobile } = useResponsive();
+
+  const mod = curriculum.find((m) => m.id === activeModuleId) || curriculum[0];
+  const lessons = mod.lessonList;
+  const activities = mod.activities;
+  const initialIndex = Math.max(0, lessons.findIndex((l) => l.active));
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(initialIndex);
+
+  const currentLesson = lessons[currentLessonIndex] || lessons[0];
+  const completedCount = lessons.filter((l) => l.completed).length;
+  const progressPct = mod.progress;
+  const tool = mod.tools[0] || "la herramienta";
+
+  const handleCompleteLesson = () => {
+    if (currentLesson && !currentLesson.completed) {
+      completeLesson(mod.id, currentLesson.id);
+      if (currentLessonIndex < lessons.length - 1) {
+        setTimeout(() => setCurrentLessonIndex(currentLessonIndex + 1), 400);
+      }
+    }
+  };
+
+  const handleCompleteActivity = (actId) => {
+    completeLesson(mod.id, actId, true);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "calc(100vh - 80px)" }}>
@@ -2102,40 +2168,40 @@ const PageExplorador = ({ setPage }) => {
       }}>
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600, fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-            Módulo 2
+            Módulo {mod.id}
           </div>
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, color: tokens.colors.oceanDarker, marginBottom: 8, lineHeight: 1.3 }}>
-            Presentaciones en Canva
+            {mod.title}
           </h3>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
             <CircularProgress value={progressPct} size={52} label="" />
             <div>
               <div style={{ fontSize: 15, fontWeight: 700, color: tokens.colors.oceanDarker }}>{progressPct}% completado</div>
-              <div style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{completedCount}/{EXPLORER_LESSONS.length} lecciones</div>
+              <div style={{ fontSize: 14, color: tokens.colors.textSecondary }}>{completedCount}/{lessons.length} lecciones</div>
             </div>
           </div>
         </div>
 
         {/* Lesson List */}
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          {EXPLORER_LESSONS.map((lesson, i) => (
+          {lessons.map((lesson, i) => (
             <div
               key={lesson.id}
-              onClick={() => lesson.completed || lesson.active ? setCurrentLesson(i) : null}
+              onClick={() => (lesson.completed || lesson.active) ? setCurrentLessonIndex(i) : null}
               role={lesson.completed || lesson.active ? "button" : undefined}
               tabIndex={lesson.completed || lesson.active ? 0 : undefined}
               onKeyDown={(e) => {
-                if ((e.key === "Enter" || e.key === " ") && (lesson.completed || lesson.active)) setCurrentLesson(i);
+                if ((e.key === "Enter" || e.key === " ") && (lesson.completed || lesson.active)) setCurrentLessonIndex(i);
               }}
               aria-label={`Lección ${lesson.id}: ${lesson.title}${lesson.completed ? " (completada)" : lesson.active ? " (en progreso)" : " (bloqueada)"}`}
               style={{
                 display: "flex", alignItems: "center", gap: 12, padding: "12px 14px",
                 borderRadius: tokens.radii.md, cursor: lesson.completed || lesson.active ? "pointer" : "default",
-                background: lesson.active ? "white" : "transparent",
-                border: lesson.active ? `2px solid ${tokens.colors.coralSoft}` : "2px solid transparent",
+                background: i === currentLessonIndex ? "white" : "transparent",
+                border: i === currentLessonIndex ? `2px solid ${tokens.colors.coralSoft}` : "2px solid transparent",
                 opacity: !lesson.completed && !lesson.active ? 0.45 : 1,
                 transition: "all 0.2s ease",
-                boxShadow: lesson.active ? tokens.shadows.sm : "none",
+                boxShadow: i === currentLessonIndex ? tokens.shadows.sm : "none",
               }}
             >
               <div style={{
@@ -2149,8 +2215,8 @@ const PageExplorador = ({ setPage }) => {
               </div>
               <div>
                 <div style={{
-                  fontSize: 14, fontWeight: lesson.active ? 700 : 600,
-                  color: lesson.active ? tokens.colors.textPrimary : tokens.colors.textSecondary,
+                  fontSize: 14, fontWeight: i === currentLessonIndex ? 700 : 600,
+                  color: i === currentLessonIndex ? tokens.colors.textPrimary : tokens.colors.textSecondary,
                   fontFamily: "'Nunito', sans-serif",
                 }}>
                   {lesson.id}. {lesson.title}
@@ -2162,9 +2228,22 @@ const PageExplorador = ({ setPage }) => {
             </div>
           ))}
         </div>
+
+        {/* Back to Ruta */}
+        <button
+          onClick={() => setPage("ruta")}
+          style={{
+            marginTop: 24, display: "flex", alignItems: "center", gap: 8,
+            background: "none", border: "none", cursor: "pointer",
+            fontSize: 14, color: tokens.colors.oceanDeep, fontWeight: 600,
+            fontFamily: "'Nunito', sans-serif", padding: "8px 0",
+          }}
+        >
+          ← Volver a Mi Ruta
+        </button>
       </aside>
 
-      {/* Main Content — PDF Viewer Style */}
+      {/* Main Content */}
       <main style={{ flex: 1, padding: isMobile ? "28px 20px" : "36px 48px", background: "white" }}>
         {/* Breadcrumb */}
         <nav aria-label="Migas de pan" style={{ fontSize: 14, color: tokens.colors.textMuted, marginBottom: 24, fontFamily: "'Nunito', sans-serif", fontWeight: 500 }}>
@@ -2173,31 +2252,35 @@ const PageExplorador = ({ setPage }) => {
           </span>
           <span style={{ margin: "0 10px", color: tokens.colors.textMuted }}>›</span>
           <span style={{ cursor: "pointer", color: tokens.colors.oceanDeep, fontWeight: 600 }} onClick={() => setPage("ruta")}>
-            Módulo 2
+            Módulo {mod.id}
           </span>
           <span style={{ margin: "0 10px", color: tokens.colors.textMuted }}>›</span>
-          <span>Lección 2</span>
+          <span>Lección {currentLessonIndex + 1}</span>
         </nav>
 
+        {/* Lesson Title */}
         <h2 style={{
           fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 24 : 30,
           color: tokens.colors.textPrimary, marginBottom: 10, lineHeight: 1.2,
         }}>
-          Guía: Crear una presentación en Canva
+          {currentLesson.title}
         </h2>
         <div style={{
           fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 32,
           display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
           fontFamily: "'Nunito', sans-serif", fontWeight: 500,
         }}>
-          <span>📄 guia-presentaciones-canva.pdf</span>
+          <span>{mod.icon} {mod.title}</span>
           <span style={{ width: 4, height: 4, borderRadius: "50%", background: tokens.colors.textMuted }} />
-          <span>Página 1 de 4</span>
+          <span>{currentLesson.type}</span>
           <span style={{ width: 4, height: 4, borderRadius: "50%", background: tokens.colors.textMuted }} />
-          <span>⏱ 8 min lectura</span>
+          <span>⏱ {currentLesson.duration}</span>
+          {currentLesson.completed && (
+            <span style={{ color: tokens.colors.forestCalm, fontWeight: 700 }}>✓ Completada</span>
+          )}
         </div>
 
-        {/* PDF-like content */}
+        {/* Lesson Content */}
         <div style={{
           background: tokens.colors.sandLight, borderRadius: tokens.radii.lg,
           padding: isMobile ? "28px 22px" : "40px 44px",
@@ -2207,21 +2290,20 @@ const PageExplorador = ({ setPage }) => {
             fontFamily: "'Playfair Display', serif", fontSize: 22,
             color: tokens.colors.oceanDarker, marginBottom: 18,
           }}>
-            Capítulo 1: Tu primera presentación en Canva
+            {currentLesson.title}
           </h3>
           <p style={{ fontSize: 16, color: tokens.colors.textBody, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>
-            <strong>Canva</strong> es una herramienta de diseño en línea que te permite crear presentaciones
-            profesionales de forma sencilla, sin necesidad de ser diseñador/a. Es ideal para preparar
-            clases visuales y atractivas para tus estudiantes.
+            En esta lección aprenderás sobre <strong>{currentLesson.title.toLowerCase()}</strong> usando{" "}
+            <strong>{tool}</strong>. Sigue los pasos a tu ritmo — no hay prisa.
+            Lo importante es que practiques cada acción hasta sentirte cómodo/a.
           </p>
           <p style={{ fontWeight: 700, fontSize: 16, color: tokens.colors.textPrimary, marginBottom: 10, fontFamily: "'Nunito', sans-serif" }}>
-            Pasos para crear tu primera presentación:
+            Pasos a seguir:
           </p>
           <ol style={{ paddingLeft: 24, fontSize: 16, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>
-            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Ingresa a <strong>canva.com</strong> e inicia sesión con tu cuenta de Google</li>
-            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Haz clic en <strong>"Crear un diseño"</strong> y selecciona <strong>"Presentación"</strong></li>
-            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Elige una plantilla que se adapte a tu tema de clase</li>
-            <li style={{ paddingLeft: 4 }}>Personaliza el texto, colores e imágenes con tu contenido educativo</li>
+            {getLessonSteps(mod, currentLesson).map((step, i) => (
+              <li key={i} style={{ marginBottom: 8, paddingLeft: 4 }}>{step}</li>
+            ))}
           </ol>
         </div>
 
@@ -2238,8 +2320,7 @@ const PageExplorador = ({ setPage }) => {
               Consejo práctico
             </div>
             <p style={{ fontSize: 15, color: tokens.colors.textBody, lineHeight: 1.7, fontFamily: "'Nunito', sans-serif", margin: 0 }}>
-              Canva tiene una sección de <strong>"Educación"</strong> con plantillas gratuitas especialmente diseñadas para docentes.
-              Busca "presentación educativa" en el buscador para encontrar diseños adaptados a tu materia.
+              {MODULE_TIPS[mod.id] || `Tómate tu tiempo con ${tool}. La práctica constante es la clave del aprendizaje digital.`}
             </p>
           </div>
         </div>
@@ -2260,14 +2341,10 @@ const PageExplorador = ({ setPage }) => {
             </h3>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {[
-              { id: 1, title: "Crear tu cuenta en Canva", type: "Práctica", duration: "5 min", completed: true, active: false },
-              { id: 2, title: "Diseña tu primera diapositiva", type: "Ejercicio", duration: "10 min", completed: false, active: true },
-              { id: 3, title: "Presentación completa de 5 slides", type: "Proyecto", duration: "15 min", completed: false, active: false },
-            ].map((act) => (
+            {activities.map((act) => (
               <div key={act.id} style={{
                 display: "flex", alignItems: "center", gap: 14,
-                background: act.active ? "white" : act.completed ? `${tokens.colors.forestLight}` : "white",
+                background: act.active ? "white" : act.completed ? `${tokens.colors.forestCalm}08` : "white",
                 padding: "14px 18px", borderRadius: tokens.radii.md,
                 border: act.active ? `2px solid ${tokens.colors.coralSoft}` : act.completed ? `2px solid ${tokens.colors.forestCalm}30` : `1px solid ${tokens.colors.oceanMist}`,
                 opacity: !act.completed && !act.active ? 0.55 : 1,
@@ -2296,12 +2373,17 @@ const PageExplorador = ({ setPage }) => {
                   </div>
                 </div>
                 {act.active && (
-                  <span style={{
-                    fontSize: 14, fontWeight: 700, color: tokens.colors.coralSoft,
-                    whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif",
-                  }}>
-                    Iniciar →
-                  </span>
+                  <button
+                    onClick={() => handleCompleteActivity(act.id)}
+                    style={{
+                      fontSize: 14, fontWeight: 700, color: "white", whiteSpace: "nowrap",
+                      fontFamily: "'Nunito', sans-serif", background: tokens.colors.coralSoft,
+                      border: "none", borderRadius: tokens.radii.pill, padding: "8px 16px",
+                      cursor: "pointer", transition: "all 0.2s ease",
+                    }}
+                  >
+                    Completar
+                  </button>
                 )}
               </div>
             ))}
@@ -2314,22 +2396,38 @@ const PageExplorador = ({ setPage }) => {
           paddingTop: 24, borderTop: `1px solid ${tokens.colors.oceanMist}`,
         }}>
           <button
+            onClick={() => currentLessonIndex > 0 && setCurrentLessonIndex(currentLessonIndex - 1)}
+            disabled={currentLessonIndex === 0}
             aria-label="Ir a la lección anterior"
             style={{
               display: "flex", alignItems: "center", gap: 8, background: "none", border: "none",
-              cursor: "pointer", fontSize: 15, color: tokens.colors.textSecondary,
+              cursor: currentLessonIndex > 0 ? "pointer" : "default", fontSize: 15,
+              color: currentLessonIndex > 0 ? tokens.colors.textSecondary : tokens.colors.textMuted,
               fontFamily: "'Nunito', sans-serif", fontWeight: 600, minHeight: 44, padding: "8px 12px",
               borderRadius: tokens.radii.md, transition: "all 0.2s ease",
+              opacity: currentLessonIndex === 0 ? 0.4 : 1,
             }}
           >
             ← Lección anterior
           </button>
           <span style={{ fontSize: 14, color: tokens.colors.textMuted, fontWeight: 600 }}>
-            2 de {EXPLORER_LESSONS.length}
+            {currentLessonIndex + 1} de {lessons.length}
           </span>
-          <Button size="sm" variant="coral" onClick={() => setPage("ruta")} aria-label="Completar lección y continuar">
-            Completar y continuar →
-          </Button>
+          {currentLesson.completed ? (
+            currentLessonIndex < lessons.length - 1 ? (
+              <Button size="sm" onClick={() => setCurrentLessonIndex(currentLessonIndex + 1)} aria-label="Ir a la siguiente lección">
+                Siguiente lección →
+              </Button>
+            ) : (
+              <Button size="sm" variant="coral" onClick={() => setPage("ruta")} aria-label="Volver a mi ruta">
+                ✓ Módulo completado
+              </Button>
+            )
+          ) : (
+            <Button size="sm" variant="coral" onClick={handleCompleteLesson} aria-label="Completar lección y continuar">
+              Completar lección ✓
+            </Button>
+          )}
         </div>
       </main>
     </div>
@@ -2773,7 +2871,7 @@ const STORAGE_KEY = "brujula_state";
 const defaultState = {
   nivel: null,
   nombre: "Carla",
-  leccionesCompletadas: [],
+  leccionesCompletadas: ["1-1", "1-2", "1-3", "1-4", "2-1", "2-2"],
   modulosCompletados: [1],
   likes: {},
   racha: { ultimoAcceso: null, dias: 5 },
@@ -2823,15 +2921,42 @@ const useAppState = () => {
     });
   };
 
-  return { state, updateState, toggleLike };
+  const completeLesson = (moduleId, lessonId, isActivity = false) => {
+    setState((prev) => {
+      const key = isActivity ? `${moduleId}-act-${lessonId}` : `${moduleId}-${lessonId}`;
+      if (prev.leccionesCompletadas.includes(key)) return prev;
+      const newCompleted = [...prev.leccionesCompletadas, key];
+      const mod = CURRICULUM.find((m) => m.id === moduleId);
+      const allLessonsDone = mod.lessonList.every(
+        (l) => newCompleted.includes(`${moduleId}-${l.id}`)
+      );
+      const newModulos = allLessonsDone && !prev.modulosCompletados.includes(moduleId)
+        ? [...prev.modulosCompletados, moduleId]
+        : prev.modulosCompletados;
+      const next = { ...prev, leccionesCompletadas: newCompleted, modulosCompletados: newModulos };
+      saveState(next);
+      return next;
+    });
+  };
+
+  return { state, updateState, toggleLike, completeLesson };
 };
 
 export default function BrujulaDigital() {
   const [currentPage, setCurrentPage] = useState("inicio");
-  const { state: appState, updateState, toggleLike } = useAppState();
+  const [activeModuleId, setActiveModuleId] = useState(2);
+  const { state: appState, updateState, toggleLike, completeLesson } = useAppState();
+
+  const curriculum = computeCurriculum(appState);
 
   const setPage = (page) => {
     setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const openModule = (moduleId) => {
+    setActiveModuleId(moduleId);
+    setCurrentPage("explorador");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -2842,9 +2967,9 @@ export default function BrujulaDigital() {
       case "diagnostico":
         return <PageDiagnostico setPage={setPage} updateState={updateState} />;
       case "ruta":
-        return <PageRuta setPage={setPage} appState={appState} />;
+        return <PageRuta setPage={setPage} appState={appState} curriculum={curriculum} openModule={openModule} />;
       case "explorador":
-        return <PageExplorador setPage={setPage} appState={appState} />;
+        return <PageExplorador key={activeModuleId} setPage={setPage} curriculum={curriculum} activeModuleId={activeModuleId} completeLesson={completeLesson} />;
       case "biblioteca":
         return <PageBiblioteca setPage={setPage} />;
       case "comunidad":
