@@ -189,10 +189,11 @@ const SHARED_RESOURCES = [
 ];
 
 const EXPLORER_LESSONS = [
-  { id: 1, title: "¿Qué es lo digital?", type: "Video", duration: "5 min", completed: true },
-  { id: 2, title: "Navegador y buscador", type: "PDF guía", duration: "3 min", completed: false, active: true },
-  { id: 3, title: "Correo electrónico", type: "Ejercicio", duration: "10 min", completed: false },
-  { id: 4, title: "Almacenamiento en la nube", type: "Video", duration: "8 min", completed: false },
+  { id: 1, title: "¿Qué es Canva?", type: "Video", duration: "5 min", completed: true },
+  { id: 2, title: "Crear una presentación desde cero", type: "PDF guía", duration: "8 min", completed: false, active: true },
+  { id: 3, title: "Añadir imágenes y elementos", type: "Video", duration: "6 min", completed: false },
+  { id: 4, title: "Animaciones y transiciones", type: "Video", duration: "7 min", completed: false },
+  { id: 5, title: "Compartir y presentar", type: "Ejercicio", duration: "10 min", completed: false },
 ];
 
 const DIAGNOSTIC_QUESTIONS = [
@@ -1838,10 +1839,10 @@ const PageExplorador = ({ setPage }) => {
       }}>
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 13, color: tokens.colors.textSecondary, marginBottom: 6, fontWeight: 600, fontFamily: "'Nunito', sans-serif", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-            Módulo 1
+            Módulo 2
           </div>
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, color: tokens.colors.oceanDarker, marginBottom: 8, lineHeight: 1.3 }}>
-            Herramientas Digitales Básicas
+            Presentaciones en Canva
           </h3>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
             <CircularProgress value={progressPct} size={52} label="" />
@@ -1909,7 +1910,7 @@ const PageExplorador = ({ setPage }) => {
           </span>
           <span style={{ margin: "0 10px", color: tokens.colors.textMuted }}>›</span>
           <span style={{ cursor: "pointer", color: tokens.colors.oceanDeep, fontWeight: 600 }} onClick={() => setPage("ruta")}>
-            Módulo 1
+            Módulo 2
           </span>
           <span style={{ margin: "0 10px", color: tokens.colors.textMuted }}>›</span>
           <span>Lección 2</span>
@@ -1919,18 +1920,18 @@ const PageExplorador = ({ setPage }) => {
           fontFamily: "'Playfair Display', serif", fontSize: isMobile ? 24 : 30,
           color: tokens.colors.textPrimary, marginBottom: 10, lineHeight: 1.2,
         }}>
-          Guía: Cómo usar el navegador
+          Guía: Crear una presentación en Canva
         </h2>
         <div style={{
           fontSize: 14, color: tokens.colors.textSecondary, marginBottom: 32,
           display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
           fontFamily: "'Nunito', sans-serif", fontWeight: 500,
         }}>
-          <span>📄 guia-navegador.pdf</span>
+          <span>📄 guia-presentaciones-canva.pdf</span>
           <span style={{ width: 4, height: 4, borderRadius: "50%", background: tokens.colors.textMuted }} />
-          <span>Página 1 de 5</span>
+          <span>Página 1 de 4</span>
           <span style={{ width: 4, height: 4, borderRadius: "50%", background: tokens.colors.textMuted }} />
-          <span>⏱ 15 min lectura</span>
+          <span>⏱ 8 min lectura</span>
         </div>
 
         {/* PDF-like content */}
@@ -1943,23 +1944,25 @@ const PageExplorador = ({ setPage }) => {
             fontFamily: "'Playfair Display', serif", fontSize: 22,
             color: tokens.colors.oceanDarker, marginBottom: 18,
           }}>
-            Capítulo 1: ¿Qué es un navegador web?
+            Capítulo 1: Tu primera presentación en Canva
           </h3>
           <p style={{ fontSize: 16, color: tokens.colors.textBody, marginBottom: 18, fontFamily: "'Nunito', sans-serif" }}>
-            Un navegador web es una aplicación que te permite acceder a páginas de internet.
-            Los más comunes son <strong>Google Chrome</strong>, <strong>Mozilla Firefox</strong> y <strong>Microsoft Edge</strong>.
+            <strong>Canva</strong> es una herramienta de diseño en línea que te permite crear presentaciones
+            profesionales de forma sencilla, sin necesidad de ser diseñador/a. Es ideal para preparar
+            clases visuales y atractivas para tus estudiantes.
           </p>
           <p style={{ fontWeight: 700, fontSize: 16, color: tokens.colors.textPrimary, marginBottom: 10, fontFamily: "'Nunito', sans-serif" }}>
-            Pasos para abrir el navegador:
+            Pasos para crear tu primera presentación:
           </p>
           <ol style={{ paddingLeft: 24, fontSize: 16, color: tokens.colors.textBody, fontFamily: "'Nunito', sans-serif" }}>
-            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Busca el ícono del navegador en tu escritorio</li>
-            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Haz doble clic sobre él</li>
-            <li style={{ paddingLeft: 4 }}>Espera a que se abra la ventana principal</li>
+            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Ingresa a <strong>canva.com</strong> e inicia sesión con tu cuenta de Google</li>
+            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Haz clic en <strong>"Crear un diseño"</strong> y selecciona <strong>"Presentación"</strong></li>
+            <li style={{ marginBottom: 8, paddingLeft: 4 }}>Elige una plantilla que se adapte a tu tema de clase</li>
+            <li style={{ paddingLeft: 4 }}>Personaliza el texto, colores e imágenes con tu contenido educativo</li>
           </ol>
         </div>
 
-        {/* Tip Box — improved */}
+        {/* Tip Box */}
         <div style={{
           background: `linear-gradient(135deg, ${tokens.colors.coralSoft}12, ${tokens.colors.sandWarm}25)`,
           border: `2px solid ${tokens.colors.coralSoft}30`,
@@ -1972,8 +1975,73 @@ const PageExplorador = ({ setPage }) => {
               Consejo práctico
             </div>
             <p style={{ fontSize: 15, color: tokens.colors.textBody, lineHeight: 1.7, fontFamily: "'Nunito', sans-serif", margin: 0 }}>
-              Si no encuentras el ícono, puedes buscarlo en el menú Inicio escribiendo el nombre del navegador. ¡No tengas miedo de explorar!
+              Canva tiene una sección de <strong>"Educación"</strong> con plantillas gratuitas especialmente diseñadas para docentes.
+              Busca "presentación educativa" en el buscador para encontrar diseños adaptados a tu materia.
             </p>
+          </div>
+        </div>
+
+        {/* Actividades y Ejercicios */}
+        <div style={{
+          background: `linear-gradient(135deg, ${tokens.colors.oceanMist}40, ${tokens.colors.sandLight})`,
+          borderRadius: tokens.radii.lg, padding: isMobile ? "24px 20px" : "28px 32px",
+          border: `1px solid ${tokens.colors.oceanMist}`, marginBottom: 36,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+            <span style={{ fontSize: 22 }}>📝</span>
+            <h3 style={{
+              fontFamily: "'Playfair Display', serif", fontSize: 20,
+              color: tokens.colors.oceanDarker, margin: 0,
+            }}>
+              Actividades y Ejercicios
+            </h3>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {[
+              { id: 1, title: "Crear tu cuenta en Canva", type: "Práctica", duration: "5 min", completed: true, active: false },
+              { id: 2, title: "Diseña tu primera diapositiva", type: "Ejercicio", duration: "10 min", completed: false, active: true },
+              { id: 3, title: "Presentación completa de 5 slides", type: "Proyecto", duration: "15 min", completed: false, active: false },
+            ].map((act) => (
+              <div key={act.id} style={{
+                display: "flex", alignItems: "center", gap: 14,
+                background: act.active ? "white" : act.completed ? `${tokens.colors.forestLight}` : "white",
+                padding: "14px 18px", borderRadius: tokens.radii.md,
+                border: act.active ? `2px solid ${tokens.colors.coralSoft}` : act.completed ? `2px solid ${tokens.colors.forestCalm}30` : `1px solid ${tokens.colors.oceanMist}`,
+                opacity: !act.completed && !act.active ? 0.55 : 1,
+                boxShadow: act.active ? tokens.shadows.sm : "none",
+                transition: "all 0.2s ease",
+              }}>
+                <div style={{
+                  width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  background: act.completed ? tokens.colors.forestCalm : act.active ? tokens.colors.oceanDeep : "#D0D0D0",
+                  color: "white", fontSize: 14, fontWeight: 800,
+                  boxShadow: act.completed ? `0 2px 8px ${tokens.colors.forestCalm}40` : "none",
+                }}>
+                  {act.completed ? "✓" : act.active ? act.id : <LockIcon />}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{
+                    fontSize: 15, fontWeight: act.active ? 700 : 600,
+                    color: act.completed ? tokens.colors.forestCalm : act.active ? tokens.colors.textPrimary : tokens.colors.textMuted,
+                    fontFamily: "'Nunito', sans-serif", marginBottom: 2,
+                  }}>
+                    Actividad {act.id}: {act.title}
+                  </div>
+                  <div style={{ fontSize: 13, color: tokens.colors.textMuted, fontWeight: 500, fontFamily: "'Nunito', sans-serif" }}>
+                    {act.type} · {act.duration}{act.completed ? " · Completada" : act.active ? " · En progreso" : " · Bloqueada"}
+                  </div>
+                </div>
+                {act.active && (
+                  <span style={{
+                    fontSize: 13, fontWeight: 700, color: tokens.colors.coralSoft,
+                    whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif",
+                  }}>
+                    Iniciar →
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
